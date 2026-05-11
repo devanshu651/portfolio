@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devanshu Raut – Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9.5pt;
+    color: #1a1a1a;
+    background: #f0ede8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 32px 16px;
+  }
+
+  .page {
+    background: #fff;
+    width: 794px;
+    min-height: 1123px;
+    padding: 44px 52px 44px 52px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.13);
+  }
+
+  /* HEADER */
+  .header { border-bottom: 2px solid #1a1a1a; padding-bottom: 12px; margin-bottom: 18px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-end; }
+  .name {
+    font-family: 'EB Garamond', serif;
+    font-size: 28pt;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    color: #111;
+  }
+  .contact-block {
+    text-align: right;
+    font-size: 8pt;
+    color: #444;
+    line-height: 1.7;
+  }
+  .contact-block a { color: #444; text-decoration: none; }
+  .contact-block a:hover { text-decoration: underline; }
+  .tagline {
+    margin-top: 5px;
+    font-size: 9.5pt;
+    color: #555;
+    font-weight: 300;
+  }
+  .tagline strong { font-weight: 600; color: #111; }
+
+  /* LAYOUT */
+  .body { display: grid; grid-template-columns: 220px 1fr; gap: 28px; }
+
+  /* LEFT COLUMN */
+  .left {}
+
+  /* RIGHT COLUMN */
+  .right {}
+
+  /* SECTION */
+  .section { margin-bottom: 18px; }
+  .section-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 2px;
+    margin-bottom: 10px;
+    color: #111;
+  }
+
+  /* EDUCATION */
+  .edu-block { margin-bottom: 10px; }
+  .edu-school { font-weight: 600; font-size: 9pt; color: #111; }
+  .edu-degree { font-size: 8.5pt; color: #333; margin-top: 1px; }
+  .edu-date { font-size: 8pt; color: #777; margin-top: 1px; font-style: italic; }
+
+  /* SKILLS */
+  .skill-group { margin-bottom: 8px; }
+  .skill-label { font-weight: 600; font-size: 8.5pt; color: #111; margin-bottom: 3px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tag {
+    background: #f4f1ec;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    padding: 2px 7px;
+    color: #333;
+  }
+
+  /* CERTIFICATIONS */
+  .cert-item { margin-bottom: 5px; display: flex; align-items: flex-start; gap: 6px; }
+  .cert-dot { width: 5px; height: 5px; border-radius: 50%; background: #555; margin-top: 4px; flex-shrink: 0; }
+  .cert-text { font-size: 8pt; color: #333; line-height: 1.4; }
+  .cert-issuer { font-size: 7.5pt; color: #888; }
+
+  /* EXPERIENCE / PROJECTS */
+  .exp-block { margin-bottom: 14px; }
+  .exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .exp-title { font-weight: 600; font-size: 9.5pt; color: #111; }
+  .exp-date { font-size: 8pt; color: #777; font-style: italic; white-space: nowrap; }
+  .exp-company { font-size: 8.5pt; color: #555; margin-bottom: 5px; }
+  .exp-bullets { list-style: none; padding: 0; }
+  .exp-bullets li {
+    font-size: 8.5pt;
+    color: #333;
+    padding-left: 12px;
+    position: relative;
+    margin-bottom: 3px;
+    line-height: 1.45;
+  }
+  .exp-bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #888;
+  }
+
+  /* AWARDS */
+  .award-item { margin-bottom: 7px; }
+  .award-name { font-weight: 600; font-size: 8.5pt; color: #111; }
+  .award-body { font-size: 8pt; color: #555; }
+  .award-date { font-size: 7.5pt; color: #888; font-style: italic; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="name">Devanshu Raut</div>
+      <div class="contact-block">
+        <a href="mailto:rautdevanshu24@gmail.com">rautdevanshu24@gmail.com</a><br>
+        <a href="https://www.linkedin.com/in/devanshu-raut-641828331/" target="_blank">linkedin.com/in/devanshu-raut</a><br>
+        <a href="https://github.com/devanshu651" target="_blank">github.com/devanshu651</a>
+      </div>
+    </div>
+    <div class="tagline"><strong>CSE (AI &amp; ML) Student</strong> with a passion for building intelligent, full-stack solutions and data-driven applications.</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- LEFT COLUMN -->
+    <div class="left">
+
+      <!-- EDUCATION -->
+      <div class="section">
+        <div class="section-title">Education</div>
+
+        <div class="edu-block">
+          <div class="edu-school">P R Pote College of Engineering &amp; Management</div>
+          <div class="edu-degree">B.Tech – Computer Science &amp; Engineering (AI &amp; ML)</div>
+          <div class="edu-date">Amravati, India · 2025 – 2029</div>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="section">
+        <div class="section-title">Skills &amp; Tools</div>
+
+        <div class="skill-group">
+          <div class="skill-label">Languages</div>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+            <span class="tag">C</span>
+            <span class="tag">Java</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">R</span>
+            <span class="tag">Dart</span>
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+          </div>
+        </div>
+
+        <div class="skill-group" style="margin-top:8px">
+          <div class="skill-label">Frameworks &amp; Platforms</div>
+          <div class="skill-tags">
+            <span class="tag">Flutter</span>
+            <span class="tag">Android Studio</span>
+          </div>
+        </div>
+
+        <div class="skill-group" style="margin-top:8px">
+          <div class="skill-label">AI / Data</div>
+          <div class="skill-tags">
+            <span class="tag">Prompt Engineering</span>
+            <span class="tag">Data Analytics</span>
+            <span class="tag">Generative AI</span>
+            <span class="tag">Predictive Modeling</span>
+          </div>
+        </div>
+
+        <div class="skill-group" style="margin-top:8px">
+          <div class="skill-label">Frontend</div>
+          <div class="skill-tags">
+            <span class="tag">React</span>
+            <span class="tag">Tailwind CSS</span>
+            <span class="tag">Bootstrap</span>
+            <span class="tag">Responsive Design</span>
+          </div>
+        </div>
+
+        <div class="skill-group" style="margin-top:8px">
+          <div class="skill-label">Backend &amp; Database</div>
+          <div class="skill-tags">
+            <span class="tag">Firebase</span>
+            <span class="tag">Firestore</span>
+            <span class="tag">Firebase Auth</span>
+            <span class="tag">Node.js</span>
+          </div>
+        </div>
+
+        <div class="skill-group" style="margin-top:8px">
+          <div class="skill-label">DevOps &amp; Deployment</div>
+          <div class="skill-tags">
+            <span class="tag">Netlify</span>
+            <span class="tag">Vercel</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Git / GitHub</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERTIFICATIONS -->
+      <div class="section">
+        <div class="section-title">Certifications</div>
+
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div class="cert-text">
+            <div>Microsoft Certified AI Skills Passport</div>
+            <div class="cert-issuer">Microsoft · 2025</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div class="cert-text">
+            <div>Advanced Cybersecurity Awareness Quiz</div>
+            <div class="cert-issuer">IIT Kanpur · Nov 2025</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div class="cert-text">
+            <div>Skill Certification – Data Analyst</div>
+            <div class="cert-issuer">OneRoadmap · Sep 2025</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div class="cert-text">
+            <div>R Programming Bootcamp</div>
+            <div class="cert-issuer">Udemy · Sep 2025</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div class="cert-text">
+            <div>Introduction to MS Excel</div>
+            <div class="cert-issuer">Microsoft · Aug 2025</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div class="cert-text">
+            <div>VisionX Season 1 – AI Attendee</div>
+            <div class="cert-issuer">Global AI Community · Oct 2025</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- RIGHT COLUMN -->
+    <div class="right">
+
+      <!-- VIRTUAL INTERNSHIPS -->
+      <div class="section">
+        <div class="section-title">Experience</div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">GenAI-Powered Data Analytics Job Simulation</div>
+            <div class="exp-date">Aug 2025</div>
+          </div>
+          <div class="exp-company">Tata Group · Remote (Forage)</div>
+          <ul class="exp-bullets">
+            <li>Completed a practical simulation focused on GenAI-powered data analytics workflows.</li>
+            <li>Gained hands-on experience in exploratory data analysis and predictive modeling using generative AI tools.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Data Analytics Job Simulation</div>
+            <div class="exp-date">Aug 2025</div>
+          </div>
+          <div class="exp-company">Deloitte · Remote (Forage)</div>
+          <ul class="exp-bullets">
+            <li>Solved real-world business problems through data storytelling and analytics tasks.</li>
+            <li>Applied core data analytics techniques to derive and present actionable insights.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Solutions Architecture Job Simulation</div>
+            <div class="exp-date">Sep 2025</div>
+          </div>
+          <div class="exp-company">Amazon Web Services (AWS) · Remote (Forage)</div>
+          <ul class="exp-bullets">
+            <li>Designed a simple, scalable hosting architecture applying core AWS cloud principles.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Software Engineering Job Simulation</div>
+            <div class="exp-date">Oct 2025</div>
+          </div>
+          <div class="exp-company">Hewlett Packard Enterprise · Remote (Forage)</div>
+          <ul class="exp-bullets">
+            <li>Completed software engineering tasks simulating a real HPE project environment.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Prompt Engineering for AI – Virtual Internship</div>
+            <div class="exp-date">Mar 2026</div>
+          </div>
+          <div class="exp-company">EduSkills Foundation (AICTE) · Remote</div>
+          <ul class="exp-bullets">
+            <li>Completed a structured virtual internship focused on designing and evaluating AI prompts.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Employability Skills Job-Ready Virtual Internship</div>
+            <div class="exp-date">Dec 2025</div>
+          </div>
+          <div class="exp-company">EduSkills Foundation (AICTE &amp; Wadhwani Foundation) · Remote</div>
+          <ul class="exp-bullets">
+            <li>Completed a 10-week program focused on corporate communication, self-management, and professional readiness.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div class="section">
+        <div class="section-title">Projects</div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Safe Ride</div>
+            <div class="exp-date">Flutter · Dart</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Built a mobile safety application aimed at ensuring rider safety with real-time monitoring features.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Campus Eye AI</div>
+            <div class="exp-date">AI / ML</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Developed an AI-powered campus monitoring and intelligence tool for smart campus use cases.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Prompt Lab</div>
+            <div class="exp-date">Web</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Created an interactive prompt engineering playground for experimenting with and comparing AI prompt outputs.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">DeVinci</div>
+            <div class="exp-date">Android Studio</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Developed an Android application with a focus on creative or productivity-oriented user workflows.</li>
+          </ul>
+        </div>
+
+        <div class="exp-block">
+          <div class="exp-header">
+            <div class="exp-title">Personal Portfolio</div>
+            <div class="exp-date">HTML · CSS · JS · Vercel</div>
+          </div>
+          <ul class="exp-bullets">
+            <li>Designed and deployed a personal portfolio website to showcase projects, skills, and professional profile.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /right -->
+  </div><!-- /body -->
+</div>
+</body>
+</html>
