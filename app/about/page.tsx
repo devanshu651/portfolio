@@ -9,8 +9,7 @@ export default function About() {
 
       <div className="mt-8 space-y-6 text-lg text-zinc-400 leading-relaxed">
         <p>
-          I’m a first-year engineering student focused on learning by
-          building real systems instead of just following tutorials. My goal is to bridge the gap between theoretical computer science and practical, usable software.
+          AI & ML engineering student with 5+ projects, 6+ industry simulations (Tata · Deloitte · AWS · HPE), and certifications from Microsoft and IIT Kanpur — focused on building intelligent, full-stack systems instead of just following tutorials. My goal is to bridge the gap between theoretical computer science and practical, usable software.
         </p>
 
         <p>

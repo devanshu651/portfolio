@@ -14,9 +14,7 @@ export default function Home() {
             <AnimatedHeading />
 
             <p className="mt-6 text-lg text-slate-400 leading-relaxed">
-              I’m a first-year engineering student focused on strengthening
-              fundamentals by building practical projects in software, data,
-              and AI.
+              AI & ML engineering student with 5+ projects, 6+ industry simulations (Tata · Deloitte · AWS · HPE), and certifications from Microsoft and IIT Kanpur — focused on building intelligent, full-stack systems.
             </p>
 
             {/* CTA */}
