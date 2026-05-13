@@ -4,6 +4,7 @@ import PageWrapper from "./components/PageWrapper";
 import MouseBackground from "./components/MouseBackground";
 import ScrollObserver from "./components/ScrollObserver";
 import MobileExperiencePrompt from "./components/MobileExperiencePrompt";
+import ContinuousPageScroll from "./components/ContinuousPageScroll";
 import { Syne, DM_Sans } from "next/font/google";
 
 const syne = Syne({ 
@@ -29,6 +30,7 @@ export default function RootLayout({
         {/* Intersection Observer for scroll animations */}
         <ScrollObserver />
         <MobileExperiencePrompt />
+        <ContinuousPageScroll />
 
         {/* Interactive Premium Background Elements */}
         <MouseBackground />
