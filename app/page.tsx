@@ -22,7 +22,7 @@ export default function Home() {
             <AnimatedHeading />
 
             <p className="mt-8 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-2xl font-sans">
-              AI & ML engineering student with 5+ projects, 6+ industry simulations (Tata · Deloitte · AWS · HPE), and certifications from Microsoft and IIT Kanpur — focused on building intelligent, full-stack systems.
+              AI & ML engineering student with 5+ projects, 6+ industry simulations (Tata · Deloitte · AWS · HPE), and 10+ certifications including Microsoft and IIT Kanpur — focused on building intelligent, full-stack systems.
             </p>
 
             {/* CTA */}

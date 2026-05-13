@@ -19,7 +19,7 @@ export default function About() {
           </span>
           <span className="hidden sm:inline">·</span>
           <span className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span> 2 Certifications
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span> 10+ Certifications
           </span>
         </div>
       </div>
