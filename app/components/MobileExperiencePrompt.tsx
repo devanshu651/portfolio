@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 
-const PROMPT_DISMISSED_KEY = "devanshu-mobile-experience-prompt-dismissed";
+const PROMPT_DISMISSED_KEY = "devanshu-mobile-experience-prompt-dismissed-session";
 
 export default function MobileExperiencePrompt() {
   const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    const dismissed = localStorage.getItem(PROMPT_DISMISSED_KEY) === "true";
+    const isMobile = window.matchMedia("(max-width: 900px), (pointer: coarse)").matches;
+    const dismissed = sessionStorage.getItem(PROMPT_DISMISSED_KEY) === "true";
 
     if (isMobile && !dismissed) {
       window.setTimeout(() => setShowPrompt(true), 0);
@@ -17,7 +17,7 @@ export default function MobileExperiencePrompt() {
   }, []);
 
   const dismissPrompt = () => {
-    localStorage.setItem(PROMPT_DISMISSED_KEY, "true");
+    sessionStorage.setItem(PROMPT_DISMISSED_KEY, "true");
     setShowPrompt(false);
   };
 
