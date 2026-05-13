@@ -44,7 +44,7 @@ export default function AnimatedHeading() {
 
   return (
     <motion.h1
-      className="text-5xl md:text-7xl font-bold tracking-tight leading-tight pb-2 flex flex-col"
+      className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight pb-2 flex flex-col font-display"
       variants={container}
       initial="hidden"
       animate="visible"

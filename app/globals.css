@@ -1,32 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors - Dark, Technical, Premium Minimal */
+  --bg-color: #050505;
+  --surface-color: #0a0a0a;
+  --surface-hover: #121212;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
+  
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa; /* zinc-400 */
+  --text-muted: #52525b; /* zinc-600 */
+  
+  --accent-color: #ededed;
+  --accent-glow: rgba(255, 255, 255, 0.2);
+
+  /* Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-color);
+  --color-foreground: var(--text-primary);
+  --font-display: var(--font-syne), "Syne", sans-serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--bg-color);
+    --foreground: var(--text-primary);
   }
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg-color);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  /* Subtle Noise Texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
+
+/* Base Interactive Elements Defaults */
+a, button, .interactive {
+  transition: all var(--duration-base) var(--ease-out-expo);
+}
+
+/* Intersection Observer Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--duration-slow) var(--ease-out-expo),
+              transform var(--duration-slow) var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
