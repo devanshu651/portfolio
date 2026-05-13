@@ -3,7 +3,6 @@ import Navbar from "./components/navbar";
 import PageWrapper from "./components/PageWrapper";
 import MouseBackground from "./components/MouseBackground";
 import ScrollObserver from "./components/ScrollObserver";
-import MobileDesktopPrompt from "./components/MobileDesktopPrompt";
 import { Syne, DM_Sans } from "next/font/google";
 
 const syne = Syne({ 
@@ -28,7 +27,6 @@ export default function RootLayout({
       <body className={`${syne.variable} ${dmSans.variable} font-sans bg-[#050505] text-slate-50 antialiased relative min-h-screen selection:bg-white/20 selection:text-white`}>
         {/* Intersection Observer for scroll animations */}
         <ScrollObserver />
-        <MobileDesktopPrompt />
 
         {/* Interactive Premium Background Elements */}
         <MouseBackground />
