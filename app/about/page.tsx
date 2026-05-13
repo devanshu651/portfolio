@@ -30,7 +30,7 @@ export default function About() {
         </p>
 
         <p>
-          I believe that the best way to understand a technology is to break it, debug it, and build something meaningful with it. Whether it's training computer vision models, building native Android applications, or crafting fast web experiences, I enjoy the entire stack.
+          I believe that the best way to understand a technology is to break it, debug it, and build something meaningful with it. Whether it&apos;s training computer vision models, building native Android applications, or crafting fast web experiences, I enjoy the entire stack.
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export default function About() {
 
       {/* CTA */}
       <div className="mt-24 pt-12 border-t border-white/10 reveal" style={{ transitionDelay: '400ms' }}>
-        <h2 className="text-2xl font-display text-white mb-4 tracking-tight">Let's build something.</h2>
+        <h2 className="text-2xl font-display text-white mb-4 tracking-tight">Let&apos;s build something.</h2>
         <p className="text-zinc-400 mb-8 max-w-md">
           Always open to collaborating on interesting projects or discussing new technologies.
         </p>

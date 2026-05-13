@@ -39,7 +39,7 @@ export default function Contact() {
           Contact
         </h1>
         <p className="mt-4 text-zinc-400 text-lg max-w-2xl">
-          If you'd like to collaborate, discuss ideas, or just talk about
+          If you&apos;d like to collaborate, discuss ideas, or just talk about
           building real systems, feel free to reach out.
         </p>
       </div>
