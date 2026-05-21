@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  turbopack: {
+    root: __dirname,
+  },
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
+  experimental: {
+    optimizeCss: true,
+  },
+  compress: true,
 };
 
 export default nextConfig;
