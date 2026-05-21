@@ -25,6 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth dark">
+      <head>
+        <meta name="google-site-verification" content="JhwCV-hq0eo2TK-zBTTIYKctc6ff8z4bFoM-lqBEwNI" />
+      </head>
       <body className={`${syne.variable} ${dmSans.variable} font-sans bg-[#050505] text-slate-50 antialiased relative min-h-screen selection:bg-white/20 selection:text-white`}>
         {/* Intersection Observer for scroll animations */}
         <ScrollObserver />
