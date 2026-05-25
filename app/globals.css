@@ -39,6 +39,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem; /* Prevent fixed navbar from covering section headings */
   background-color: var(--bg-color);
 }
 
