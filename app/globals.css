@@ -5,15 +5,15 @@
   --bg-color: #050505;
   --surface-color: #0a0a0a;
   --surface-hover: #121212;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.15);
+  --border-color: rgba(244, 241, 234, 0.08);
+  --border-hover: rgba(244, 241, 234, 0.15);
   
-  --text-primary: #ffffff;
+  --text-primary: #f4f1ea; /* Soft warm beige / ivory */
   --text-secondary: #a1a1aa; /* zinc-400 */
   --text-muted: #52525b; /* zinc-600 */
   
-  --accent-color: #ededed;
-  --accent-glow: rgba(255, 255, 255, 0.2);
+  --accent-color: #eae5d9; /* Secondary warm accent */
+  --accent-glow: rgba(244, 241, 234, 0.2);
 
   /* Transitions */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -26,6 +26,7 @@
 @theme inline {
   --color-background: var(--bg-color);
   --color-foreground: var(--text-primary);
+  --color-white: #f4f1ea; /* Map Tailwind white to warm beige globally */
   --font-display: var(--font-syne), "Syne", sans-serif;
   --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
 }
