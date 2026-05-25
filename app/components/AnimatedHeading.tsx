@@ -49,7 +49,7 @@ export default function AnimatedHeading() {
       initial="hidden"
       animate="visible"
     >
-      <div className="flex flex-wrap gap-x-3 md:gap-x-4 text-white">
+      <div className="flex flex-wrap justify-center md:justify-start gap-x-3 md:gap-x-4 text-white">
         <motion.span variants={child}>Building</motion.span>
         
         {/* Interactive "real systems" with cursor spotlight */}
@@ -82,7 +82,7 @@ export default function AnimatedHeading() {
         </motion.span>
       </div>
       
-      <div className="flex flex-wrap gap-x-3 md:gap-x-4 mt-1 md:mt-2 text-slate-400">
+      <div className="flex flex-wrap justify-center md:justify-start gap-x-3 md:gap-x-4 mt-1 md:mt-2 text-slate-400">
         <motion.span variants={child}>learning</motion.span>
         <motion.span variants={child}>by</motion.span>
         <motion.span 

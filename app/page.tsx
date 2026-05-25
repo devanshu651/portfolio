@@ -113,7 +113,7 @@ export default function Home() {
   return (
     <>
       {/* 1. HOME / HERO SECTION */}
-      <section id="home" className="min-h-[calc(100vh-6rem)] flex items-center relative overflow-hidden">
+      <section id="home" className="hero-section min-h-[calc(100vh-6rem)] flex items-center relative overflow-hidden">
         {/* Subtle CSS Grid Dot Pattern */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSkiLz48L3N2Zz4=')] opacity-50 pointer-events-none" />
         
@@ -124,7 +124,7 @@ export default function Home() {
           <div className="grid grid-cols-12 gap-8 md:gap-12 items-center">
             
             {/* Left side text */}
-            <div className="col-span-12 md:col-span-7 order-2 md:order-1 max-w-2xl text-left">
+            <div className="col-span-12 md:col-span-7 order-2 md:order-1 max-w-2xl text-center md:text-left">
               {/* Eyebrow */}
               <p className="text-sm font-semibold tracking-[0.2em] text-zinc-500 uppercase mb-4">
                 Hi, I am Devanshu
@@ -137,7 +137,7 @@ export default function Home() {
               </p>
 
               {/* CTA */}
-              <div className="mt-12 flex flex-wrap items-center gap-4">
+              <div className="mt-12 flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <a
                   href="#projects"
                   onClick={(e) => {
@@ -186,11 +186,11 @@ export default function Home() {
             </div>
 
             {/* Right side headshot image */}
-            <div className="col-span-12 md:col-span-5 order-1 md:order-2 flex justify-center md:justify-end relative mb-8 md:mb-0">
+            <div className="col-span-12 md:col-span-5 order-1 md:order-2 flex flex-col items-center justify-center md:justify-end relative mb-8 md:mb-0">
               {/* Decorative premium neon glow ring behind photo */}
               <div className="absolute inset-0 max-w-[220px] md:max-w-[280px] max-h-[275px] md:max-h-[350px] rounded-full bg-gradient-to-tr from-cyan-500/20 to-pink-500/20 blur-2xl -translate-y-4 translate-x-4 pointer-events-none mx-auto md:mx-0" />
               
-              <div className="relative max-w-[220px] md:max-w-[280px] aspect-[4/5] w-full rounded-full border border-white/10 bg-zinc-900/40 p-2 shadow-2xl shadow-cyan-500/5 backdrop-blur-md transition-all duration-700 hover:-translate-y-2 hover:border-white/20 hover:shadow-cyan-500/15 group overflow-hidden">
+              <div className="hero-photo relative max-w-[220px] md:max-w-[280px] aspect-[4/5] w-full rounded-full border border-white/10 bg-zinc-900/40 p-2 shadow-2xl shadow-cyan-500/5 backdrop-blur-md transition-all duration-700 hover:-translate-y-2 hover:border-white/20 hover:shadow-cyan-500/15 group overflow-hidden">
                 {/* Internal background gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 
@@ -199,6 +199,19 @@ export default function Home() {
                   alt="Devanshu Raut Headshot"
                   className="rounded-full w-full h-full object-cover border border-white/5 grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]"
                 />
+              </div>
+
+              {/* Mobile-only badge and subtitle below the photo */}
+              <div className="md:hidden flex flex-col items-center mt-3.5 space-y-2.5 z-10">
+                {/* Status Pill Badge */}
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-white/10 bg-zinc-900/80 text-[11px] font-medium tracking-wide text-zinc-300 backdrop-blur-md">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
+                  <span>Open to opportunities</span>
+                </div>
+                {/* Professional Subtitle */}
+                <p className="text-xs font-mono text-zinc-400 font-medium tracking-wide">
+                  AI/ML Engineer &middot; CS Undergraduate
+                </p>
               </div>
             </div>
 
