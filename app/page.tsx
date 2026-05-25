@@ -40,7 +40,7 @@ export default function Home() {
   const skillCategories = [
     {
       title: "Languages",
-      skills: ["Python", "Kotlin", "TypeScript", "SQL"],
+      skills: ["Python", "C", "Java", "R", "Kotlin", "TypeScript", "SQL"],
       icon: (
         <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -49,7 +49,7 @@ export default function Home() {
     },
     {
       title: "Frontend & Frameworks",
-      skills: ["Next.js", "React", "Tailwind CSS", "HTML5/CSS3"],
+      skills: ["Flutter", "Next.js", "React", "Tailwind CSS", "HTML5/CSS3"],
       icon: (
         <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -208,11 +208,14 @@ export default function Home() {
           </div>
 
           <div className="md:col-span-2 space-y-6 text-lg text-zinc-400 leading-relaxed font-sans">
-            <p>
-              AI & ML engineering student focused on building intelligent, full-stack systems instead of just following tutorials. My goal is to bridge the gap between theoretical computer science and practical, usable software.
+            <p className="text-white font-semibold text-xl">
+              I don&apos;t just study AI/ML — I build with it.
             </p>
             <p>
-              I believe that the best way to understand a technology is to break it, debug it, and build something meaningful with it. Whether it&apos;s training computer vision models, building native Android applications, or crafting fast web experiences, I enjoy the entire stack.
+              I&apos;m Devanshu, a first-year B.Tech student in Computer Science (AI/ML) at P.R. Pote Patil College of Engineering &amp; Management. I&apos;ve completed four virtual internships with globally recognized organizations — HPE, AWS, Deloitte, and Tata Group — gaining real, hands-on experience across software engineering, cloud architecture, data analytics, and GenAI.
+            </p>
+            <p>
+              I know Python, C, Java, R, and Flutter, and I&apos;ve shipped a real product: SafeRide, a mobile safety app built with Flutter and Firebase. I also run PromptLab Pro, where I explore prompt engineering and AI-powered tools.
             </p>
           </div>
 
