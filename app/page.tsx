@@ -120,66 +120,88 @@ export default function Home() {
         {/* Animated Gradient Glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/[0.02] rounded-[100%] blur-[120px] pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto px-6 w-full relative z-10 reveal">
-          <div className="max-w-3xl">
-            {/* Eyebrow */}
-            <p className="text-sm font-semibold tracking-[0.2em] text-zinc-500 uppercase mb-4">
-              Hi, I am Devanshu
-            </p>
+        <div className="max-w-6xl mx-auto px-6 w-full relative z-10 reveal py-16 md:py-24">
+          <div className="grid md:grid-cols-12 gap-12 items-center">
             
-            <AnimatedHeading />
+            {/* Left side text */}
+            <div className="md:col-span-7 max-w-2xl">
+              {/* Eyebrow */}
+              <p className="text-sm font-semibold tracking-[0.2em] text-zinc-500 uppercase mb-4">
+                Hi, I am Devanshu
+              </p>
+              
+              <AnimatedHeading />
 
-            <p className="mt-8 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-2xl font-sans">
-              AI & ML engineering student with 5+ projects, 6+ industry simulations (Tata · Deloitte · AWS · HPE), and 10+ certifications including Microsoft and IIT Kanpur — focused on building intelligent, full-stack systems.
-            </p>
+              <p className="mt-8 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-2xl font-sans">
+                AI &amp; ML engineering student with 5+ projects, 6+ industry simulations (Tata · Deloitte · AWS · HPE), and 10+ certifications including Microsoft and IIT Kanpur — focused on building intelligent, full-stack systems.
+              </p>
 
-            {/* CTA */}
-            <div className="mt-12 flex flex-wrap items-center gap-4">
-              <a
-                href="#projects"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="group relative inline-flex items-center justify-center rounded-lg bg-white px-8 py-3.5 text-sm font-medium text-black transition-all hover:bg-zinc-200 active:scale-95 overflow-hidden"
-              >
-                <span className="relative z-10">View Projects</span>
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
-              </a>
-
-              <a
-                href="#about"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/[0.02] px-8 py-3.5 text-sm font-medium text-white transition-all hover:bg-white/[0.06] hover:border-white/20 active:scale-95 backdrop-blur-sm"
-              >
-                About Me
-              </a>
-
-              {/* Social Links inside hero */}
-              <div className="flex items-center gap-3 ml-2 border-l border-white/10 pl-6 h-10">
+              {/* CTA */}
+              <div className="mt-12 flex flex-wrap items-center gap-4">
                 <a
-                  href="https://github.com/devanshu651"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-zinc-500 hover:text-white transition-colors"
-                  title="GitHub"
+                  href="#projects"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="group relative inline-flex items-center justify-center rounded-lg bg-white px-8 py-3.5 text-sm font-medium text-black transition-all hover:bg-zinc-200 active:scale-95 overflow-hidden"
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg>
+                  <span className="relative z-10">View Projects</span>
+                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-[shimmer_1.5s_infinite]" />
                 </a>
+
                 <a
-                  href="https://www.linkedin.com/in/devanshu-raut-641828331/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-zinc-500 hover:text-[#0a66c2] transition-colors"
-                  title="LinkedIn"
+                  href="#about"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/[0.02] px-8 py-3.5 text-sm font-medium text-white transition-all hover:bg-white/[0.06] hover:border-white/20 active:scale-95 backdrop-blur-sm"
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" /></svg>
+                  About Me
                 </a>
+
+                {/* Social Links inside hero */}
+                <div className="flex items-center gap-3 ml-2 border-l border-white/10 pl-6 h-10">
+                  <a
+                    href="https://github.com/devanshu651"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-500 hover:text-white transition-colors"
+                    title="GitHub"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/devanshu-raut-641828331/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-500 hover:text-[#0a66c2] transition-colors"
+                    title="LinkedIn"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" /></svg>
+                  </a>
+                </div>
               </div>
             </div>
+
+            {/* Right side headshot image */}
+            <div className="md:col-span-5 flex justify-center md:justify-end relative">
+              {/* Decorative premium neon glow ring behind photo */}
+              <div className="absolute inset-0 max-w-[340px] max-h-[340px] rounded-[2.5rem] bg-gradient-to-tr from-cyan-500/20 to-pink-500/20 blur-2xl -translate-y-4 translate-x-4 pointer-events-none" />
+              
+              <div className="relative max-w-[340px] aspect-square w-full rounded-[2rem] border border-white/10 bg-zinc-900/40 p-2.5 shadow-2xl shadow-cyan-500/5 backdrop-blur-md transition-all duration-700 hover:-translate-y-2 hover:border-white/20 hover:shadow-cyan-500/15 group overflow-hidden">
+                {/* Internal background gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                
+                <img
+                  src="/avatar.png"
+                  alt="Devanshu Raut Headshot"
+                  className="rounded-[1.5rem] w-full h-full object-cover border border-white/5 grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]"
+                />
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
