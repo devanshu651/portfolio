@@ -52,7 +52,7 @@ export default function RootLayout({
       <div>
         <p className="text-white font-medium font-display tracking-wide">Devanshu</p>
         <p className="mt-2 max-w-xs text-zinc-500">
-          Building real systems and learning by doing.
+          Code. Learn. Ship. Repeat.
         </p>
       </div>
 
