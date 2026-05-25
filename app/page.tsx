@@ -187,17 +187,11 @@ export default function Home() {
 
             {/* Right side headshot image */}
             <div className="col-span-12 md:col-span-5 order-1 md:order-2 flex justify-center md:justify-end relative mb-8 md:mb-0">
-              {/* Decorative premium neon glow ring behind photo */}
-              <div className="absolute inset-0 max-w-[220px] md:max-w-[280px] max-h-[275px] md:max-h-[350px] rounded-full bg-gradient-to-tr from-cyan-500/20 to-pink-500/20 blur-2xl -translate-y-4 translate-x-4 pointer-events-none mx-auto md:mx-0" />
-              
-              <div className="relative max-w-[220px] md:max-w-[280px] aspect-[4/5] w-full rounded-full border border-white/10 bg-zinc-900/40 p-2 shadow-2xl shadow-cyan-500/5 backdrop-blur-md transition-all duration-700 hover:-translate-y-2 hover:border-white/20 hover:shadow-cyan-500/15 group overflow-hidden">
-                {/* Internal background gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                
+              <div className="relative max-w-[220px] md:max-w-[280px] aspect-[4/5] w-full rounded-full border border-white/10 transition-all duration-700 hover:-translate-y-2 hover:border-white/30 group overflow-hidden">
                 <img
                   src="/avatar.png"
                   alt="Devanshu Raut Headshot"
-                  className="rounded-full w-full h-full object-cover border border-white/5 grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]"
+                  className="w-full h-full object-cover grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]"
                 />
               </div>
             </div>
