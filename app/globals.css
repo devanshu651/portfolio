@@ -94,6 +94,12 @@ button,
   animation: fadeUp 0.6s ease-out both;
 }
 
+.hero-section {
+  min-height: calc(100vh - 6rem);
+  /* Cap the min-height to prevent extreme vertical stretching in portrait aspect ratios (e.g. mobile desktop mode) */
+  min-height: min(calc(100vh - 6rem), 720px);
+}
+
 @media (max-width: 768px) {
   .hero-photo {
     width: 180px !important;

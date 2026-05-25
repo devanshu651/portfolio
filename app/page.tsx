@@ -113,7 +113,7 @@ export default function Home() {
   return (
     <>
       {/* 1. HOME / HERO SECTION */}
-      <section id="home" className="hero-section min-h-[calc(100vh-6rem)] flex items-center relative overflow-hidden">
+      <section id="home" className="hero-section flex items-center relative overflow-hidden">
         {/* Subtle CSS Grid Dot Pattern */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSkiLz48L3N2Zz4=')] opacity-50 pointer-events-none" />
         
