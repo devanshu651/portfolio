@@ -58,21 +58,21 @@ export default function AnimatedHeading() {
           onMouseMove={handleMouseMove}
           className="relative group cursor-crosshair px-1 -mx-1"
         >
-          {/* Base Text (subtle slate gradient) */}
-          <span className="bg-gradient-to-r from-yellow-300 via-pink-400 to-cyan-400 bg-clip-text text-transparent transition-opacity duration-300 group-hover:opacity-40 drop-shadow-[0_0_20px_rgba(236,72,153,0.6)]">
+          {/* Base Text (yellow-gold premium gradient) */}
+          <span className="bg-gradient-to-r from-yellow-200 to-yellow-400 bg-clip-text text-transparent transition-opacity duration-300 group-hover:opacity-40 drop-shadow-[0_0_15px_rgba(250,204,21,0.3)]">
             real systems,
           </span>
 
           {/* Glowing Spotlight Overlay */}
           <motion.span 
-            className="absolute inset-x-1 top-0 bg-clip-text text-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.9)]"
+            className="absolute inset-x-1 top-0 bg-clip-text text-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_0_20px_rgba(250,204,21,0.7)]"
             style={{
               backgroundImage: useMotionTemplate`
                 radial-gradient(
                   150px circle at ${mouseX}px ${mouseY}px,
-                  #06b6d4, /* cyan-500 */
-                  #ec4899, /* pink-500 */
-                  transparent 80%
+                  #facc15 0%,
+                  #eab308 60%,
+                  transparent 100%
                 )
               `,
             }}
