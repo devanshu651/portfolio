@@ -209,7 +209,7 @@ export default function Home() {
 
           <div className="md:col-span-2 space-y-6 text-lg text-zinc-400 leading-relaxed font-sans">
             <p className="text-white font-semibold text-xl">
-              I don&apos;t just study AI/ML — I build with it.
+              I don&apos;t just study AI — I build with it.
             </p>
             <p>
               I&apos;m Devanshu, a first-year B.Tech student in Computer Science (AI/ML) at P.R. Pote Patil College of Engineering &amp; Management. I&apos;ve completed four virtual internships with globally recognized organizations — HPE, AWS, Deloitte, and Tata Group — gaining real, hands-on experience across software engineering, cloud architecture, data analytics, and GenAI.
