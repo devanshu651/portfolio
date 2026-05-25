@@ -96,9 +96,11 @@ button,
 
 @media (max-width: 768px) {
   .hero-photo {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto 1.5rem;
+    width: 180px !important;
+    height: 180px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    margin: 0 auto 1rem;
   }
 
   .hero-section {
