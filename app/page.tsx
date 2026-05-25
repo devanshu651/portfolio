@@ -121,10 +121,10 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/[0.02] rounded-[100%] blur-[120px] pointer-events-none" />
 
         <div className="max-w-6xl mx-auto px-6 w-full relative z-10 reveal py-16 md:py-24">
-          <div className="grid md:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-12 gap-8 md:gap-12 items-center">
             
             {/* Left side text */}
-            <div className="md:col-span-7 max-w-2xl">
+            <div className="col-span-12 md:col-span-7 order-2 md:order-1 max-w-2xl text-left">
               {/* Eyebrow */}
               <p className="text-sm font-semibold tracking-[0.2em] text-zinc-500 uppercase mb-4">
                 Hi, I am Devanshu
@@ -186,11 +186,11 @@ export default function Home() {
             </div>
 
             {/* Right side headshot image */}
-            <div className="md:col-span-5 flex justify-center md:justify-end relative">
+            <div className="col-span-12 md:col-span-5 order-1 md:order-2 flex justify-center md:justify-end relative mb-8 md:mb-0">
               {/* Decorative premium neon glow ring behind photo */}
-              <div className="absolute inset-0 max-w-[280px] max-h-[350px] rounded-full bg-gradient-to-tr from-cyan-500/20 to-pink-500/20 blur-2xl -translate-y-4 translate-x-4 pointer-events-none" />
+              <div className="absolute inset-0 max-w-[220px] md:max-w-[280px] max-h-[275px] md:max-h-[350px] rounded-full bg-gradient-to-tr from-cyan-500/20 to-pink-500/20 blur-2xl -translate-y-4 translate-x-4 pointer-events-none mx-auto md:mx-0" />
               
-              <div className="relative max-w-[280px] aspect-[4/5] w-full rounded-full border border-white/10 bg-zinc-900/40 p-2 shadow-2xl shadow-cyan-500/5 backdrop-blur-md transition-all duration-700 hover:-translate-y-2 hover:border-white/20 hover:shadow-cyan-500/15 group overflow-hidden">
+              <div className="relative max-w-[220px] md:max-w-[280px] aspect-[4/5] w-full rounded-full border border-white/10 bg-zinc-900/40 p-2 shadow-2xl shadow-cyan-500/5 backdrop-blur-md transition-all duration-700 hover:-translate-y-2 hover:border-white/20 hover:shadow-cyan-500/15 group overflow-hidden">
                 {/* Internal background gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 
