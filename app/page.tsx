@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import AnimatedHeading from "./components/AnimatedHeading";
+import Certifications from "./components/Certifications";
 
 export default function Home() {
   const projects = [
@@ -113,13 +114,22 @@ export default function Home() {
   return (
     <>
       {/* 1. HOME / HERO SECTION */}
-      <section id="home" className="hero-section flex items-center relative overflow-hidden">
-        {/* Subtle CSS Grid Dot Pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSkiLz48L3N2Zz4=')] opacity-50 pointer-events-none" />
+      <section id="home" className="hero-section bg-[#050505] flex items-center relative overflow-hidden">
+        {/* Cinematic Background: Color Wash + Film Grain */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          {/* Soft Violet/Purple Wash in Top-Left */}
+          <div className="absolute -top-[20%] -left-[10%] w-[100%] h-[100%] md:w-[70%] md:h-[90%] rounded-full bg-[radial-gradient(circle,rgba(120,90,255,0.12)_0%,transparent_60%)] blur-[60px]" />
+          
+          {/* Static SVG Film Grain (Hidden on mobile for performance) */}
+          <svg className="hidden md:block absolute inset-0 w-full h-full opacity-30 mix-blend-overlay" xmlns="http://www.w3.org/2000/svg">
+            <filter id="hero-grain">
+              <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch" />
+              <feColorMatrix type="saturate" values="0" />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#hero-grain)" />
+          </svg>
+        </div>
         
-        {/* Animated Gradient Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-white/[0.02] rounded-[100%] blur-[120px] pointer-events-none" />
-
         <div className="max-w-6xl mx-auto px-6 w-full relative z-10 reveal py-16 md:py-24">
           <div className="grid grid-cols-12 gap-8 md:gap-12 items-center">
             
@@ -247,7 +257,7 @@ export default function Home() {
               I don&apos;t just study AI — I build with it.
             </p>
             <p>
-              I&apos;m Devanshu, a first-year B.Tech student in Computer Science (AI/ML) at P.R. Pote Patil College of Engineering &amp; Management. I&apos;ve completed four virtual internships with globally recognized organizations — HPE, AWS, Deloitte, and Tata Group — gaining real, hands-on experience across software engineering, cloud architecture, data analytics, and GenAI.
+              I&apos;m Devanshu, a second-year B.Tech student in Computer Science (AI/ML) at P.R. Pote Patil College of Engineering &amp; Management. I&apos;ve completed four virtual internships with globally recognized organizations — HPE, AWS, Deloitte, and Tata Group — gaining real, hands-on experience across software engineering, cloud architecture, data analytics, and GenAI.
             </p>
             <p>
               I know Python, C, Java, R, and Flutter, and I&apos;ve shipped a real product: SafeRide, a mobile safety app built with Flutter and Firebase. I also run PromptLab Pro, where I explore prompt engineering and AI-powered tools.
@@ -381,6 +391,9 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* CERTIFICATIONS SECTION */}
+      <Certifications />
 
       {/* 5. CONTACT SECTION */}
       <section id="contact" className="max-w-6xl mx-auto px-6 py-24 md:py-32 border-t border-white/10 reveal">

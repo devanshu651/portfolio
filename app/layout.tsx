@@ -3,6 +3,7 @@ import Navbar from "./components/navbar";
 import PageWrapper from "./components/PageWrapper";
 import MouseBackground from "./components/MouseBackground";
 import ScrollObserver from "./components/ScrollObserver";
+import ChatWidget from "./components/ChatWidget";
 import { Syne, DM_Sans } from "next/font/google";
 
 const syne = Syne({ 
@@ -28,6 +29,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="JhwCV-hq0eo2TK-zBTTIYKctc6ff8z4bFoM-lqBEwNI" />
       </head>
       <body className={`${syne.variable} ${dmSans.variable} font-sans bg-[#050505] text-slate-50 antialiased relative min-h-screen selection:bg-white/20 selection:text-white`}>
+        
         {/* Intersection Observer for scroll animations */}
         <ScrollObserver />
 
@@ -72,6 +74,7 @@ export default function RootLayout({
 
     </div>
   </footer>
+  <ChatWidget />
 </body>
 
     </html>
