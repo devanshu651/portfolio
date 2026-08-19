@@ -11,7 +11,7 @@ type Message = {
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Hi! I'm AI Devanshu. Feel free to ask me anything about my projects, skills, or what I like to do!" }
+    { role: "assistant", content: "Yo, I'm Devanshu 👋 Feel free to ask me anything about my projects, skills, or what I like to do!" }
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -136,7 +136,7 @@ export default function ChatWidget() {
             <div className="bg-[#121212] border-b border-white/10 p-4 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                <h3 className="text-[#f4f1ea] font-medium tracking-wide text-sm">Chat with AI Devanshu</h3>
+                <h3 className="text-[#f4f1ea] font-medium tracking-wide text-sm">Chat with me</h3>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
