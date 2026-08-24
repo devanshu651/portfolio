@@ -15,8 +15,28 @@ export default function ChatWidget() {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hasShown = sessionStorage.getItem("chat_greeting_shown");
+    if (!hasShown) {
+      const showTimer = setTimeout(() => {
+        setShowGreeting(true);
+        sessionStorage.setItem("chat_greeting_shown", "true");
+      }, 1500);
+
+      const dismissTimer = setTimeout(() => {
+        setShowGreeting(false);
+      }, 7500); // 1.5s + 6s
+
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(dismissTimer);
+      };
+    }
+  }, []);
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -201,24 +221,83 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Floating Toggle Button */}
-      <motion.button
-        onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-full bg-[#f4f1ea] text-[#050505] shadow-lg flex items-center justify-center hover:bg-white transition-colors"
-        aria-label="Toggle chat"
-      >
-        {isOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 6L6 18M6 6l12 12"/>
-          </svg>
-        ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-          </svg>
+      {/* Greeting Popup */}
+      <AnimatePresence>
+        {showGreeting && !isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.9 }}
+            className="mb-2 flex items-center gap-3 z-40 w-max max-w-[calc(100vw-2rem)]"
+          >
+            {/* Speech Bubble */}
+            <div 
+              className="relative bg-zinc-900 border border-white/10 rounded-2xl p-3.5 pr-8 shadow-2xl cursor-pointer hover:bg-zinc-800 transition-colors"
+              onClick={() => { setIsOpen(true); setShowGreeting(false); }}
+            >
+              <p className="text-sm text-zinc-200">
+                Hi! 👋 Ask me anything about myself
+              </p>
+              {/* Tail */}
+              <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-zinc-900 border-t border-r border-white/10 transform rotate-45" />
+              
+              {/* Close Button */}
+              <button 
+                onClick={(e) => { e.stopPropagation(); setShowGreeting(false); }}
+                className="absolute top-2 right-2 p-1 text-zinc-500 hover:text-white transition-colors"
+                aria-label="Dismiss greeting"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            {/* Avatar */}
+            <div 
+              className="relative shrink-0 cursor-pointer"
+              onClick={() => { setIsOpen(true); setShowGreeting(false); }}
+            >
+              {/* Glowing ring */}
+              <div className="absolute inset-0 rounded-full bg-amber-400/40 blur-md animate-pulse" />
+              {/* Avatar container */}
+              <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-amber-400 bg-zinc-900 overflow-hidden shadow-[0_0_15px_rgba(251,191,36,0.3)]">
+                <img src="/chat-logo.png" alt="Chatbot Logo" className="w-full h-full object-cover" />
+              </div>
+              {/* Waving Emoji */}
+              <motion.div 
+                className="absolute -top-3 -right-2 text-xl sm:text-2xl origin-[70%_70%]"
+                animate={{ rotate: [0, -15, 15, -15, 15, 0] }}
+                transition={{ duration: 1.5, repeat: 2, repeatDelay: 1, ease: "easeInOut" }}
+              >
+                👋
+              </motion.div>
+            </div>
+          </motion.div>
         )}
-      </motion.button>
+      </AnimatePresence>
+
+      {/* Floating Toggle Button */}
+      <AnimatePresence>
+        {(!showGreeting || isOpen) && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            onClick={() => setIsOpen(!isOpen)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-amber-400 bg-zinc-900 shadow-[0_0_15px_rgba(251,191,36,0.3)] flex items-center justify-center overflow-hidden transition-colors"
+            aria-label="Toggle chat"
+          >
+            {isOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f4f1ea" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            ) : (
+              <img src="/chat-logo.png" alt="Chatbot Logo" className="w-full h-full object-cover" />
+            )}
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
