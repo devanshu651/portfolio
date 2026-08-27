@@ -257,10 +257,42 @@ export default function Home() {
               I don&apos;t just study AI — I build with it.
             </p>
             <p>
-              I&apos;m Devanshu, a second-year B.Tech student in Computer Science (AI/ML) at P.R. Pote Patil College of Engineering &amp; Management. I&apos;ve completed four virtual internships with globally recognized organizations — HPE, AWS, Deloitte, and Tata Group — gaining real, hands-on experience across software engineering, cloud architecture, data analytics, and GenAI.
+              I&apos;m Devanshu — a builder first, student second. While most of my coursework is still ahead of me, my shipped work isn&apos;t: SafeRide is a live safety app (Flutter + Firebase) built from scratch, and PromptLab Pro is my own platform for evaluating LLM prompts against measurable metrics, not gut feel.
             </p>
             <p>
-              I know Python, C, Java, R, and Flutter, and I&apos;ve shipped a real product: SafeRide, a mobile safety app built with Flutter and Firebase. I also run PromptLab Pro, where I explore prompt engineering and AI-powered tools.
+              I work across Python, C, Java, R, and Flutter, moving from computer-vision systems like CampusEye AI to responsive Next.js frontends — I&apos;d rather ship something rough and iterate than perfect something in theory.
+            </p>
+            <p>
+              That build-first instinct is backed by four job simulations — AWS solutions architecture, GenAI-powered analytics at Tata Group, data analytics at Deloitte, and software engineering at HPE — that shaped how I think about production-grade systems, not just class projects.
+            </p>
+            
+            <div className="pt-2">
+              <h3 className="text-white font-semibold text-xl mb-3">Experience</h3>
+              <div className="space-y-1">
+                <p className="text-zinc-200 font-medium">Full Stack Developer Intern — Codec Technologies India <span className="text-zinc-500 font-normal text-sm ml-2">(Full-time &middot; Hybrid)</span></p>
+                <p className="text-sm text-emerald-400 font-mono mb-2">Aug 2026 &ndash; Present</p>
+                <p className="text-base text-zinc-400">
+                  Contributing to full-stack development as part of an industry-oriented internship — currently building a blog website — while applying practices like debugging, testing, and version control alongside a project team.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <h3 className="text-white font-semibold text-xl mb-3">Leading Beyond the Code</h3>
+              <ul className="space-y-3 list-none text-base">
+                <li className="flex items-start">
+                  <span className="text-emerald-500 mr-3 mt-1.5 leading-none">&bull;</span>
+                  <span>I&apos;ve led 3 national-level hackathon teams — finalists in 2, and cleared 2 rounds in the third.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-emerald-500 mr-3 mt-1.5 leading-none">&bull;</span>
+                  <span>I&apos;m also leading an 11-member team for my Semester III Community Engagement Project, and a Member of the AWS Student Builder Group at PRPCEM (Jul 2026–Present).</span>
+                </li>
+              </ul>
+            </div>
+
+            <p className="pt-2 text-zinc-300 font-medium italic">
+              Currently looking for internships and collaborations — if you&apos;re building something interesting, let&apos;s talk.
             </p>
           </div>
 
