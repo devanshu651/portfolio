@@ -13,6 +13,7 @@ export default function Navbar() {
     { href: "/#about", id: "about", label: "About" },
     { href: "/#projects", id: "projects", label: "Projects" },
     { href: "/#skills", id: "skills", label: "Skills" },
+    { href: "/#certifications", id: "certifications", label: "Certifications" },
     { href: "/cv.html", id: "resume", label: "Resume", external: true },
     { href: "/#contact", id: "contact", label: "Contact" },
   ];
@@ -24,7 +25,7 @@ export default function Navbar() {
       return;
     }
 
-    const sections = ["home", "about", "projects", "skills", "contact"];
+    const sections = ["home", "about", "projects", "skills", "certifications", "contact"];
     
     // Set active section based on current hash when page first loads
     const currentHash = window.location.hash.replace("#", "");

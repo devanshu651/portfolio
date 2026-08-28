@@ -44,9 +44,9 @@ export default function Certifications() {
         </svg>
       ),
       certificates: [
-        { title: "Solutions Architecture Job Simulation", issuer: "AWS (via Forage)", period: "September 2025", file: "/certificates/AWS_solution_Ar.jpg" },
-        { title: "Data Analytics Job Simulation", issuer: "Deloitte (via Forage)", period: "August 2025", file: "/certificates/deloitte_forage.jpg" },
-        { title: "GenAI Powered Data Analytics Job Simulation", issuer: "Tata Group (via Forage)", period: "August 2025", file: "/certificates/tata_genai_forage.jpg" },
+        { title: "Solutions Architecture Job Simulation", issuer: "AWS (via Forage)", period: "September 2025", file: "/certificates/AWS.jpg" },
+        { title: "Data Analytics Job Simulation", issuer: "Deloitte (via Forage)", period: "August 2025", file: "/certificates/DATAANLAYAST.jpg" },
+        { title: "GenAI Powered Data Analytics Job Simulation", issuer: "Tata Group (via Forage)", period: "August 2025", file: "/certificates/GENAI.jpg" },
         { title: "Software Engineering Job Simulation", issuer: "Hewlett Packard Enterprise (via Forage)", period: "October 2025", file: "/certificates/HEP.jpg" },
       ],
     },
@@ -58,8 +58,10 @@ export default function Certifications() {
         </svg>
       ),
       certificates: [
-        { title: "Employability Skill Job Ready Virtual Internship", issuer: "EduSkills Academy (Supported by Wadhwani Foundation)", period: "October–December 2025", details: "10-week program", file: "/certificates/Eduskill_Employ.jpg" },
-        { title: "Java Full Stack Development With Project — Virtual Internship", issuer: "EduSkills Academy", period: "April–June 2026", details: "8-week program", file: "/certificates/Eduskill_Javafull_Stack.jpg" },
+        { title: "Employability Skill Job Ready Virtual Internship", issuer: "EduSkills Academy (Supported by Wadhwani Foundation)", period: "October–December 2025", details: "10-week program", file: "/certificates/employeebilityskill.jpg" },
+        { title: "Java Full Stack Development With Project — Virtual Internship", issuer: "EduSkills Academy", period: "April–June 2026", details: "8-week program", file: "/certificates/javafullstack.jpg" },
+        { title: "Prompt Engineering for AI Virtual Internship", issuer: "EduSkills Academy", period: "", details: "", file: "/certificates/Prompt Engineering for AI Virtual Internship.pdf" },
+        { title: "Python Full Stack Development With Project Virtual Internship", issuer: "EduSkills Academy", period: "", details: "", file: "/certificates/Python Full Stack Development With Project Virtual Internship.pdf" },
       ],
     },
     {
@@ -70,9 +72,9 @@ export default function Certifications() {
         </svg>
       ),
       certificates: [
-        { title: "Java Training", issuer: "IIT Bombay (EduPyramids, SINE)", period: "June 2026", details: "Score: 95%, Credits: 4, Credential ID: 4779071I9Y", file: "/certificates/IIT.htm" },
+        { title: "Java Training", issuer: "IIT Bombay (EduPyramids, SINE)", period: "June 2026", details: "Score: 95%, Credits: 4, Credential ID: 4779071I9Y", file: "/certificates/java-traning.jpg" },
         { title: "Cybersecurity Awareness Quiz", issuer: "", period: "", details: "", file: "/certificates/DEVANSHU-RAUT-Participant-Certificate.pdf" },
-        { title: "R Programming Bootcamp for Absolute Beginners (2025)", issuer: "Udemy", period: "2025", details: "", file: "/certificates/Udemey_R_lan.jpg" },
+        { title: "R Programming Bootcamp for Absolute Beginners (2025)", issuer: "Udemy", period: "2025", details: "", file: "/certificates/R-PROGRAMING.jpg" },
       ],
     },
     {
@@ -83,10 +85,16 @@ export default function Certifications() {
         </svg>
       ),
       certificates: [
-        { title: "Introduction to MS Excel", issuer: "Microsoft", period: "August 2025", details: "", file: "/certificates/mirosoft_msexcel.jpg" },
-        { title: "AI Skills Passport", issuer: "EY & Microsoft", period: "", details: "", file: "/certificates/MS-Skill_ai.jpg" },
-        { title: "Data Analytics — Certificate of Achievement", issuer: "OneRoadmap", period: "", details: "", file: "/certificates/oneroad_data_ana.jpg" },
-        { title: "Supply Chain Operations Academy (S.C.O.A) — Data Entry", issuer: "Flipkart", period: "", details: "", file: "/certificates/flipcard_data_entry.jpg" },
+        { title: "Introduction to MS Excel", issuer: "Microsoft", period: "August 2025", details: "", file: "/certificates/ms-EXCEL.jpg" },
+        { title: "AI Skills Passport", issuer: "EY & Microsoft", period: "", details: "", file: "/certificates/MS-AIskill.jpg" },
+        { title: "Data Analytics — Certificate of Achievement", issuer: "OneRoadmap", period: "", details: "", file: "/certificates/Oneroad.jpg" },
+        { title: "Supply Chain Operations Academy (S.C.O.A) — Data Entry", issuer: "Flipkart", period: "", details: "", file: "/certificates/FLIPCARD.jpg" },
+        { title: "Acquiring Data", issuer: "", period: "", details: "", file: "/certificates/Acquringdata.jpg" },
+        { title: "Microsoft Learn Achievement (wv26jqtn)", issuer: "Microsoft Learn", period: "", details: "Online Badge", file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
+        { title: "Microsoft Learn Achievement (9rytp8wu)", issuer: "Microsoft Learn", period: "", details: "Online Badge", file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/9rytp8wu?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
+        { title: "Microsoft Learn Achievement (wv26jqtn) - 2", issuer: "Microsoft Learn", period: "", details: "Online Badge", file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
+        { title: "Microsoft Learn Achievement (wv26jqtn) - 3", issuer: "Microsoft Learn", period: "", details: "Online Badge", file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
+        { title: "AI Attendee", issuer: "Global AI Community", period: "", details: "Online Badge", file: "https://globalai.community/badges/1c9afae3-7e6c-4b7b-9c1a-b35ad269355c/" },
       ],
     },
   ];
@@ -146,7 +154,13 @@ export default function Certifications() {
                       </div>
 
                       <button
-                        onClick={() => setSelectedCert(cert)}
+                        onClick={() => {
+                          if (cert.file.startsWith("http")) {
+                            window.open(cert.file, "_blank", "noopener,noreferrer");
+                          } else {
+                            setSelectedCert(cert);
+                          }
+                        }}
                         className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-white/[0.05] hover:bg-white/[0.1] text-xs font-medium text-zinc-300 hover:text-white transition-all border border-transparent hover:border-white/10 active:scale-95"
                       >
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
