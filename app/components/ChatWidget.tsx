@@ -1,43 +1,33 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
+  time?: string;
 };
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Yo, I'm Devanshu 👋 Feel free to ask me anything about my projects, skills, or what I like to do!" }
+    {
+      role: "assistant",
+      content:
+        "Yo, I'm Devanshu's digital twin. Ask me anything about my projects (SafeRide, PromptLab, CampusEye), internships, philosophy, or background.",
+      time: "NOW",
+    },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showGreeting, setShowGreeting] = useState(false);
-  
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    const hasShown = sessionStorage.getItem("chat_greeting_shown");
-    if (!hasShown) {
-      const showTimer = setTimeout(() => {
-        setShowGreeting(true);
-        sessionStorage.setItem("chat_greeting_shown", "true");
-      }, 1500);
-
-      const dismissTimer = setTimeout(() => {
-        setShowGreeting(false);
-      }, 7500); // 1.5s + 6s
-
-      return () => {
-        clearTimeout(showTimer);
-        clearTimeout(dismissTimer);
-      };
-    }
-  }, []);
-
+  // Auto-scroll messages
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -46,255 +36,298 @@ export default function ChatWidget() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isOpen]);
+  }, [messages, isLoading, isOpen]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputValue.trim() || isLoading) return;
+  // Focus management & Escape key listener
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
 
-    const userMessage = inputValue.trim();
-    setInputValue("");
-    
-    // Add user message immediately
-    const newMessages: Message[] = [...messages, { role: "user", content: userMessage }];
-    setMessages(newMessages);
-    setIsLoading(true);
-    
-    // Add an empty assistant message to append chunks to
-    setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setIsOpen(false);
+          triggerRef.current?.focus();
+        }
 
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
+        // Trap focus inside dialog
+        if (e.key === "Tab" && panelRef.current) {
+          const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          if (focusable.length === 0) return;
+
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [isOpen]);
+
+  // Form submit handler with Groq SSE streaming logic intact
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!inputValue.trim() || isLoading) return;
+
+      const userMessage = inputValue.trim();
+      setInputValue("");
+
+      const currentTime = new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
       });
 
-      if (!response.ok) {
-        throw new Error("API response not ok");
-      }
+      // Add user message immediately
+      const newMessages: Message[] = [
+        ...messages,
+        { role: "user", content: userMessage, time: currentTime },
+      ];
+      setMessages(newMessages);
+      setIsLoading(true);
 
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder("utf-8");
-      
-      if (!reader) {
-        throw new Error("No reader available");
-      }
+      // Add empty assistant message to append streaming chunks to
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "", time: currentTime },
+      ]);
 
-      let buffer = "";
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: newMessages.map(({ role, content }) => ({ role, content })),
+          }),
+        });
 
-        // Decode the chunk, stream: true ensures characters aren't split across chunks
-        const chunkText = decoder.decode(value, { stream: true });
-        buffer += chunkText;
+        if (!response.ok) {
+          throw new Error("API response not ok");
+        }
 
-        const lines = buffer.split("\n\n");
-        // Keep the last partial line in the buffer
-        buffer = lines.pop() || "";
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder("utf-8");
 
-        for (const line of lines) {
-          if (line.trim() === "") continue;
-          
-          if (line.startsWith("data: ")) {
-            const dataStr = line.replace("data: ", "").trim();
-            if (dataStr === "[DONE]") {
-              continue;
-            }
-            try {
-              const data = JSON.parse(dataStr);
-              const delta = data.choices?.[0]?.delta;
-              
-              if (delta?.content) {
-                const newContent = delta.content;
-                setMessages((prev) => {
-                  const updated = [...prev];
-                  const lastIndex = updated.length - 1;
-                  updated[lastIndex] = {
-                    ...updated[lastIndex],
-                    content: updated[lastIndex].content + newContent
-                  };
-                  return updated;
-                });
+        if (!reader) {
+          throw new Error("No reader available");
+        }
+
+        let buffer = "";
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunkText = decoder.decode(value, { stream: true });
+          buffer += chunkText;
+
+          const lines = buffer.split("\n\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            if (line.trim() === "") continue;
+
+            if (line.startsWith("data: ")) {
+              const dataStr = line.replace("data: ", "").trim();
+              if (dataStr === "[DONE]") {
+                continue;
               }
-              // We explicitly ignore any delta.reasoning fields here
-            } catch (err) {
-              console.warn("Failed to parse SSE data line", err);
+              try {
+                const data = JSON.parse(dataStr);
+                const delta = data.choices?.[0]?.delta;
+
+                if (delta?.content) {
+                  const newContent = delta.content;
+                  setMessages((prev) => {
+                    const updated = [...prev];
+                    const lastIndex = updated.length - 1;
+                    updated[lastIndex] = {
+                      ...updated[lastIndex],
+                      content: updated[lastIndex].content + newContent,
+                    };
+                    return updated;
+                  });
+                }
+              } catch (err) {
+                console.warn("Failed to parse SSE data line", err);
+              }
             }
           }
         }
+      } catch (error) {
+        console.error("Chat error:", error);
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            role: "assistant",
+            content: "Oops! Connection dropped. Feel free to try again or email me at rautdevanshu24@gmail.com.",
+            time: currentTime,
+          };
+          return updated;
+        });
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("Chat error:", error);
-      setMessages((prev) => {
-        const updated = [...prev];
-        // Replace the last empty assistant message with error state
-        updated[updated.length - 1] = { 
-          role: "assistant", 
-          content: "Oops! Connection dropped. Feel free to try again in a sec." 
-        };
-        return updated;
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [inputValue, isLoading, messages]
+  );
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className="fixed bottom-6 right-6 z-[90] flex flex-col items-end">
+      {/* EXPANDABLE CHAT PANEL */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Chat with AI Devanshu"
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-4 w-[340px] h-[450px] sm:w-[380px] sm:h-[500px] flex flex-col rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-2xl overflow-hidden"
+            exit={{ opacity: 0, y: 20, scale: 0.96 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-x-0 bottom-0 sm:inset-auto sm:right-6 sm:bottom-6 w-full sm:w-[420px] h-[85vh] sm:h-[560px] flex flex-col border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden z-[100]"
           >
-            {/* Header */}
-            <div className="bg-[#121212] border-b border-white/10 p-4 flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                <h3 className="text-[#f4f1ea] font-medium tracking-wide text-sm">Chat with me</h3>
-              </div>
-              <button 
-                onClick={() => setIsOpen(false)}
-                className="text-zinc-500 hover:text-[#f4f1ea] transition-colors p-1"
-                aria-label="Close chat"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-              </button>
-            </div>
+            {/* Corner Registration Stamps */}
+            <span className="absolute top-1 left-1 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
+            <span className="absolute top-1 right-1 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
 
-            {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${
-                    msg.role === "user" 
-                      ? "bg-white/10 text-white rounded-br-sm" 
-                      : "bg-[#161616] border border-white/5 text-zinc-300 rounded-bl-sm"
-                  }`}>
+            {/* Panel Header */}
+            <header className="p-4 sm:p-5 border-b border-[var(--ink)]/15 bg-[var(--paper)] flex items-center justify-between shrink-0">
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2 font-mono text-[10px] uppercase text-[var(--muted)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+                  <span>ONLINE · BOT DIALOGUE</span>
+                </div>
+                <h3 className="font-serif text-2xl text-[var(--ink)] font-normal leading-none pt-1">
+                  AI Devanshu
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  triggerRef.current?.focus();
+                }}
+                className="font-mono text-xs uppercase px-2.5 py-1.5 border border-[var(--ink)]/20 text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus:outline-none transition-colors"
+                aria-label="Close chat window (Escape)"
+              >
+                ✕ ESC
+              </button>
+            </header>
+
+            {/* Messages Scroll Area */}
+            <div
+              tabIndex={0}
+              aria-label="Chat conversation history"
+              className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-5 focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus:outline-none scroll-smooth"
+            >
+              {messages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={`flex flex-col ${
+                    msg.role === "user" ? "items-end" : "items-start"
+                  }`}
+                >
+                  {/* Timestamp & Role */}
+                  <div className="font-mono text-[10px] uppercase text-[var(--muted)] mb-1 px-1">
+                    {msg.role === "user" ? "YOU" : "DEVANSHU"} {msg.time ? `· ${msg.time}` : ""}
+                  </div>
+
+                  {/* Message Bubble */}
+                  <div
+                    className={`max-w-[88%] p-3.5 sm:p-4 text-sm leading-relaxed font-sans whitespace-pre-wrap ${
+                      msg.role === "user"
+                        ? "bg-[var(--ink)] text-[var(--paper)]"
+                        : "border border-[var(--ink)]/15 bg-[var(--paper)] text-[var(--ink)]"
+                    }`}
+                  >
                     {msg.content}
                   </div>
                 </div>
               ))}
-              {isLoading && messages[messages.length - 1].role === "user" && (
-                <div className="flex justify-start">
-                  <div className="bg-[#161616] border border-white/5 rounded-2xl rounded-bl-sm px-4 py-3 flex gap-1 items-center">
-                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce"></span>
+
+              {/* Typing indicator: three bouncing ink dots */}
+              {isLoading && messages[messages.length - 1]?.role === "user" && (
+                <div className="flex flex-col items-start">
+                  <span className="font-mono text-[10px] uppercase text-[var(--muted)] mb-1 px-1">
+                    DEVANSHU IS TYPING
+                  </span>
+                  <div className="border border-[var(--ink)]/15 bg-[var(--paper)] p-3 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 bg-[var(--ink)] rounded-full animate-bounce [animation-delay:-0.3s]" />
+                    <span className="w-1.5 h-1.5 bg-[var(--ink)] rounded-full animate-bounce [animation-delay:-0.15s]" />
+                    <span className="w-1.5 h-1.5 bg-[var(--ink)] rounded-full animate-bounce" />
                   </div>
                 </div>
               )}
+
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area */}
-            <div className="p-3 border-t border-white/10 bg-[#0a0a0a] shrink-0">
+            {/* Input & Form Area */}
+            <footer className="p-3 sm:p-4 border-t border-[var(--ink)]/15 bg-[var(--paper)] shrink-0">
               <form onSubmit={handleSubmit} className="flex gap-2">
                 <input
+                  ref={inputRef}
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Ask me anything..."
+                  placeholder="Ask about projects, hackathons, skills..."
                   disabled={isLoading}
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-white/20 transition-all disabled:opacity-50"
+                  className="flex-1 bg-[var(--paper)] border border-[var(--ink)]/20 px-3.5 py-2.5 text-xs sm:text-sm font-mono text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] disabled:opacity-50 transition-colors"
+                  aria-label="Your message to AI Devanshu"
                 />
+
                 <button
                   type="submit"
                   disabled={!inputValue.trim() || isLoading}
-                  className="bg-white/10 hover:bg-white/20 disabled:bg-white/5 disabled:text-zinc-600 text-white rounded-xl px-4 py-2 flex items-center justify-center transition-all"
+                  data-cursor="SEND"
+                  className="bg-[var(--ink)] text-[var(--paper)] px-4 py-2.5 font-mono text-xs uppercase tracking-wider hover:bg-[var(--accent)] disabled:opacity-40 disabled:hover:bg-[var(--ink)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus:outline-none transition-colors shrink-0"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                  </svg>
+                  SEND ↗
                 </button>
               </form>
-            </div>
+            </footer>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Greeting Popup */}
+      {/* FLOATING TRIGGER PILL */}
       <AnimatePresence>
-        {showGreeting && !isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.9 }}
-            className="mb-2 flex items-center gap-3 z-40 w-max max-w-[calc(100vw-2rem)]"
-          >
-            {/* Speech Bubble */}
-            <div 
-              className="relative bg-zinc-900 border border-white/10 rounded-2xl p-3.5 pr-8 shadow-2xl cursor-pointer hover:bg-zinc-800 transition-colors"
-              onClick={() => { setIsOpen(true); setShowGreeting(false); }}
-            >
-              <p className="text-sm text-zinc-200">
-                Hi! 👋 Ask me anything about myself
-              </p>
-              {/* Tail */}
-              <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-zinc-900 border-t border-r border-white/10 transform rotate-45" />
-              
-              {/* Close Button */}
-              <button 
-                onClick={(e) => { e.stopPropagation(); setShowGreeting(false); }}
-                className="absolute top-2 right-2 p-1 text-zinc-500 hover:text-white transition-colors"
-                aria-label="Dismiss greeting"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </button>
-            </div>
-
-            {/* Avatar */}
-            <div 
-              className="relative shrink-0 cursor-pointer"
-              onClick={() => { setIsOpen(true); setShowGreeting(false); }}
-            >
-              {/* Glowing ring */}
-              <div className="absolute inset-0 rounded-full bg-amber-400/40 blur-md animate-pulse" />
-              {/* Avatar container */}
-              <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-amber-400 bg-zinc-900 overflow-hidden shadow-[0_0_15px_rgba(251,191,36,0.3)]">
-                <img src="/chat-logo.png" alt="Chatbot Logo" className="w-full h-full object-cover" />
-              </div>
-              {/* Waving Emoji */}
-              <motion.div 
-                className="absolute -top-3 -right-2 text-xl sm:text-2xl origin-[70%_70%]"
-                animate={{ rotate: [0, -15, 15, -15, 15, 0] }}
-                transition={{ duration: 1.5, repeat: 2, repeatDelay: 1, ease: "easeInOut" }}
-              >
-                👋
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Floating Toggle Button */}
-      <AnimatePresence>
-        {(!showGreeting || isOpen) && (
+        {!isOpen && (
           <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            onClick={() => setIsOpen(!isOpen)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-amber-400 bg-zinc-900 shadow-[0_0_15px_rgba(251,191,36,0.3)] flex items-center justify-center overflow-hidden transition-colors"
-            aria-label="Toggle chat"
+            ref={triggerRef}
+            type="button"
+            onClick={() => setIsOpen(true)}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 15 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            data-cursor="CHAT"
+            className="group flex items-center gap-3 border border-[var(--ink)]/25 bg-[var(--paper)] px-5 py-3 shadow-xl hover:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus:outline-none transition-all duration-200"
+            aria-expanded={isOpen}
+            aria-label="Open AI Devanshu chat assistant"
           >
-            {isOpen ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f4f1ea" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6L6 18M6 6l12 12"/>
-              </svg>
-            ) : (
-              <img src="/chat-logo.png" alt="Chatbot Logo" className="w-full h-full object-cover" />
-            )}
+            <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-widest text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors">
+              ASK DEVANSHU&apos;S BOT ↗
+            </span>
           </motion.button>
         )}
       </AnimatePresence>
