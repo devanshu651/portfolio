@@ -3,7 +3,7 @@
 export default function GrainOverlay() {
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-40 h-full w-full overflow-hidden opacity-[0.055]"
+      className="pointer-events-none fixed inset-0 z-40 h-full w-full overflow-hidden opacity-[0.045] transition-opacity duration-300 dark-section:opacity-[0.03]"
       aria-hidden="true"
     >
       <div className="absolute -inset-[100%] w-[300%] h-[300%] animate-film-grain bg-repeat">

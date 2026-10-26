@@ -20,16 +20,10 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
-    if (pathname !== "/") {
-      setActiveSection("");
-      return;
-    }
+    if (pathname !== "/") return;
 
     const sections = ["home", "about", "projects", "skills", "certifications", "contact"];
     const currentHash = window.location.hash.replace("#", "");
-    if (sections.includes(currentHash)) {
-      setActiveSection(currentHash);
-    }
 
     const observers = sections.map((id) => {
       const el = document.getElementById(id);

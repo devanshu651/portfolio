@@ -4,6 +4,9 @@ import PageWrapper from "./components/PageWrapper";
 import ScrollObserver from "./components/ScrollObserver";
 import ChatWidget from "./components/ChatWidget";
 import GrainOverlay from "./components/GrainOverlay";
+import SmoothScroll from "./components/SmoothScroll";
+import CustomCursor from "./components/CustomCursor";
+import Preloader from "./components/Preloader";
 import { Instrument_Serif, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import type { Metadata } from "next";
 
@@ -46,6 +49,15 @@ export default function RootLayout({
       className={`${instrumentSerif.variable} ${bricolage.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-[var(--paper)] text-[var(--ink)] font-sans antialiased min-h-screen relative selection:bg-[var(--accent)] selection:text-[var(--paper)]">
+        {/* Short Page Load Preloader (<1.5s, cached in sessionStorage) */}
+        <Preloader />
+
+        {/* Lenis Smooth Scroll Engine + Vermilion Progress Bar */}
+        <SmoothScroll />
+
+        {/* Dynamic Difference Cursor with Lerping & Hover Labels */}
+        <CustomCursor />
+
         {/* Subtle Animated Film Grain Overlay */}
         <GrainOverlay />
 
@@ -145,7 +157,7 @@ export default function RootLayout({
           </div>
         </footer>
 
-        {/* AI Chatbot Widget (styled to editorial palette in Phase 6) */}
+        {/* AI Chatbot Widget */}
         <ChatWidget />
       </body>
     </html>
