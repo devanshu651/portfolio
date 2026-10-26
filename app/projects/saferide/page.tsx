@@ -1,91 +1,143 @@
+import Link from "next/link";
+
 export default function SafeRide() {
   return (
-    <section className="max-w-4xl mx-auto px-6 pt-32 pb-24">
+    <article className="max-w-5xl mx-auto px-6 md:px-12 pt-16 pb-32">
+      {/* Back Link */}
+      <div className="mb-12">
+        <Link
+          href="/#projects"
+          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--muted)] hover:text-[var(--accent)] transition-colors link-sweep"
+        >
+          <span>←</span>
+          <span>RETURN TO REPOSITORY INDEX</span>
+        </Link>
+      </div>
 
-      {/* Title */}
-      <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-        SafeRide
-      </h1>
+      {/* Header */}
+      <header className="border-b border-[var(--ink)]/15 pb-10">
+        <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-3">
+          <span className="text-[var(--accent)] font-semibold">§ PLATE 01</span>
+          <span>·</span>
+          <span>TRAVEL SAFETY &amp; SOS SYSTEM</span>
+          <span>·</span>
+          <span>RISING INDIA HACKATHON 1.0</span>
+        </div>
 
-      {/* Subtitle */}
-      <p className="mt-4 text-lg text-zinc-400">
-        Driver Behavior Risk Analyzer – A comprehensive travel safety application for late-night and long-distance travel.
-      </p>
+        <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-[var(--ink)] leading-[0.95]">
+          SafeRide
+        </h1>
 
-      {/* Hero Image */}
-      <div className="mt-16 flex justify-center">
-        <div className="max-w-[320px] rounded-[2rem] border border-white/10 bg-zinc-900/50 p-2 shadow-2xl shadow-blue-500/10 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-blue-500/20">
-          <img
-            src="/saferide-ui.png"
-            alt="SafeRide UI"
-            className="rounded-[1.5rem] w-full border border-white/5"
-          />
+        <p className="mt-6 text-lg sm:text-xl text-[var(--ink)]/80 leading-relaxed font-sans max-w-3xl font-light">
+          Driver Behavior Risk Analyzer – A comprehensive travel safety application for late-night and long-distance travel.
+        </p>
+      </header>
+
+      {/* Visual Artifact Presentation */}
+      <div className="my-14 flex justify-center">
+        <div className="relative max-w-md w-full border border-[var(--ink)]/20 bg-[var(--paper)] p-3 shadow-2xl">
+          <span className="absolute -top-1.5 -left-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
+          <span className="absolute -top-1.5 -right-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
+          <span className="absolute -bottom-1.5 -left-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
+          <span className="absolute -bottom-1.5 -right-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
+
+          <div className="relative overflow-hidden border border-[var(--ink)]/10 bg-[var(--ink)]/5">
+            <img
+              src="/saferide-ui.png"
+              alt="SafeRide UI Interface"
+              className="w-full h-auto object-contain filter contrast-105"
+            />
+          </div>
+
+          <div className="mt-2 pt-2 border-t border-[var(--ink)]/10 flex justify-between items-center font-mono text-[10px] uppercase text-[var(--muted)]">
+            <span>FIGURE 01.1 · INTERFACE OVERVIEW</span>
+            <span>FLUTTER / DART CLIENT</span>
+          </div>
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="mt-10 h-px bg-white/10" />
+      {/* Technical Dossier Content */}
+      <div className="space-y-12">
+        {/* Overview */}
+        <section className="space-y-4">
+          <h2 className="font-serif text-3xl text-[var(--ink)] font-normal">
+            System Overview
+          </h2>
+          <div className="space-y-4 text-base sm:text-lg text-[var(--ink)]/85 leading-relaxed font-sans font-light">
+            <p>
+              SafeRide was built during the Rising India Hackathon 1.0 (Team Nexus) to address the risks associated with late-night and long-distance travel. The platform combines ride-sharing functionality with real-time safety monitoring and emergency support systems.
+            </p>
+            <p>
+              The system evaluates ride safety using an AI Safety Score based on time, route, and driver history. Key features include a Smart SOS system, Guardian Mode for real-time tracking, and a visual Route Heatmap.
+            </p>
+          </div>
+        </section>
 
-      {/* Overview */}
-      <div className="mt-12 space-y-6 text-zinc-300 leading-relaxed">
-        <p>
-          SafeRide was built during the Rising India Hackathon 1.0 (Team Nexus) to address the risks associated with late-night and long-distance travel. The platform combines ride-sharing functionality with real-time safety monitoring and emergency support systems.
-        </p>
+        {/* Key Features */}
+        <section className="pt-8 border-t border-[var(--ink)]/15">
+          <h2 className="font-serif text-3xl text-[var(--ink)] font-normal mb-6">
+            Key Architecture &amp; Features
+          </h2>
 
-        <p>
-          The system evaluates ride safety using an AI Safety Score based on time, route, and driver history. Key features include a Smart SOS system, Guardian Mode for real-time tracking, and a visual Route Heatmap.
-        </p>
-      </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[
+              { title: "Ride Sharing System", desc: "Post or find rides based on route and schedule." },
+              { title: "AI Safety Score", desc: "Evaluates ride safety on a 0-100 scale based on dynamic factors." },
+              { title: "Smart SOS", desc: "One-tap emergency alert sending live location to contacts." },
+              { title: "Guardian Mode", desc: "Real-time tracking access for family members." },
+              { title: "Route Heatmap", desc: "Visual safety indicators (Green, Orange, Red) mapping risk levels." },
+            ].map((f, i) => (
+              <div key={i} className="p-5 border border-[var(--ink)]/15 bg-[var(--paper)]">
+                <span className="font-mono text-xs text-[var(--accent)] block mb-1">§ 0{i + 1}</span>
+                <h3 className="font-serif text-xl text-[var(--ink)] font-normal mb-1">{f.title}</h3>
+                <p className="font-sans text-sm text-[var(--muted)]">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-      {/* Features */}
-      <div className="mt-14">
-        <h3 className="text-sm uppercase tracking-widest text-zinc-500">
-          Key Features
-        </h3>
+        {/* Technologies Used */}
+        <section className="pt-8 border-t border-[var(--ink)]/15">
+          <h2 className="font-serif text-3xl text-[var(--ink)] font-normal mb-6">
+            Technologies Used
+          </h2>
 
-        <ul className="mt-4 space-y-3 text-zinc-300 list-disc list-inside">
-          <li><strong className="text-white">Ride Sharing System:</strong> Post or find rides based on route and schedule.</li>
-          <li><strong className="text-white">AI Safety Score:</strong> Evaluates ride safety on a 0-100 scale based on dynamic factors.</li>
-          <li><strong className="text-white">Smart SOS:</strong> One-tap emergency alert sending live location to contacts.</li>
-          <li><strong className="text-white">Guardian Mode:</strong> Real-time tracking access for family members.</li>
-          <li><strong className="text-white">Route Heatmap:</strong> Visual safety indicators (Green, Orange, Red) mapping risk levels.</li>
-        </ul>
-      </div>
+          <div className="flex flex-wrap gap-2.5">
+            {[
+              "Flutter",
+              "Node.js",
+              "Express",
+              "Firebase Firestore",
+              "Google Maps API",
+              "Python (AI Module)",
+              "Firebase Auth",
+              "Twilio",
+            ].map((tech) => (
+              <span
+                key={tech}
+                className="border border-[var(--ink)]/20 px-4 py-2 font-mono text-xs uppercase tracking-wider text-[var(--ink)] bg-[var(--paper)]"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </section>
 
-      {/* Technologies */}
-      <div className="mt-14">
-        <h3 className="text-sm uppercase tracking-widest text-zinc-500">
-          Technologies Used
-        </h3>
+        {/* Actions / Metadata */}
+        <div className="pt-10 border-t border-[var(--ink)]/15 flex flex-wrap items-center justify-between gap-4 font-mono text-xs uppercase tracking-wider">
+          <span className="border border-[var(--ink)]/20 px-4 py-2 text-[var(--muted)]">
+            HACKATHON PROJECT · TEAM NEXUS
+          </span>
 
-        <div className="mt-6 flex flex-wrap gap-3 text-sm text-zinc-400">
-          {[
-            "Flutter",
-            "Node.js",
-            "Express",
-            "Firebase Firestore",
-            "Google Maps API",
-            "Python (AI Module)",
-            "Firebase Auth",
-            "Twilio"
-          ].map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full border border-white/10 px-4 py-2 bg-white/[0.03] transition hover:border-white/30 hover:bg-white/[0.06]"
-            >
-              {tech}
-            </span>
-          ))}
+          <Link
+            href="/#projects"
+            className="inline-flex items-center gap-2 bg-[var(--ink)] text-[var(--paper)] px-6 py-3 hover:bg-[var(--accent)] transition-colors"
+          >
+            <span>BACK TO ALL PROJECTS</span>
+            <span>→</span>
+          </Link>
         </div>
       </div>
-
-      {/* Actions */}
-      <div className="mt-16 flex flex-wrap gap-4">
-        <span className="px-6 py-3 border border-white/20 text-zinc-400 rounded-md">
-          Hackathon Project
-        </span>
-      </div>
-
-    </section>
+    </article>
   );
 }

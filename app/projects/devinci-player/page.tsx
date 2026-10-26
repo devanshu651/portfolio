@@ -1,103 +1,133 @@
+import Link from "next/link";
+
 export default function DeVinciPlayer() {
   return (
-    <section className="max-w-4xl mx-auto px-6 pt-32 pb-24">
-
-      {/* Title */}
-      <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-        DeVinci Music Player
-      </h1>
-
-      {/* Subtitle */}
-      <p className="mt-4 text-lg text-zinc-400">
-        Minimalist Android music player built to eliminate streaming ads and
-        provide a clean, uninterrupted listening experience.
-      </p>
-      <div className="mt-16 flex justify-center">
-        <div className="max-w-[320px] rounded-[2rem] border border-white/10 bg-zinc-900/50 p-2 shadow-2xl shadow-yellow-500/10 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-yellow-500/20">
-          <img
-            src="/devinci-ui.jpg"
-            alt="DeVinci Music Player UI"
-            className="rounded-[1.5rem] w-full border border-white/5"
-          />
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div className="mt-10 h-px bg-white/10" />
-
-      {/* Overview */}
-      <div className="mt-12 space-y-6 text-zinc-300 leading-relaxed">
-        <p>
-          DeVinci is a premium-style Android music player designed around a
-          simple idea: music apps should focus on the music, not advertisements.
-          I built it to combine local playback with online streaming while
-          keeping the interface minimal and fast.
-        </p>
-
-        <p>
-          The app uses a modern Material 3 interface and a background playback
-          engine powered by Android Media3 (ExoPlayer). It supports local
-          library scanning, online track search, queue management, and smooth
-          background playback.
-        </p>
-      </div>
-
-      {/* Why I Built This */}
-      <div className="mt-14">
-        <h3 className="text-sm uppercase tracking-widest text-zinc-500">
-          Why I Built This
-        </h3>
-
-        <p className="mt-4 text-zinc-300 leading-relaxed">
-          I built DeVinci after getting frustrated with the constant ads and
-          restrictions in mainstream music apps. The goal was to create a
-          lightweight player that feels premium while still giving users full
-          control over their listening experience.
-        </p>
-      </div>
-
-      {/* Technologies */}
-      <div className="mt-14">
-        <h3 className="text-sm uppercase tracking-widest text-zinc-500">
-          Technologies Used
-        </h3>
-
-        <div className="mt-6 flex flex-wrap gap-3 text-sm text-zinc-400">
-          {[
-            "Kotlin",
-            "Android Studio",
-            "MVVM Architecture",
-            "Media3 (ExoPlayer)",
-            "Retrofit",
-            "OKHttp",
-            "Material 3",
-            "Glide",
-          ].map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full border border-white/10 px-4 py-2 bg-white/[0.03] transition hover:border-white/30 hover:bg-white/[0.06]"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Actions */}
-      <div className="mt-16 flex flex-wrap gap-4">
-        <a
-          href="https://github.com/devanshu651/DeVinci"
-          target="_blank"
-          className="px-6 py-3 bg-white text-black font-medium rounded-md transition-all duration-300 hover:scale-105 hover:bg-zinc-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] active:scale-95"
+    <article className="max-w-5xl mx-auto px-6 md:px-12 pt-16 pb-32">
+      {/* Back Link */}
+      <div className="mb-12">
+        <Link
+          href="/#projects"
+          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--muted)] hover:text-[var(--accent)] transition-colors link-sweep"
         >
-          View Code
-        </a>
-
-        <span className="px-6 py-3 border border-white/20 text-zinc-400 rounded-md">
-          Android App
-        </span>
+          <span>←</span>
+          <span>RETURN TO REPOSITORY INDEX</span>
+        </Link>
       </div>
 
-    </section>
+      {/* Header */}
+      <header className="border-b border-[var(--ink)]/15 pb-10">
+        <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-3">
+          <span className="text-[var(--accent)] font-semibold">§ PLATE 04</span>
+          <span>·</span>
+          <span>NATIVE ANDROID CLIENT &amp; MEDIA ENGINE</span>
+        </div>
+
+        <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-[var(--ink)] leading-[0.95]">
+          DeVinci Music Player
+        </h1>
+
+        <p className="mt-6 text-lg sm:text-xl text-[var(--ink)]/80 leading-relaxed font-sans max-w-3xl font-light">
+          Minimalist Android music player built to eliminate streaming ads and provide a clean, uninterrupted listening experience.
+        </p>
+      </header>
+
+      {/* Visual Artifact Presentation */}
+      <div className="my-14 flex justify-center">
+        <div className="relative max-w-sm w-full border border-[var(--ink)]/20 bg-[var(--paper)] p-3 shadow-2xl">
+          <span className="absolute -top-1.5 -left-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
+          <span className="absolute -top-1.5 -right-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
+          <span className="absolute -bottom-1.5 -left-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
+          <span className="absolute -bottom-1.5 -right-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
+
+          <div className="relative overflow-hidden border border-[var(--ink)]/10 bg-[var(--ink)]/5">
+            <img
+              src="/devinci-ui.png"
+              alt="DeVinci Music Player UI"
+              className="w-full h-auto object-contain filter contrast-105"
+            />
+          </div>
+
+          <div className="mt-2 pt-2 border-t border-[var(--ink)]/10 flex justify-between items-center font-mono text-[10px] uppercase text-[var(--muted)]">
+            <span>FIGURE 04.1 · MATERIAL 3 MOBILE UI</span>
+            <span>KOTLIN / ANDROID STUDIO</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Technical Dossier Content */}
+      <div className="space-y-12">
+        <section className="space-y-4">
+          <h2 className="font-serif text-3xl text-[var(--ink)] font-normal">
+            Overview
+          </h2>
+          <div className="space-y-4 text-base sm:text-lg text-[var(--ink)]/85 leading-relaxed font-sans font-light">
+            <p>
+              DeVinci is a premium-style Android music player designed around a simple idea: music apps should focus on the music, not advertisements. I built it to combine local playback with online streaming while keeping the interface minimal and fast.
+            </p>
+            <p>
+              The app uses a modern Material 3 interface and a background playback engine powered by Android Media3 (ExoPlayer). It supports local library scanning, online track search, queue management, and smooth background playback.
+            </p>
+          </div>
+        </section>
+
+        {/* Why I Built This */}
+        <section className="pt-8 border-t border-[var(--ink)]/15">
+          <h2 className="font-serif text-3xl text-[var(--ink)] font-normal mb-4">
+            Why I Built This
+          </h2>
+          <p className="text-base sm:text-lg text-[var(--ink)]/85 leading-relaxed font-sans font-light">
+            I built DeVinci after getting frustrated with the constant ads and restrictions in mainstream music apps. The goal was to create a lightweight player that feels premium while still giving users full control over their listening experience.
+          </p>
+        </section>
+
+        {/* Technologies Used */}
+        <section className="pt-8 border-t border-[var(--ink)]/15">
+          <h2 className="font-serif text-3xl text-[var(--ink)] font-normal mb-6">
+            Technologies Used
+          </h2>
+
+          <div className="flex flex-wrap gap-2.5">
+            {[
+              "Kotlin",
+              "Android Studio",
+              "MVVM Architecture",
+              "Media3 (ExoPlayer)",
+              "Retrofit",
+              "OKHttp",
+              "Material 3",
+              "Glide",
+            ].map((tech) => (
+              <span
+                key={tech}
+                className="border border-[var(--ink)]/20 px-4 py-2 font-mono text-xs uppercase tracking-wider text-[var(--ink)] bg-[var(--paper)]"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* Actions */}
+        <div className="pt-10 border-t border-[var(--ink)]/15 flex flex-wrap items-center justify-between gap-4 font-mono text-xs uppercase tracking-wider">
+          <a
+            href="https://github.com/devanshu651/DeVinci"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[var(--ink)] text-[var(--paper)] px-6 py-3 hover:bg-[var(--accent)] transition-colors"
+          >
+            <span>VIEW REPOSITORY SOURCE</span>
+            <span>↗</span>
+          </a>
+
+          <Link
+            href="/#projects"
+            className="inline-flex items-center gap-2 border border-[var(--ink)]/20 text-[var(--ink)] px-6 py-3 hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
+          >
+            <span>BACK TO ALL PROJECTS</span>
+            <span>→</span>
+          </Link>
+        </div>
+      </div>
+    </article>
   );
 }

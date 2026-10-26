@@ -1,45 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import HeroSection from "./components/HeroSection";
 import AboutSection from "./components/AboutSection";
 import TimelineSection from "./components/TimelineSection";
+import ProjectsSection from "./components/ProjectsSection";
 import Certifications from "./components/Certifications";
 
 export default function Home() {
-  const projects = [
-    {
-      title: "SafeRide",
-      description: "A comprehensive travel safety and ride-sharing application with real-time risk analysis.",
-      href: "/projects/saferide",
-      tags: ["Flutter", "Node.js", "AI"],
-    },
-    {
-      title: "CampusEye AI",
-      description: "Smart Face-ID based attendance system using real-time face recognition.",
-      href: "/projects/campuseye-ai",
-      tags: ["Computer Vision", "Python"],
-    },
-    {
-      title: "PromptLab Pro",
-      description: "Research-grade platform for evaluating LLM prompts with measurable metrics.",
-      href: "/projects/promptlab",
-      tags: ["LLMs", "Evaluation"],
-    },
-    {
-      title: "DeVinci Music Player",
-      description: "Minimalist Android music player with local and online playback.",
-      href: "/projects/devinci-player",
-      tags: ["Android", "Kotlin"],
-    },
-    {
-      title: "Personal Portfolio",
-      href: "/#home",
-      description: "A minimalist developer portfolio built with Next.js and Tailwind CSS.",
-      tags: ["Next.js", "Tailwind CSS"],
-    },
-  ];
-
   const skillCategories = [
     {
       title: "Languages",
@@ -124,54 +91,8 @@ export default function Home() {
       {/* 3. VERTICAL TIMELINE WITH DRAWING LINE ON SCROLL */}
       <TimelineSection />
 
-      {/* 4. PROJECTS SECTION */}
-      <section id="projects" className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15">
-        <div className="mb-14">
-          <span className="font-mono text-xs uppercase tracking-widest text-[var(--muted)] block mb-2">
-            § 04 — SELECTED WORK
-          </span>
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight text-[var(--ink)] font-normal mb-3">
-            Projects
-          </h2>
-          <p className="text-[var(--muted)] max-w-2xl text-base leading-relaxed font-sans">
-            Selected work focused on learning by building real, usable systems. Click any project to view detailed case studies, design choices, and code walkthroughs.
-          </p>
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, i) => (
-            <Link
-              key={project.title}
-              href={project.href}
-              className="group flex flex-col border border-[var(--ink)]/15 bg-[var(--paper)] p-6 hover:border-[var(--accent)] transition-colors"
-            >
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-[var(--ink)]/10">
-                <span className="font-mono text-[10px] text-[var(--muted)]">0{i + 1}</span>
-                <span className="font-mono text-xs text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors">
-                  VIEW ↗
-                </span>
-              </div>
-
-              <h3 className="font-serif text-2xl sm:text-3xl text-[var(--ink)] font-normal group-hover:text-[var(--accent)] transition-colors mb-3">
-                {project.title}
-              </h3>
-
-              <p className="text-[var(--muted)] text-sm leading-relaxed mb-6 flex-grow font-sans">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-[var(--ink)]/10">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="border border-[var(--ink)]/15 px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-[var(--muted)]">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* 4. PROJECTS: STICKY STACK SHOWCASE + CURSOR-LERPED INDEX LIST */}
+      <ProjectsSection />
 
       {/* 5. SKILLS SECTION */}
       <section id="skills" className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15">
