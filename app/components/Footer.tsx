@@ -107,10 +107,10 @@ export default function Footer() {
             <ul className="space-y-2 list-none p-0 m-0 uppercase">
               <li>
                 <a
-                  href="mailto:rautdevanshu24@gmail.com"
+                  href="mailto:devanshuraut.in@gmail.com"
                   className="link-sweep text-[var(--ink)] hover:text-[var(--accent)]"
                 >
-                  RAUTDEVANSHU24@GMAIL.COM ↗
+                  DEVANSHURAUT.IN@GMAIL.COM ↗
                 </a>
               </li>
               <li>

@@ -214,7 +214,7 @@ export default function ChatWidget() {
           const updated = [...prev];
           updated[updated.length - 1] = {
             role: "assistant",
-            content: "Oops! Connection dropped. Feel free to try again or email me at rautdevanshu24@gmail.com.",
+            content: "Oops! Connection dropped. Feel free to try again or email me at devanshuraut.in@gmail.com.",
             time: currentTime,
           };
           return updated;

@@ -37,6 +37,7 @@ export default function ProjectsSection() {
         "Mobile-friendly Progressive Web App that helps Anganwadi workers screen children aged 0–6 for possible developmental concerns using age-based milestone questions, with screening history for follow-up.",
       href: "/projects/sparsh",
       tags: ["React 19", "FastAPI", "PWA", "Firebase Auth", "Cloud Firestore", "Tailwind CSS"],
+      imageSrc: "/sparsh-ui.png",
       stats: "11-Member Lead · Community Engagement",
     },
     {

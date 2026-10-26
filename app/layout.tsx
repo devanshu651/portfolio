@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     siteName: "Devanshu Raut Portfolio",
     images: [
       {
-        url: "/avatar.png",
+        url: "/avatar-try2.png",
         width: 800,
         height: 800,
         alt: "Devanshu Raut portrait",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: "Devanshu Raut — Systems, Machine Learning & Engineering",
     description:
       "Editorial portfolio of Devanshu Raut — AI & ML engineering student with 9+ projects, led 4 national-level hackathon teams (finalists in all 4), builder of SPARSH, SafeRide, and intelligent systems.",
-    images: ["/avatar.png"],
+    images: ["/avatar-try2.png"],
   },
   verification: {
     google: "JhwCV-hq0eo2TK-zBTTIYKctc6ff8z4bFoM-lqBEwNI",

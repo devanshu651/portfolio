@@ -290,7 +290,7 @@ export default function HeroSection() {
 
               <div className="relative w-full h-full overflow-hidden border border-[var(--ink)]/10">
                 <Image
-                  src="/avatar.png"
+                  src="/avatar-try2.png"
                   alt="Devanshu Raut Portrait"
                   fill
                   sizes="(max-width: 640px) 240px, 280px"

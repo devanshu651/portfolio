@@ -47,8 +47,8 @@ export default function ContactSection() {
     {
       label: "DIRECT DISPATCH",
       title: "Email",
-      value: "rautdevanshu24@gmail.com",
-      href: "mailto:rautdevanshu24@gmail.com",
+      value: "devanshuraut.in@gmail.com",
+      href: "mailto:devanshuraut.in@gmail.com",
       cta: "WRITE EMAIL ↗",
     },
     {
@@ -102,7 +102,7 @@ export default function ContactSection() {
           <div className="pt-8 pb-10 flex justify-center">
             <a
               ref={magneticCtaRef}
-              href="mailto:rautdevanshu24@gmail.com"
+              href="mailto:devanshuraut.in@gmail.com"
               data-cursor="EMAIL"
               className="inline-flex items-center gap-3 bg-[var(--ink)] text-[var(--paper)] px-10 py-5 font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-[var(--accent)] transition-colors shadow-xl will-change-transform"
             >

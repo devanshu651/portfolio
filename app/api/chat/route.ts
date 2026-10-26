@@ -91,7 +91,7 @@ VERIFIED FACTS ABOUT DEVANSHU RAUT:
   - Intelligence & AI: OpenCV, Machine Learning, LLM APIs, PromptLab evaluation
   - Tools: Android Studio, Git & GitHub, Docker, VS Code, Firebase Firestore
 - Contact Details:
-  - Email: rautdevanshu24@gmail.com
+  - Email: devanshuraut.in@gmail.com
   - LinkedIn: https://www.linkedin.com/in/devanshu-raut-641828331/
   - GitHub: https://github.com/devanshu651
   - Location: Amravati, Maharashtra, India
