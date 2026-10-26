@@ -1,22 +1,39 @@
 import "./globals.css";
 import Navbar from "./components/navbar";
 import PageWrapper from "./components/PageWrapper";
-import MouseBackground from "./components/MouseBackground";
 import ScrollObserver from "./components/ScrollObserver";
 import ChatWidget from "./components/ChatWidget";
-import { Syne, DM_Sans } from "next/font/google";
+import GrainOverlay from "./components/GrainOverlay";
+import { Instrument_Serif, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
+import type { Metadata } from "next";
 
-const syne = Syne({ 
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-syne",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-bricolage",
   display: "swap",
 });
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Devanshu Raut — Systems, Machine Learning & Engineering",
+  description: "Portfolio of Devanshu Raut — AI/ML engineering student, builder of SafeRide, CampusEye AI, PromptLab Pro, and DeVinci Player.",
+  verification: {
+    google: "JhwCV-hq0eo2TK-zBTTIYKctc6ff8z4bFoM-lqBEwNI",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -24,59 +41,113 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth dark">
-      <head>
-        <meta name="google-site-verification" content="JhwCV-hq0eo2TK-zBTTIYKctc6ff8z4bFoM-lqBEwNI" />
-      </head>
-      <body className={`${syne.variable} ${dmSans.variable} font-sans bg-[#050505] text-slate-50 antialiased relative min-h-screen selection:bg-white/20 selection:text-white`}>
-        
-        {/* Intersection Observer for scroll animations */}
+    <html
+      lang="en"
+      className={`${instrumentSerif.variable} ${bricolage.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="bg-[var(--paper)] text-[var(--ink)] font-sans antialiased min-h-screen relative selection:bg-[var(--accent)] selection:text-[var(--paper)]">
+        {/* Subtle Animated Film Grain Overlay */}
+        <GrainOverlay />
+
+        {/* Scroll observer for trigger reveals */}
         <ScrollObserver />
 
-        {/* Interactive Premium Background Elements */}
-        <MouseBackground />
-        
+        {/* Global Editorial Navbar */}
         <Navbar />
 
-  <main className="pt-24">
-  <PageWrapper>
-    {children}
-  </PageWrapper>
-</main>
+        {/* Main Content Shell */}
+        <main className="relative z-10 pt-20">
+          <PageWrapper>{children}</PageWrapper>
+        </main>
 
+        {/* Editorial Footer Shell */}
+        <footer className="relative z-10 border-t border-[var(--ink)]/15 mt-32 bg-[var(--paper)]">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-16">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start pb-16 border-b border-[var(--ink)]/10">
+              {/* Left Column: Huge serif wordmark & colophon */}
+              <div className="md:col-span-7">
+                <span className="font-mono text-xs uppercase tracking-widest text-[var(--muted)] block mb-3">
+                  § Vol. 01 — Portfolio &amp; Index
+                </span>
+                <h2 className="font-serif text-5xl sm:text-7xl lg:text-8xl tracking-tight text-[var(--ink)] font-normal leading-[0.9]">
+                  Devanshu Raut
+                </h2>
+                <p className="font-sans text-base text-[var(--muted)] mt-5 max-w-md leading-relaxed">
+                  Undergraduate in AI &amp; ML. Building real, production-ready software systems with a build-first ethos.
+                </p>
+              </div>
 
-  {/* Footer */}
-  <footer className="border-t border-white/10 mt-24 reveal">
-    <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between gap-6 text-sm text-zinc-400">
-      
-      <div>
-        <p className="text-white font-medium font-display tracking-wide">Devanshu</p>
-        <p className="mt-2 max-w-xs text-zinc-500">
-          Code. Learn. Ship. Repeat.
-        </p>
-      </div>
+              {/* Middle Column: Location & Live Status */}
+              <div className="md:col-span-2 space-y-3 font-mono text-xs">
+                <span className="text-[var(--muted)] block uppercase tracking-wider">
+                  Location
+                </span>
+                <p className="text-[var(--ink)]">Amravati, Maharashtra, IN</p>
+                <div className="inline-flex items-center gap-2 pt-2 text-[var(--ink)]">
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+                  <span>Open for roles</span>
+                </div>
+              </div>
 
-      <div className="flex gap-6">
-        <a href="https://github.com/devanshu651" target="_blank" className="hover:text-white transition-colors">
-          GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/devanshu-raut-641828331" target="_blank" className="hover:text-white transition-colors">
-          LinkedIn
-        </a>
-        <a href="mailto:rautdevanshu24@gmail.com" className="hover:text-white transition-colors">
-          Email
-        </a>
-      </div>
+              {/* Right Column: Links */}
+              <div className="md:col-span-3 space-y-3 font-mono text-xs">
+                <span className="text-[var(--muted)] block uppercase tracking-wider">
+                  Directory &amp; Socials
+                </span>
+                <ul className="space-y-2 list-none p-0 m-0">
+                  <li>
+                    <a
+                      href="https://github.com/devanshu651"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-sweep hover:text-[var(--accent)]"
+                    >
+                      GITHUB ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.linkedin.com/in/devanshu-raut-641828331/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-sweep hover:text-[var(--accent)]"
+                    >
+                      LINKEDIN ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="mailto:rautdevanshu24@gmail.com"
+                      className="link-sweep hover:text-[var(--accent)]"
+                    >
+                      RAUTDEVANSHU24@GMAIL.COM ↗
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/cv.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-sweep hover:text-[var(--accent)]"
+                    >
+                      CURRICULUM VITAE (PDF) ↗
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
 
-      <div>
-        © {new Date().getFullYear()} Devanshu
-      </div>
+            {/* Bottom Meta Row */}
+            <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[11px] text-[var(--muted)] uppercase tracking-wider">
+              <span>© {new Date().getFullYear()} Devanshu Raut · All rights reserved</span>
+              <span>Typeset in Instrument Serif &amp; Bricolage Grotesque</span>
+            </div>
+          </div>
+        </footer>
 
-    </div>
-  </footer>
-  <ChatWidget />
-</body>
-
+        {/* AI Chatbot Widget (styled to editorial palette in Phase 6) */}
+        <ChatWidget />
+      </body>
     </html>
   );
 }
