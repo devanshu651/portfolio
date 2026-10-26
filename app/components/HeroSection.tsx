@@ -207,7 +207,7 @@ export default function HeroSection() {
               ref={bioRef}
               className="mt-8 md:mt-10 max-w-2xl text-base sm:text-lg md:text-xl text-[var(--ink)]/85 leading-relaxed font-sans font-normal"
             >
-              AI &amp; ML engineering student with 5+ projects, 6+ industry simulations (Tata · Deloitte · AWS · HPE), and 10+ certifications including Microsoft and IIT Bombay — focused on building intelligent, full-stack systems.
+              AI &amp; ML engineering student with 9+ projects, 6+ industry simulations (Tata · Deloitte · AWS · HPE), and 10+ certifications including Microsoft and IIT Bombay — focused on building intelligent, full-stack systems.
             </p>
 
             {/* CTAs with Magnetic Button */}

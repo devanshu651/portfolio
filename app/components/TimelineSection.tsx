@@ -65,18 +65,18 @@ export default function TimelineSection() {
       period: "AUG 2026 — PRESENT",
       type: "Full-time · Hybrid",
       description:
-        "Contributing to full-stack web engineering as part of an industry-oriented internship. Currently engineering a modern blog platform while establishing rigorous practices in unit testing, systematic debugging, modular API design, and multi-developer Git version control.",
+        "Contributing to full-stack development as part of an industry-oriented internship — currently building a blog website — while applying practices like debugging, testing, and version control alongside a project team.",
       tags: ["Full-Stack", "Web Development", "Git & CI/CD", "Team Collaboration"],
     },
     {
       index: "02",
       category: "COMPETITIVE ENGINEERING",
       role: "Hackathon Team Lead",
-      organization: "3 National-Level Hackathons",
+      organization: "4 National-Level Hackathons",
       period: "2025 — 2026",
       type: "National Level",
       description:
-        "Spearheaded three cross-functional engineering teams in high-intensity national hackathons. Secured finalist positions in two competitions (including Rising India Hackathon 1.0 with SafeRide) and advanced past two rigorous elimination stages in the third.",
+        "Led 4 national-level hackathon teams, finalists in all 4 (including Rising India Hackathon 1.0 with SafeRide).",
       tags: ["Team Leadership", "Rapid Prototyping", "Pitching", "System Architecture"],
     },
     {

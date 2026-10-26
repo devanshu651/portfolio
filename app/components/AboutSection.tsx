@@ -65,7 +65,7 @@ export default function AboutSection() {
         });
       };
 
-      animateCount(stat1Ref.current, 5);
+      animateCount(stat1Ref.current, 9);
       animateCount(stat2Ref.current, 6);
       animateCount(stat3Ref.current, 10);
     }, sectionRef);
@@ -100,7 +100,7 @@ export default function AboutSection() {
             {/* Stat 1 */}
             <div className="space-y-1">
               <div className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[var(--ink)] font-normal leading-none tracking-tight">
-                <span ref={stat1Ref}>5</span>+
+                <span ref={stat1Ref}>9</span>+
               </div>
               <p className="font-mono text-[11px] uppercase tracking-wider text-[var(--muted)]">
                 Shipped Systems

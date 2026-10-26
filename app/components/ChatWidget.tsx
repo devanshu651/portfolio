@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 type Message = {
   role: "user" | "assistant";
@@ -9,13 +10,20 @@ type Message = {
   time?: string;
 };
 
+const TEASER_SESSION_KEY = "devanshu_chat_teaser_seen_v1";
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showTeaser, setShowTeaser] = useState(false);
+  const [isPulsing, setIsPulsing] = useState(true);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [logoError, setLogoError] = useState(false);
+
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       content:
-        "Yo, I'm Devanshu's digital twin. Ask me anything about my projects (SafeRide, PromptLab, CampusEye), internships, philosophy, or background.",
+        "Yo, I'm Devanshu's digital twin. Ask me anything about my projects (SPARSH, SafeRide, PromptLab, CampusEye), internships, philosophy, or background.",
       time: "NOW",
     },
   ]);
@@ -26,6 +34,41 @@ export default function ChatWidget() {
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+
+  // Check prefers-reduced-motion
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  // Subtle pulse on logo for the first 10 seconds only
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPulsing(false);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Teaser pop-up once per session after preloader ends (~2.5s on repeat visits)
+  // Never steals keyboard focus, never auto-opens full panel
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const seen = sessionStorage.getItem(TEASER_SESSION_KEY);
+    if (seen) return;
+
+    const preloaded = sessionStorage.getItem("devanshu_portfolio_preloaded_v1");
+    const delay = preloaded ? 2500 : 2000;
+
+    const timer = setTimeout(() => {
+      setShowTeaser(true);
+      sessionStorage.setItem(TEASER_SESSION_KEY, "true");
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Auto-scroll messages
   const scrollToBottom = () => {
@@ -79,13 +122,10 @@ export default function ChatWidget() {
     }
   }, [isOpen]);
 
-  // Form submit handler with Groq SSE streaming logic intact
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!inputValue.trim() || isLoading) return;
-
-      const userMessage = inputValue.trim();
+  // Reusable message sender maintaining Groq SSE streaming logic intact
+  const sendMessage = useCallback(
+    async (userMessage: string) => {
+      if (!userMessage.trim() || isLoading) return;
       setInputValue("");
 
       const currentTime = new Date().toLocaleTimeString([], {
@@ -183,11 +223,87 @@ export default function ChatWidget() {
         setIsLoading(false);
       }
     },
-    [inputValue, isLoading, messages]
+    [isLoading, messages]
   );
+
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!inputValue.trim() || isLoading) return;
+      sendMessage(inputValue.trim());
+    },
+    [inputValue, isLoading, sendMessage]
+  );
+
+  const handleChipClick = (question: string) => {
+    setShowTeaser(false);
+    setIsOpen(true);
+    sendMessage(question);
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-[90] flex flex-col items-end">
+      {/* POP-UP TEASER CARD (Above logo, once per session) */}
+      <AnimatePresence>
+        {showTeaser && !isOpen && (
+          <motion.div
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.95 }}
+            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.95 }}
+            transition={{ duration: prefersReducedMotion ? 0.2 : 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-3 w-[290px] sm:w-[320px] border border-[var(--ink)]/20 bg-[var(--paper)] p-4 shadow-2xl relative select-none"
+            role="region"
+            aria-label="AI Assistant Quick Inquiries"
+          >
+            {/* Registration crosshairs */}
+            <span className="absolute -top-1 -left-1 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
+            <span className="absolute -top-1 -right-1 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
+
+            {/* Header row */}
+            <div className="flex items-center justify-between pb-2 border-b border-[var(--ink)]/10 font-mono text-[10px] uppercase text-[var(--muted)]">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+                <span>AI TWIN · ONLINE</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowTeaser(false)}
+                className="font-mono text-xs px-1 text-[var(--muted)] hover:text-[var(--ink)] transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus:outline-none"
+                aria-label="Dismiss quick inquiries"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Serif line */}
+            <h4 className="font-serif text-lg sm:text-xl text-[var(--ink)] font-normal leading-snug my-2.5">
+              Ask my AI twin about my projects
+            </h4>
+
+            {/* 3 Question chips */}
+            <div className="space-y-1.5 pt-1">
+              {[
+                "What is SPARSH?",
+                "Tell me about your hackathons",
+                "Are you open to internships?",
+              ].map((chip) => (
+                <button
+                  key={chip}
+                  type="button"
+                  onClick={() => handleChipClick(chip)}
+                  className="w-full text-left font-mono text-[11px] border border-[var(--ink)]/15 px-3 py-1.5 bg-[var(--paper)] text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)] hover:bg-[var(--ink)]/[0.02] focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus:outline-none transition-all flex items-center justify-between group"
+                >
+                  <span className="truncate pr-2">{chip}</span>
+                  <span className="text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all text-xs">
+                    ↗
+                  </span>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* EXPANDABLE CHAT PANEL */}
       <AnimatePresence>
         {isOpen && (
@@ -196,9 +312,9 @@ export default function ChatWidget() {
             role="dialog"
             aria-modal="true"
             aria-label="Chat with AI Devanshu"
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.96 }}
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.96 }}
+            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-x-0 bottom-0 sm:inset-auto sm:right-6 sm:bottom-6 w-full sm:w-[420px] h-[85dvh] sm:h-[560px] flex flex-col border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden z-[100]"
           >
@@ -308,28 +424,67 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* FLOATING TRIGGER PILL */}
+      {/* FLOATING ROUND LOGO BUTTON TRIGGER */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
-            ref={triggerRef}
-            type="button"
-            onClick={() => setIsOpen(true)}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 15 }}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            data-cursor="CHAT"
-            className="group flex items-center gap-3 border border-[var(--ink)]/25 bg-[var(--paper)] px-5 py-3 shadow-xl hover:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus:outline-none transition-all duration-200"
-            aria-expanded={isOpen}
-            aria-label="Ask Devanshu's Bot — Open AI Chat Assistant"
-          >
-            <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
-            <span className="font-mono text-xs uppercase tracking-widest text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors">
-              ASK DEVANSHU&apos;S BOT ↗
+          <div className="relative group">
+            {/* Desktop Hover Tooltip */}
+            <span
+              role="tooltip"
+              className="pointer-events-none absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap bg-[var(--ink)] text-[var(--paper)] font-mono text-[11px] uppercase tracking-wider px-2.5 py-1 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block shadow-md z-10"
+            >
+              Ask Devanshu&apos;s bot
             </span>
-          </motion.button>
+
+            <motion.button
+              ref={triggerRef}
+              type="button"
+              onClick={() => {
+                setShowTeaser(false);
+                setIsOpen(true);
+              }}
+              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
+              animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+              exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
+              whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+              whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
+              data-cursor="CHAT"
+              className={`relative w-14 h-14 rounded-full border border-[var(--ink)]/25 bg-[var(--paper)] shadow-xl flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus:outline-none transition-shadow duration-300 ${
+                isPulsing
+                  ? "ring-2 ring-[var(--accent)]/50 shadow-[0_0_18px_rgba(235,59,0,0.3)]"
+                  : "hover:border-[var(--accent)] hover:shadow-2xl"
+              }`}
+              aria-expanded={isOpen}
+              aria-label="Ask Devanshu's bot"
+            >
+              {/* Logo / Monogram */}
+              <div className="relative w-11 h-11 rounded-full overflow-hidden flex items-center justify-center bg-[var(--paper)]">
+                {!logoError ? (
+                  <Image
+                    src="/chat-logo.png"
+                    alt="Devanshu's AI Bot"
+                    width={44}
+                    height={44}
+                    priority
+                    className="object-cover w-full h-full"
+                    onError={() => setLogoError(true)}
+                  />
+                ) : (
+                  <div className="w-full h-full rounded-full bg-[var(--ink)] text-[var(--paper)] flex items-center justify-center font-serif text-xl font-normal relative">
+                    D
+                    <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
+                  </div>
+                )}
+              </div>
+
+              {/* Status indicator dot with subtle pulse for first 10s */}
+              <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-[var(--accent)] border-2 border-[var(--paper)] flex items-center justify-center">
+                {isPulsing && (
+                  <span className="w-full h-full rounded-full bg-[var(--accent)] animate-ping opacity-75" />
+                )}
+              </span>
+            </motion.button>
+          </div>
         )}
       </AnimatePresence>
     </div>

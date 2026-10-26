@@ -18,7 +18,7 @@ export default function SafeRide() {
       {/* Header */}
       <header className="border-b border-[var(--ink)]/15 pb-10">
         <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-3">
-          <span className="text-[var(--accent)] font-semibold">§ PLATE 01</span>
+          <span className="text-[var(--accent)] font-semibold">§ PLATE 02</span>
           <span>·</span>
           <span>TRAVEL SAFETY &amp; SOS SYSTEM</span>
           <span>·</span>
@@ -54,7 +54,7 @@ export default function SafeRide() {
           </div>
 
           <div className="mt-2 pt-2 border-t border-[var(--ink)]/10 flex justify-between items-center font-mono text-[10px] uppercase text-[var(--muted)]">
-            <span>FIGURE 01.1 · INTERFACE OVERVIEW</span>
+            <span>FIGURE 02.1 · INTERFACE OVERVIEW</span>
             <span>FLUTTER / DART CLIENT</span>
           </div>
         </div>

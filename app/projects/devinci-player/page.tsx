@@ -18,7 +18,7 @@ export default function DeVinciPlayer() {
       {/* Header */}
       <header className="border-b border-[var(--ink)]/15 pb-10">
         <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-[var(--muted)] mb-3">
-          <span className="text-[var(--accent)] font-semibold">§ PLATE 04</span>
+          <span className="text-[var(--accent)] font-semibold">§ PLATE 05</span>
           <span>·</span>
           <span>NATIVE ANDROID CLIENT &amp; MEDIA ENGINE</span>
         </div>
@@ -52,7 +52,7 @@ export default function DeVinciPlayer() {
           </div>
 
           <div className="mt-2 pt-2 border-t border-[var(--ink)]/10 flex justify-between items-center font-mono text-[10px] uppercase text-[var(--muted)]">
-            <span>FIGURE 04.1 · MATERIAL 3 MOBILE UI</span>
+            <span>FIGURE 05.1 · MATERIAL 3 MOBILE UI</span>
             <span>KOTLIN / ANDROID STUDIO</span>
           </div>
         </div>

@@ -30,6 +30,17 @@ export default function ProjectsSection() {
   const projects: Project[] = [
     {
       num: "01",
+      title: "SPARSH",
+      category: "CHILD DEVELOPMENT SCREENING PWA",
+      year: "2026",
+      description:
+        "Mobile-friendly Progressive Web App that helps Anganwadi workers screen children aged 0–6 for possible developmental concerns using age-based milestone questions, with screening history for follow-up.",
+      href: "/projects/sparsh",
+      tags: ["React 19", "FastAPI", "PWA", "Firebase Auth", "Cloud Firestore", "Tailwind CSS"],
+      stats: "11-Member Lead · Community Engagement",
+    },
+    {
+      num: "02",
       title: "SafeRide",
       category: "TRAVEL SAFETY & SOS",
       year: "2026",
@@ -41,7 +52,7 @@ export default function ProjectsSection() {
       stats: "Finalist · Rising India Hackathon 1.0",
     },
     {
-      num: "02",
+      num: "03",
       title: "CampusEye AI",
       category: "COMPUTER VISION",
       year: "2026",
@@ -53,7 +64,7 @@ export default function ProjectsSection() {
       stats: "Real-time Edge Recognition",
     },
     {
-      num: "03",
+      num: "04",
       title: "PromptLab Pro",
       category: "LLM EVALUATION PLATFORM",
       year: "2025",
@@ -65,7 +76,7 @@ export default function ProjectsSection() {
       stats: "Determinism Index (DI)",
     },
     {
-      num: "04",
+      num: "05",
       title: "DeVinci Music Player",
       category: "NATIVE ANDROID",
       year: "2025",
@@ -77,7 +88,7 @@ export default function ProjectsSection() {
       stats: "Zero-Ad Architecture",
     },
     {
-      num: "05",
+      num: "06",
       title: "Personal Portfolio",
       category: "EDITORIAL DESIGN SYSTEM",
       year: "2026",
@@ -183,7 +194,7 @@ export default function ProjectsSection() {
           </h2>
         </div>
         <div className="font-mono text-xs text-[var(--muted)] max-w-xs text-left md:text-right uppercase space-y-1">
-          <p className="text-[var(--ink)]">5 SHIPPED ARTIFACTS</p>
+          <p className="text-[var(--ink)]">9+ SHIPPED SYSTEMS</p>
           <p>STACKED DOSSIER + INTERACTIVE INDEX</p>
         </div>
       </div>
@@ -274,9 +285,36 @@ export default function ProjectsSection() {
                         className="object-cover filter grayscale contrast-110 group-hover:filter-none group-hover:scale-105 transition-all duration-700"
                       />
                     ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center">
-                        <span className="font-serif text-3xl italic text-[var(--ink)]">{p.title}</span>
-                        <span className="font-mono text-xs text-[var(--muted)] mt-2">TECHNICAL DEMO</span>
+                      <div className="w-full h-full min-h-[220px] flex flex-col justify-between p-6 sm:p-7 bg-[var(--paper)] border border-[var(--ink)]/15 select-none relative">
+                        <span className="absolute top-1.5 left-1.5 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
+                        <span className="absolute top-1.5 right-1.5 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
+                        <span className="absolute bottom-1.5 left-1.5 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
+                        <span className="absolute bottom-1.5 right-1.5 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
+                        
+                        <div className="flex justify-between items-center font-mono text-[10px] uppercase text-[var(--muted)] border-b border-[var(--ink)]/10 pb-2">
+                          <span>PLATE {p.num} · SPECIFICATION</span>
+                          <span className="text-[var(--accent)] font-semibold">FIELD ARTIFACT</span>
+                        </div>
+                        <div className="my-auto py-3 text-center">
+                          <span className="font-serif text-3xl sm:text-4xl text-[var(--ink)] font-normal block leading-tight">
+                            {p.title}
+                          </span>
+                          <span className="font-mono text-[10px] text-[var(--muted)] uppercase tracking-wider mt-1 block">
+                            {p.category}
+                          </span>
+                          <div className="flex flex-wrap justify-center gap-1.5 mt-3">
+                            <span className="border border-[var(--ink)]/15 px-2 py-0.5 font-mono text-[9px] uppercase text-[var(--muted)]">
+                              5 Screening Domains
+                            </span>
+                            <span className="border border-[var(--ink)]/15 px-2 py-0.5 font-mono text-[9px] uppercase text-[var(--muted)]">
+                              Ages 0–6
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center font-mono text-[9px] uppercase text-[var(--muted)] pt-2 border-t border-[var(--ink)]/10">
+                          <span>REVASA, AMRAVATI</span>
+                          <span className="text-[var(--ink)] font-medium">VIEW SPEC ↗</span>
+                        </div>
                       </div>
                     )}
                   </div>

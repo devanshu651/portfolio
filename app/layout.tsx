@@ -38,11 +38,12 @@ export const metadata: Metadata = {
     template: "%s · Devanshu Raut",
   },
   description:
-    "Portfolio of Devanshu Raut — AI/ML engineering student, builder of SafeRide, CampusEye AI, PromptLab Pro, and DeVinci Player.",
+    "Portfolio of Devanshu Raut — AI/ML engineering student, builder of SPARSH, SafeRide, CampusEye AI, PromptLab Pro, and DeVinci Player. 9+ projects, led 4 national-level hackathon teams (finalists in all 4).",
   keywords: [
     "Devanshu Raut",
     "AI/ML Engineer",
     "Systems Engineering",
+    "SPARSH",
     "SafeRide",
     "CampusEye AI",
     "PromptLab",
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Devanshu Raut — Systems, Machine Learning & Engineering",
     description:
-      "Editorial portfolio of Devanshu Raut — AI & ML engineering student, shipping production systems, hackathon finalists, and research tools.",
+      "Editorial portfolio of Devanshu Raut — AI & ML engineering student with 9+ projects, led 4 national-level hackathon teams (finalists in all 4), builder of SPARSH, SafeRide, and intelligent systems.",
     url: "https://devanshuweb.in",
     siteName: "Devanshu Raut Portfolio",
     images: [
@@ -72,7 +73,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Devanshu Raut — Systems, Machine Learning & Engineering",
     description:
-      "Editorial portfolio of Devanshu Raut — AI & ML engineering student, shipping production systems, hackathon finalists, and research tools.",
+      "Editorial portfolio of Devanshu Raut — AI & ML engineering student with 9+ projects, led 4 national-level hackathon teams (finalists in all 4), builder of SPARSH, SafeRide, and intelligent systems.",
     images: ["/avatar.png"],
   },
   verification: {

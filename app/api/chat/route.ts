@@ -63,24 +63,25 @@ BOUNDARIES & STRICT SCOPE:
 
 VERIFIED FACTS ABOUT DEVANSHU RAUT:
 - Education: B.Tech Computer Science (AI & ML) student, 2nd year at P.R. Pote Patil College of Engineering & Management (PRPCEM), Amravati, Maharashtra, India.
-- Focus: Building real, production-grade systems; learning by shipping hands-on projects.
+- Focus: Building real, production-grade systems; learning by shipping hands-on projects (9+ projects shipped).
 - Shipped Projects:
-  1. SafeRide: Travel safety & ride-sharing app with real-time AI Safety Score (0-100), Smart SOS, Guardian Mode, and Route Heatmaps (Flutter, Firebase, Node.js). Finalist at Rising India Hackathon 1.0.
-  2. CampusEye AI: Smart Face-ID attendance system with OpenCV, real-time facial recognition, and local SQLite offline logging (Python, OpenCV).
-  3. PromptLab Pro: Research platform evaluating LLM prompts via quantifiable metrics (Determinism Index, similarity, hallucination risk) using TF-IDF and Streamlit.
-  4. DeVinci Music Player: Minimalist, ad-free Android music player with online streaming and local playback (Kotlin, Android Media3 ExoPlayer, MVVM).
-  5. Personal Portfolio: Editorial zine developer site built with Next.js, Tailwind CSS, Lenis, and GSAP.
+  1. SPARSH (Smart Platform for Assessment of Response, Screening & Holistic Development): Mobile-friendly Progressive Web App that helps Anganwadi workers screen children aged 0–6 for possible developmental concerns using age-based milestone questions, with screening history for follow-up. Built with React 19, Vite, Tailwind CSS, PWA, FastAPI, Pydantic, Firebase Auth, Cloud Firestore. Role: Team Leader of an 11-member Semester III Community Engagement Project team, CSE (AI & ML), PRPCEM Amravati. Links: Live https://sparsh-tech.vercel.app , GitHub https://github.com/devanshu651/SPARSH. Caveats/limits: screening support only (not a diagnosis); no pilot deployment yet; transparent rule-based screening engine is live, AI-powered engine is in development (no accuracy claims).
+  2. SafeRide: Travel safety & ride-sharing app with real-time AI Safety Score (0-100), Smart SOS, Guardian Mode, and Route Heatmaps (Flutter, Firebase, Node.js). Finalist at Rising India Hackathon 1.0.
+  3. CampusEye AI: Smart Face-ID attendance system with OpenCV, real-time facial recognition, and local SQLite offline logging (Python, OpenCV).
+  4. PromptLab Pro: Research platform evaluating LLM prompts via quantifiable metrics (Determinism Index, similarity, hallucination risk) using TF-IDF and Streamlit.
+  5. DeVinci Music Player: Minimalist, ad-free Android music player with online streaming and local playback (Kotlin, Android Media3 ExoPlayer, MVVM).
+  6. Personal Portfolio: Editorial zine developer site built with Next.js, Tailwind CSS, Lenis, and GSAP.
 - Experience & Leadership:
-  - Full Stack Developer Intern at Codec Technologies India (Hybrid · Aug 2026–Present): developing web platforms with Git, unit testing, and API integration.
-  - Hackathon Leadership: Led 3 national-level hackathon teams — finalists in 2 competitions, advanced 2 rounds in the 3rd.
-  - Community Project Lead: Directing an 11-member team for Semester III Community Engagement Project.
+  - Full Stack Developer Intern at Codec Technologies India (Hybrid · Aug 2026–Present): contributing to full-stack development as part of an industry-oriented internship — currently building a blog website — while applying practices like debugging, testing, and version control alongside a project team.
+  - Hackathon Leadership: Led 4 national-level hackathon teams, finalists in all 4 (including Rising India Hackathon 1.0 with SafeRide).
+  - Community Project Lead: Team Leader of an 11-member Semester III Community Engagement Project team, CSE (AI & ML), PRPCEM Amravati (SPARSH).
   - AWS Student Builder Group Member at PRPCEM (Jul 2026–Present).
-- Industry Job Simulations (via Forage):
+- Industry Job Simulations: 6+ simulations (via Forage), including:
   - AWS: Solutions Architecture (Sep 2025)
   - Deloitte: Data Analytics (Aug 2025)
   - Tata Group: GenAI Powered Data Analytics (Aug 2025)
   - HPE: Software Engineering (Oct 2025)
-- Certifications & Training:
+- Certifications & Training: 10+ certifications, including:
   - IIT Bombay: Java Training (Score: 95%, Credits: 4, Credential ID: 4779071I9Y)
   - EduSkills Academy: Employability Skills (10-week), Java Full Stack (8-week), Prompt Engineering for AI, Python Full Stack
   - Professional: Microsoft Excel (Aug 2025), EY & Microsoft AI Skills Passport, OneRoadmap Data Analytics, Flipkart Supply Chain Data Entry, Microsoft Learn Badges, Global AI Community Badge.
