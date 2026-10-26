@@ -1,24 +1,30 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 type Certificate = {
+  id: string;
   title: string;
   issuer: string;
   period: string;
   details?: string;
   file: string;
-};
-
-type CertificationCategory = {
-  title: string;
-  icon: React.ReactNode;
-  certificates: Certificate[];
+  category: "simulations" | "internships" | "training" | "certifications";
+  categoryLabel: string;
 };
 
 export default function Certifications() {
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState<string>("all");
+  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({
+    simulations: true,
+    internships: true,
+    training: true,
+    certifications: true,
+  });
 
+  // Modal ESC listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setSelectedCert(null);
@@ -33,194 +39,490 @@ export default function Certifications() {
     };
   }, [selectedCert]);
 
-  const categories: CertificationCategory[] = [
-    {
-      title: "Industry Job Simulations",
-      icon: (
-        <svg className="w-5 h-5 text-[var(--ink)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      ),
-      certificates: [
-        { title: "Solutions Architecture Job Simulation", issuer: "AWS (via Forage)", period: "September 2025", file: "/certificates/AWS.jpg" },
-        { title: "Data Analytics Job Simulation", issuer: "Deloitte (via Forage)", period: "August 2025", file: "/certificates/DATAANLAYAST.jpg" },
-        { title: "GenAI Powered Data Analytics Job Simulation", issuer: "Tata Group (via Forage)", period: "August 2025", file: "/certificates/GENAI.jpg" },
-        { title: "Software Engineering Job Simulation", issuer: "Hewlett Packard Enterprise (via Forage)", period: "October 2025", file: "/certificates/HEP.jpg" },
-      ],
-    },
-    {
-      title: "Virtual Internships",
-      icon: (
-        <svg className="w-5 h-5 text-[var(--ink)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-        </svg>
-      ),
-      certificates: [
-        { title: "Employability Skill Job Ready Virtual Internship", issuer: "EduSkills Academy (Supported by Wadhwani Foundation)", period: "October–December 2025", details: "10-week program", file: "/certificates/employeebilityskill.jpg" },
-        { title: "Java Full Stack Development With Project — Virtual Internship", issuer: "EduSkills Academy", period: "April–June 2026", details: "8-week program", file: "/certificates/javafullstack.jpg" },
-        { title: "Prompt Engineering for AI Virtual Internship", issuer: "EduSkills Academy", period: "", details: "", file: "/certificates/Prompt Engineering for AI Virtual Internship.pdf" },
-        { title: "Python Full Stack Development With Project Virtual Internship", issuer: "EduSkills Academy", period: "", details: "", file: "/certificates/Python Full Stack Development With Project Virtual Internship.pdf" },
-      ],
-    },
-    {
-      title: "Technical Training",
-      icon: (
-        <svg className="w-5 h-5 text-[var(--ink)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      ),
-      certificates: [
-        { title: "Java Training", issuer: "IIT Bombay (EduPyramids, SINE)", period: "June 2026", details: "Score: 95%, Credits: 4, Credential ID: 4779071I9Y", file: "/certificates/java-traning.jpg" },
-        { title: "Cybersecurity Awareness Quiz", issuer: "", period: "", details: "", file: "/certificates/DEVANSHU-RAUT-Participant-Certificate.pdf" },
-        { title: "R Programming Bootcamp for Absolute Beginners (2025)", issuer: "Udemy", period: "2025", details: "", file: "/certificates/R-PROGRAMING.jpg" },
-      ],
-    },
-    {
-      title: "Professional Certifications",
-      icon: (
-        <svg className="w-5 h-5 text-[var(--ink)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-        </svg>
-      ),
-      certificates: [
-        { title: "Introduction to MS Excel", issuer: "Microsoft", period: "August 2025", details: "", file: "/certificates/ms-EXCEL.jpg" },
-        { title: "AI Skills Passport", issuer: "EY & Microsoft", period: "", details: "", file: "/certificates/MS-AIskill.jpg" },
-        { title: "Data Analytics — Certificate of Achievement", issuer: "OneRoadmap", period: "", details: "", file: "/certificates/Oneroad.jpg" },
-        { title: "Supply Chain Operations Academy (S.C.O.A) — Data Entry", issuer: "Flipkart", period: "", details: "", file: "/certificates/FLIPCARD.jpg" },
-        { title: "Acquiring Data", issuer: "", period: "", details: "", file: "/certificates/Acquringdata.jpg" },
-        { title: "Microsoft Learn Achievement (wv26jqtn)", issuer: "Microsoft Learn", period: "", details: "Online Badge", file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
-        { title: "Microsoft Learn Achievement (9rytp8wu)", issuer: "Microsoft Learn", period: "", details: "Online Badge", file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/9rytp8wu?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
-        { title: "Microsoft Learn Achievement (wv26jqtn) - 2", issuer: "Microsoft Learn", period: "", details: "Online Badge", file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
-        { title: "Microsoft Learn Achievement (wv26jqtn) - 3", issuer: "Microsoft Learn", period: "", details: "Online Badge", file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
-        { title: "AI Attendee", issuer: "Global AI Community", period: "", details: "Online Badge", file: "https://globalai.community/badges/1c9afae3-7e6c-4b7b-9c1a-b35ad269355c/" },
-      ],
-    },
-  ];
+  // Complete, unaltered inventory of all 21 certificates
+  const allCertificates: Certificate[] = useMemo(
+    () => [
+      // 1. Simulations
+      {
+        id: "SIM-01",
+        title: "Solutions Architecture Job Simulation",
+        issuer: "AWS (via Forage)",
+        period: "September 2025",
+        file: "/certificates/AWS.jpg",
+        category: "simulations",
+        categoryLabel: "Industry Job Simulations",
+      },
+      {
+        id: "SIM-02",
+        title: "Data Analytics Job Simulation",
+        issuer: "Deloitte (via Forage)",
+        period: "August 2025",
+        file: "/certificates/DATAANLAYAST.jpg",
+        category: "simulations",
+        categoryLabel: "Industry Job Simulations",
+      },
+      {
+        id: "SIM-03",
+        title: "GenAI Powered Data Analytics Job Simulation",
+        issuer: "Tata Group (via Forage)",
+        period: "August 2025",
+        file: "/certificates/GENAI.jpg",
+        category: "simulations",
+        categoryLabel: "Industry Job Simulations",
+      },
+      {
+        id: "SIM-04",
+        title: "Software Engineering Job Simulation",
+        issuer: "Hewlett Packard Enterprise (via Forage)",
+        period: "October 2025",
+        file: "/certificates/HEP.jpg",
+        category: "simulations",
+        categoryLabel: "Industry Job Simulations",
+      },
+
+      // 2. Virtual Internships
+      {
+        id: "INT-01",
+        title: "Employability Skill Job Ready Virtual Internship",
+        issuer: "EduSkills Academy (Supported by Wadhwani Foundation)",
+        period: "October–December 2025",
+        details: "10-week program",
+        file: "/certificates/employeebilityskill.jpg",
+        category: "internships",
+        categoryLabel: "Virtual Internships",
+      },
+      {
+        id: "INT-02",
+        title: "Java Full Stack Development With Project — Virtual Internship",
+        issuer: "EduSkills Academy",
+        period: "April–June 2026",
+        details: "8-week program",
+        file: "/certificates/javafullstack.jpg",
+        category: "internships",
+        categoryLabel: "Virtual Internships",
+      },
+      {
+        id: "INT-03",
+        title: "Prompt Engineering for AI Virtual Internship",
+        issuer: "EduSkills Academy",
+        period: "",
+        details: "Virtual Internship",
+        file: "/certificates/Prompt Engineering for AI Virtual Internship.pdf",
+        category: "internships",
+        categoryLabel: "Virtual Internships",
+      },
+      {
+        id: "INT-04",
+        title: "Python Full Stack Development With Project Virtual Internship",
+        issuer: "EduSkills Academy",
+        period: "",
+        details: "Virtual Internship",
+        file: "/certificates/Python Full Stack Development With Project Virtual Internship.pdf",
+        category: "internships",
+        categoryLabel: "Virtual Internships",
+      },
+
+      // 3. Technical Training
+      {
+        id: "TRN-01",
+        title: "Java Training",
+        issuer: "IIT Bombay (EduPyramids, SINE)",
+        period: "June 2026",
+        details: "Score: 95%, Credits: 4, Credential ID: 4779071I9Y",
+        file: "/certificates/java-traning.jpg",
+        category: "training",
+        categoryLabel: "Technical Training",
+      },
+      {
+        id: "TRN-02",
+        title: "Cybersecurity Awareness Quiz",
+        issuer: "National Cybersecurity Initiative",
+        period: "",
+        details: "Participant Certificate",
+        file: "/certificates/DEVANSHU-RAUT-Participant-Certificate.pdf",
+        category: "training",
+        categoryLabel: "Technical Training",
+      },
+      {
+        id: "TRN-03",
+        title: "R Programming Bootcamp for Absolute Beginners (2025)",
+        issuer: "Udemy",
+        period: "2025",
+        details: "Bootcamp Certificate",
+        file: "/certificates/R-PROGRAMING.jpg",
+        category: "training",
+        categoryLabel: "Technical Training",
+      },
+
+      // 4. Professional Certifications & Online Badges
+      {
+        id: "CRT-01",
+        title: "Introduction to MS Excel",
+        issuer: "Microsoft",
+        period: "August 2025",
+        file: "/certificates/ms-EXCEL.jpg",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-02",
+        title: "AI Skills Passport",
+        issuer: "EY & Microsoft",
+        period: "",
+        file: "/certificates/MS-AIskill.jpg",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-03",
+        title: "Data Analytics — Certificate of Achievement",
+        issuer: "OneRoadmap",
+        period: "",
+        file: "/certificates/Oneroad.jpg",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-04",
+        title: "Supply Chain Operations Academy (S.C.O.A) — Data Entry",
+        issuer: "Flipkart",
+        period: "",
+        file: "/certificates/FLIPCARD.jpg",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-05",
+        title: "Acquiring Data",
+        issuer: "Technical Data Foundation",
+        period: "",
+        file: "/certificates/Acquringdata.jpg",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-06",
+        title: "Microsoft Learn Achievement (wv26jqtn)",
+        issuer: "Microsoft Learn",
+        period: "",
+        details: "Online Badge",
+        file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-07",
+        title: "Microsoft Learn Achievement (9rytp8wu)",
+        issuer: "Microsoft Learn",
+        period: "",
+        details: "Online Badge",
+        file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/9rytp8wu?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-08",
+        title: "Microsoft Learn Achievement (wv26jqtn) - 2",
+        issuer: "Microsoft Learn",
+        period: "",
+        details: "Online Badge",
+        file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-09",
+        title: "Microsoft Learn Achievement (wv26jqtn) - 3",
+        issuer: "Microsoft Learn",
+        period: "",
+        details: "Online Badge",
+        file: "https://learn.microsoft.com/en-us/users/devanshuraut-2185/achievements/wv26jqtn?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+      {
+        id: "CRT-10",
+        title: "AI Attendee",
+        issuer: "Global AI Community",
+        period: "",
+        details: "Online Badge",
+        file: "https://globalai.community/badges/1c9afae3-7e6c-4b7b-9c1a-b35ad269355c/",
+        category: "certifications",
+        categoryLabel: "Professional Certifications",
+      },
+    ],
+    []
+  );
+
+  // Filtered certificates based on search query and active tab
+  const filteredCerts = useMemo(() => {
+    return allCertificates.filter((cert) => {
+      const matchesTab = activeTab === "all" || cert.category === activeTab;
+      if (!matchesTab) return false;
+
+      if (!searchQuery.trim()) return true;
+
+      const q = searchQuery.toLowerCase();
+      return (
+        cert.title.toLowerCase().includes(q) ||
+        cert.issuer.toLowerCase().includes(q) ||
+        cert.id.toLowerCase().includes(q) ||
+        (cert.details && cert.details.toLowerCase().includes(q)) ||
+        (cert.period && cert.period.toLowerCase().includes(q))
+      );
+    });
+  }, [allCertificates, searchQuery, activeTab]);
+
+  // Group filtered results by category
+  const categoriesGrouped = useMemo(() => {
+    const groups: { key: string; label: string; items: Certificate[] }[] = [
+      { key: "simulations", label: "Industry Job Simulations", items: [] },
+      { key: "internships", label: "Virtual Internships", items: [] },
+      { key: "training", label: "Technical Training & Academics", items: [] },
+      { key: "certifications", label: "Professional Certifications & Badges", items: [] },
+    ];
+
+    filteredCerts.forEach((cert) => {
+      const g = groups.find((grp) => grp.key === cert.category);
+      if (g) g.items.push(cert);
+    });
+
+    return groups.filter((g) => g.items.length > 0);
+  }, [filteredCerts]);
+
+  const toggleCategory = (key: string) => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   return (
-    <>
-      <section id="certifications" className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-32 border-t border-[var(--ink)]/15">
-        <div className="mb-14">
+    <section
+      id="certifications"
+      className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15"
+    >
+      {/* Section Header */}
+      <div className="mb-14 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div>
           <span className="font-mono text-xs uppercase tracking-widest text-[var(--muted)] block mb-2">
-            § 05 — CREDENTIALS &amp; AUDITS
+            § 06 / CREDENTIALS &amp; INDUSTRY SIMULATIONS
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl tracking-tight text-[var(--ink)] font-normal mb-3">
+          <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-tight text-[var(--ink)] font-normal leading-[0.95]">
             Certifications
           </h2>
-          <p className="text-[var(--muted)] max-w-2xl text-base leading-relaxed font-sans">
-            Verified credentials and training programs validating skills across software engineering, AI/ML, and cloud architecture.
-          </p>
+        </div>
+        <div className="font-mono text-xs text-[var(--muted)] uppercase space-y-1 text-left md:text-right">
+          <p className="text-[var(--ink)]">21 VERIFIED RECORDS</p>
+          <p>SEARCHABLE ACCORDION ARCHIVE</p>
+        </div>
+      </div>
+
+      {/* FILTER & SEARCH CONTROL BAR */}
+      <div className="mb-10 space-y-4">
+        {/* Search Input */}
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder='Filter credentials by name, issuer, or ID (e.g. "AWS", "IIT", "Deloitte", "4779071I9Y")...'
+            className="w-full bg-[var(--paper)] border border-[var(--ink)]/20 px-4 py-3.5 pl-10 font-mono text-xs sm:text-sm text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+          />
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-mono text-xs text-[var(--muted)]">
+            ⌕
+          </span>
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 font-mono text-xs text-[var(--muted)] hover:text-[var(--accent)]"
+            >
+              CLEAR ✕
+            </button>
+          )}
         </div>
 
-        {/* Certifications Grid */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-          {categories.map((category, i) => (
-            <div
-              key={category.title}
-              className="border border-[var(--ink)]/15 bg-[var(--paper)] p-6 hover:border-[var(--accent)] transition-colors flex flex-col"
+        {/* Category Tabs */}
+        <div className="flex flex-wrap gap-2 font-mono text-xs uppercase tracking-wider">
+          {[
+            { id: "all", label: `ALL (${allCertificates.length})` },
+            { id: "simulations", label: "SIMULATIONS (4)" },
+            { id: "internships", label: "INTERNSHIPS (4)" },
+            { id: "training", label: "TRAINING (3)" },
+            { id: "certifications", label: "CERTS (10)" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-3 py-1.5 border transition-colors ${
+                activeTab === tab.id
+                  ? "border-[var(--accent)] bg-[var(--accent)] text-white"
+                  : "border-[var(--ink)]/15 text-[var(--muted)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]"
+              }`}
             >
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-[var(--ink)]/10">
-                <span className="font-mono text-[10px] text-[var(--muted)]">0{i + 1}</span>
-                <span className="text-[var(--ink)]">{category.icon}</span>
-              </div>
-
-              <h3 className="font-serif text-2xl text-[var(--ink)] font-normal mb-6">
-                {category.title}
-              </h3>
-
-              {/* Certificates List */}
-              <div className="flex flex-col gap-3">
-                {category.certificates.map((cert, j) => (
-                  <div
-                    key={j}
-                    className="p-4 border border-[var(--ink)]/10 bg-[var(--paper)] hover:border-[var(--accent)] transition-colors flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
-                  >
-                    <div className="flex flex-col gap-1 pr-4">
-                      <h4 className="font-serif text-lg text-[var(--ink)] font-normal">
-                        {cert.title}
-                      </h4>
-                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--muted)] font-mono">
-                        {cert.issuer && <span>{cert.issuer}</span>}
-                        {cert.issuer && cert.period && <span>·</span>}
-                        {cert.period && <span>{cert.period}</span>}
-                      </div>
-                      {cert.details && (
-                        <p className="text-[11px] text-[var(--muted)] mt-1 font-mono">{cert.details}</p>
-                      )}
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        if (cert.file.startsWith("http")) {
-                          window.open(cert.file, "_blank", "noopener,noreferrer");
-                        } else {
-                          setSelectedCert(cert);
-                        }
-                      }}
-                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 border border-[var(--ink)]/20 text-xs font-mono uppercase tracking-wider text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] transition-colors active:scale-95"
-                    >
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                      </svg>
-                      VIEW ↗
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
+              {tab.label}
+            </button>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* Lightbox / Modal */}
+      {/* ACCORDION / GROUPED TABLE */}
+      {categoriesGrouped.length > 0 ? (
+        <div className="space-y-6">
+          {categoriesGrouped.map((grp) => {
+            const isExpanded = expandedCategories[grp.key] !== false;
+
+            return (
+              <div
+                key={grp.key}
+                className="border border-[var(--ink)]/15 bg-[var(--paper)] overflow-hidden"
+              >
+                {/* Category Accordion Header */}
+                <button
+                  type="button"
+                  onClick={() => toggleCategory(grp.key)}
+                  className="w-full flex items-center justify-between p-5 md:p-6 bg-[var(--ink)]/[0.02] hover:bg-[var(--ink)]/[0.05] transition-colors border-b border-[var(--ink)]/10 text-left font-mono"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-[var(--accent)] font-semibold text-xs">§</span>
+                    <span className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal">
+                      {grp.label}
+                    </span>
+                    <span className="font-mono text-xs text-[var(--muted)] ml-2">
+                      [{grp.items.length}]
+                    </span>
+                  </div>
+
+                  <span className="font-mono text-xs text-[var(--muted)]">
+                    {isExpanded ? "COLLAPSE ▲" : "EXPAND ▼"}
+                  </span>
+                </button>
+
+                {/* Table Rows */}
+                {isExpanded && (
+                  <div className="divide-y divide-[var(--ink)]/10">
+                    {grp.items.map((cert) => (
+                      <div
+                        key={cert.id + cert.title}
+                        className="p-5 md:p-6 hover:bg-[var(--ink)]/[0.02] transition-colors group flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+                      >
+                        {/* Title and Metadata */}
+                        <div className="space-y-1.5 max-w-3xl">
+                          <div className="flex items-center gap-3 font-mono text-[11px] uppercase text-[var(--muted)]">
+                            <span className="text-[var(--accent)] font-semibold">{cert.id}</span>
+                            {cert.issuer && <span>{cert.issuer}</span>}
+                            {cert.period && <span>· {cert.period}</span>}
+                          </div>
+
+                          <h4 className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal group-hover:text-[var(--accent)] transition-colors link-sweep inline-block">
+                            {cert.title}
+                          </h4>
+
+                          {cert.details && (
+                            <p className="font-mono text-xs text-[var(--muted)]">
+                              ↳ {cert.details}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Action Button */}
+                        <button
+                          onClick={() => {
+                            if (cert.file.startsWith("http")) {
+                              window.open(cert.file, "_blank", "noopener,noreferrer");
+                            } else {
+                              setSelectedCert(cert);
+                            }
+                          }}
+                          data-cursor="OPEN ↗"
+                          className="shrink-0 inline-flex items-center gap-2 border border-[var(--ink)]/20 px-4 py-2 font-mono text-xs uppercase tracking-wider text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] transition-colors active:scale-95"
+                        >
+                          <span>{cert.file.startsWith("http") ? "VERIFY BADGE" : "VIEW ARTIFACT"}</span>
+                          <span>↗</span>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        /* Empty State */
+        <div className="p-12 text-center border border-[var(--ink)]/15 bg-[var(--paper)] font-mono text-xs text-[var(--muted)] uppercase">
+          No credentials found matching &ldquo;{searchQuery}&rdquo;.
+        </div>
+      )}
+
+      {/* LIGHTBOX MODAL (For viewing certificate images & PDFs) */}
       {selectedCert && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 md:p-12">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-[var(--ink)]/80 backdrop-blur-sm transition-opacity"
             onClick={() => setSelectedCert(null)}
           />
 
-          {/* Modal Content */}
-          <div className="relative z-10 w-full max-w-5xl flex flex-col max-h-full border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden">
+          {/* Modal Container */}
+          <div className="relative z-10 w-full max-w-5xl flex flex-col max-h-[92vh] border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-4 border-b border-[var(--ink)]/15 bg-[var(--paper)]">
-              <div className="flex flex-col pr-4">
-                <h3 className="font-serif text-xl text-[var(--ink)] font-normal">{selectedCert.title}</h3>
-                <p className="text-xs text-[var(--muted)] font-mono">
-                  {selectedCert.issuer} {selectedCert.period ? `(${selectedCert.period})` : ""}
+            <div className="flex items-center justify-between p-4 sm:p-5 border-b border-[var(--ink)]/15 bg-[var(--paper)]">
+              <div className="space-y-0.5 pr-4">
+                <span className="font-mono text-[10px] text-[var(--accent)] uppercase tracking-widest block">
+                  {selectedCert.id} · {selectedCert.categoryLabel}
+                </span>
+                <h3 className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal leading-tight">
+                  {selectedCert.title}
+                </h3>
+                <p className="font-mono text-xs text-[var(--muted)]">
+                  {selectedCert.issuer} {selectedCert.period ? `(${selectedCert.period})` : ""}{" "}
+                  {selectedCert.details ? `— ${selectedCert.details}` : ""}
                 </p>
               </div>
+
               <button
                 onClick={() => setSelectedCert(null)}
-                className="shrink-0 p-2 font-mono text-xs uppercase border border-[var(--ink)]/20 text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] transition-colors"
-                aria-label="Close"
+                className="shrink-0 p-2.5 font-mono text-xs uppercase border border-[var(--ink)]/20 text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] transition-colors"
+                aria-label="Close certificate preview"
               >
                 ✕ CLOSE
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="relative flex-1 overflow-auto bg-[var(--paper)] flex items-center justify-center p-4 min-h-[50vh]">
-              {selectedCert.file.match(/\.(pdf|htm|html)$/i) ? (
+            <div className="relative flex-1 overflow-auto bg-[var(--paper)] flex items-center justify-center p-4 sm:p-8 min-h-[50vh]">
+              {selectedCert.file.match(/\.(pdf)$/i) ? (
                 <iframe
                   src={selectedCert.file}
-                  className="w-full h-[70vh] border border-[var(--ink)]/10 bg-white"
+                  className="w-full h-[70vh] border border-[var(--ink)]/15 bg-white"
                   title={selectedCert.title}
                 />
               ) : (
                 <img
                   src={selectedCert.file}
                   alt={selectedCert.title}
-                  className="max-w-full max-h-[70vh] object-contain border border-[var(--ink)]/10"
+                  className="max-w-full max-h-[70vh] object-contain border border-[var(--ink)]/15 shadow-md"
                   loading="lazy"
                 />
               )}
             </div>
+
+            {/* Modal Footer */}
+            <div className="p-3 border-t border-[var(--ink)]/10 font-mono text-[10px] uppercase text-[var(--muted)] flex justify-between items-center">
+              <span>PRESS ESC TO CLOSE</span>
+              <a
+                href={selectedCert.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--ink)] hover:text-[var(--accent)] link-sweep"
+              >
+                OPEN RAW FILE ↗
+              </a>
+            </div>
           </div>
         </div>
       )}
-    </>
+    </section>
   );
 }
