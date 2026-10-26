@@ -12,43 +12,52 @@ export default function Footer() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
-    const ctx = gsap.context(() => {
-      if (wordmarkRef.current && footerRef.current) {
-        gsap.fromTo(
-          wordmarkRef.current,
-          { yPercent: 40, opacity: 0.15 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: "top 95%",
-              end: "bottom 95%",
-              scrub: 1,
-            },
-          }
-        );
-      }
-    }, footerRef);
-
-    return () => ctx.revert();
+    const media = gsap.matchMedia();
+    media.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        if (wordmarkRef.current && footerRef.current) {
+          gsap.fromTo(wordmarkRef.current, { yPercent: 40, opacity: 0.15 }, {
+            yPercent: 0, opacity: 1, ease: "none",
+            scrollTrigger: { trigger: footerRef.current, start: "top 95%", end: "bottom 95%", scrub: 1 },
+          });
+        }
+      }, footerRef);
+      return () => ctx.revert();
+    });
+    media.add("(max-width: 1023px) and (prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        if (wordmarkRef.current && footerRef.current) {
+          gsap.fromTo(wordmarkRef.current, { opacity: 0.2 }, {
+            opacity: 1, ease: "none",
+            scrollTrigger: { trigger: footerRef.current, start: "top 95%", end: "bottom 95%", scrub: 1 },
+          });
+        }
+      }, footerRef);
+      return () => ctx.revert();
+    });
+    media.add("(prefers-reduced-motion: reduce)", () => {
+      const ctx = gsap.context(() => {
+        if (wordmarkRef.current) gsap.fromTo(wordmarkRef.current, { opacity: 0.7 }, {
+          opacity: 1, duration: 0.2,
+          scrollTrigger: { trigger: wordmarkRef.current, start: "top 95%", once: true },
+        });
+      }, footerRef);
+      return () => ctx.revert();
+    });
+    return () => media.revert();
   }, []);
 
   return (
     <footer
       ref={footerRef}
-      className="relative z-10 border-t border-[var(--ink)]/15 mt-24 bg-[var(--paper)] overflow-hidden"
+      className="relative z-10 border-t border-[var(--ink)]/15 mt-20 lg:mt-24 bg-[var(--paper)] overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-12">
+      <div className="max-w-7xl mx-auto px-5 lg:px-12 pt-12 lg:pt-16 pb-10 lg:pb-12 min-w-0">
         {/* Navigation & Metadata Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-16 border-b border-[var(--ink)]/10 font-mono text-xs">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12 lg:pb-16 border-b border-[var(--ink)]/10 font-mono text-xs min-w-0">
           
           {/* Col 1: Colophon */}
-          <div className="md:col-span-5 space-y-3">
+          <div className="col-span-1 lg:col-span-5 space-y-3 min-w-0">
             <span className="text-[var(--muted)] uppercase tracking-widest block">
               § ARCHIVAL COLOPHON
             </span>
@@ -61,7 +70,7 @@ export default function Footer() {
           </div>
 
           {/* Col 2: Directory */}
-          <div className="md:col-span-3 space-y-3">
+          <div className="col-span-1 lg:col-span-3 space-y-3 min-w-0">
             <span className="text-[var(--muted)] uppercase tracking-widest block">
               PAGE DIRECTORY
             </span>
@@ -100,7 +109,7 @@ export default function Footer() {
           </div>
 
           {/* Col 3: Network Channels */}
-          <div className="md:col-span-4 space-y-3">
+          <div className="col-span-1 lg:col-span-4 space-y-3 min-w-0">
             <span className="text-[var(--muted)] uppercase tracking-widest block">
               TRANSMISSION &amp; RESUME
             </span>
@@ -109,6 +118,7 @@ export default function Footer() {
                 <a
                   href="mailto:devanshuraut.in@gmail.com"
                   className="link-sweep text-[var(--ink)] hover:text-[var(--accent)]"
+                  data-break-anywhere
                 >
                   DEVANSHURAUT.IN@GMAIL.COM ↗
                 </a>
@@ -156,10 +166,10 @@ export default function Footer() {
       </div>
 
       {/* GIANT SCROLL-REVEALED WORDMARK */}
-      <div className="w-full overflow-hidden border-t border-[var(--ink)]/15 select-none bg-[var(--paper)]">
+      <div className="w-full overflow-x-clip overflow-y-hidden border-t border-[var(--ink)]/15 select-none bg-[var(--paper)]">
         <div
           ref={wordmarkRef}
-          className="font-serif text-[15vw] leading-[0.8] tracking-[-0.04em] text-[var(--ink)] text-center whitespace-nowrap will-change-transform pt-4 pb-2"
+          className="font-serif text-[clamp(2.5rem,12vw,6rem)] lg:text-[15vw] leading-[0.9] lg:leading-[0.8] tracking-tight lg:tracking-[-0.04em] text-[var(--ink)] text-center whitespace-nowrap will-change-transform pt-4 pb-2"
         >
           DEVANSHU RAUT
         </div>

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function SparshCaseStudy() {
   return (
-    <article className="max-w-5xl mx-auto px-6 md:px-12 pt-16 pb-32">
+    <article className="max-w-5xl mx-auto px-5 lg:px-12 pt-20 lg:pt-16 pb-24 lg:pb-32 min-w-0">
       {/* Back Link */}
       <div className="mb-12">
         <Link
@@ -31,7 +31,7 @@ export default function SparshCaseStudy() {
           <span>COMMUNITY ENGAGEMENT</span>
         </div>
 
-        <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-[var(--ink)] leading-[0.95]">
+        <h1 className="font-serif text-[clamp(2.5rem,10vw,5.25rem)] lg:text-8xl font-normal tracking-tight text-[var(--ink)] leading-[0.98] lg:leading-[0.95] break-words">
           SPARSH
         </h1>
 
@@ -44,7 +44,7 @@ export default function SparshCaseStudy() {
         </p>
 
         {/* Project Meta Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 pt-8 mt-8 border-t border-[var(--ink)]/10 font-mono text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 pt-8 mt-8 border-t border-[var(--ink)]/10 font-mono text-xs min-w-0">
           <div>
             <span className="text-[var(--muted)] uppercase block mb-1">Project Role</span>
             <span className="text-[var(--ink)] leading-snug block">

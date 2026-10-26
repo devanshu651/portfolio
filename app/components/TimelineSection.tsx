@@ -11,10 +11,9 @@ export default function TimelineSection() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
+    const media = gsap.matchMedia();
+    media.add("(min-width: 0px)", () => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
     const ctx = gsap.context(() => {
       // Scrubbed drawing line on scroll
       if (lineRef.current && itemsContainerRef.current) {
@@ -40,8 +39,8 @@ export default function TimelineSection() {
         items.forEach((item) => {
           gsap.from(item, {
             opacity: 0,
-            x: 20,
-            duration: 0.8,
+            x: prefersReducedMotion ? 3 : 20,
+            duration: prefersReducedMotion ? 0.2 : 0.8,
             ease: "power3.out",
             scrollTrigger: {
               trigger: item,
@@ -52,8 +51,9 @@ export default function TimelineSection() {
         });
       }
     }, sectionRef);
-
     return () => ctx.revert();
+    });
+    return () => media.revert();
   }, []);
 
   const timelineEntries = [
@@ -96,7 +96,7 @@ export default function TimelineSection() {
     <section
       ref={sectionRef}
       id="experience"
-      className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15"
+      className="max-w-7xl mx-auto px-5 lg:px-12 py-20 lg:py-36 border-t border-[var(--ink)]/15 min-w-0"
     >
       <div className="mb-16">
         <span className="font-mono text-xs uppercase tracking-widest text-[var(--muted)] block mb-2">
@@ -111,7 +111,7 @@ export default function TimelineSection() {
       </div>
 
       {/* Relative container holding the animated drawing line */}
-      <div ref={itemsContainerRef} className="relative pl-6 sm:pl-10 md:pl-16">
+      <div ref={itemsContainerRef} className="relative pl-6 sm:pl-10 lg:pl-16 min-w-0">
         
         {/* Background static ruler guide */}
         <div className="absolute left-0 top-2 bottom-2 w-[1px] bg-[var(--ink)]/15" />
@@ -128,14 +128,14 @@ export default function TimelineSection() {
           {timelineEntries.map((entry) => (
             <div
               key={entry.index}
-              className="timeline-node relative border border-[var(--ink)]/15 bg-[var(--paper)] p-6 sm:p-8 hover:border-[var(--accent)] transition-colors group"
+              className="timeline-node relative border border-[var(--ink)]/15 bg-[var(--paper)] p-5 sm:p-8 hover:border-[var(--accent)] transition-colors group min-w-0"
             >
               {/* Bullet Node Anchor on the vertical line */}
-              <div className="absolute -left-6 sm:-left-10 md:-left-16 top-8 -translate-x-[5px] w-3 h-3 border-2 border-[var(--ink)] bg-[var(--paper)] group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)] transition-colors rounded-full" />
+              <div className="absolute -left-6 sm:-left-10 lg:-left-16 top-8 -translate-x-[5px] w-3 h-3 border-2 border-[var(--ink)] bg-[var(--paper)] group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)] transition-colors rounded-full" />
 
               {/* Node Header Row */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-baseline gap-2 mb-4 pb-4 border-b border-[var(--ink)]/10 font-mono text-xs">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-baseline gap-2 mb-4 pb-4 border-b border-[var(--ink)]/10 font-mono text-xs min-w-0">
+                <div className="flex flex-wrap items-center gap-3 min-w-0">
                   <span className="text-[var(--accent)] font-semibold">{entry.index}</span>
                   <span className="text-[var(--muted)] uppercase tracking-widest">
                     {entry.category}
@@ -149,7 +149,7 @@ export default function TimelineSection() {
 
               {/* Role & Org */}
               <div className="mb-4">
-                <h3 className="font-serif text-2xl sm:text-3xl text-[var(--ink)] font-normal group-hover:text-[var(--accent)] transition-colors">
+                <h3 className="font-serif text-2xl sm:text-3xl text-[var(--ink)] font-normal group-hover:text-[var(--accent)] transition-colors break-words">
                   {entry.role}
                 </h3>
                 <p className="font-mono text-xs text-[var(--muted)] mt-1">

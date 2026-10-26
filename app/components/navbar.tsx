@@ -51,6 +51,20 @@ export default function Navbar() {
     };
   }, [pathname]);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const previousOverflowY = document.body.style.overflowY;
+    document.body.style.overflowY = "hidden";
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflowY = previousOverflowY;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [mobileMenuOpen]);
+
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, link: (typeof navLinks)[0]) => {
     setMobileMenuOpen(false);
     if (link.external) return;
@@ -67,8 +81,8 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-[var(--paper)]/90 backdrop-blur-md border-b border-[var(--ink)]/15">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+    <header className={`fixed top-0 left-0 w-full ${mobileMenuOpen ? "z-[120]" : "z-50"} bg-[var(--paper)]/90 lg:backdrop-blur-md border-b border-[var(--ink)]/15 h-[calc(4rem+env(safe-area-inset-top))] lg:h-16`}>
+      <div className="max-w-7xl mx-auto px-5 lg:px-12 h-full pt-[env(safe-area-inset-top)] lg:pt-0 flex items-center justify-between min-w-0">
         
         {/* Brand Mark */}
         <Link
@@ -128,8 +142,10 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden p-2 font-mono text-xs uppercase tracking-widest text-[var(--ink)] hover:text-[var(--accent)] flex items-center gap-1.5"
+          className="lg:hidden min-h-11 min-w-11 px-2 font-mono text-xs uppercase tracking-widest text-[var(--ink)] hover:text-[var(--accent)] flex items-center justify-center gap-1.5 active:scale-[0.98]"
           aria-label="Toggle navigation menu"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation-overlay"
         >
           <span>§</span>
           <span>{mobileMenuOpen ? "CLOSE" : "MENU"}</span>
@@ -138,8 +154,12 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[var(--paper)] border-b border-[var(--ink)]/15 px-6 py-6 font-mono text-xs tracking-wider uppercase">
-          <div className="space-y-4">
+        <div id="mobile-navigation-overlay" role="dialog" aria-modal="true" aria-label="Site navigation" className="fixed inset-0 z-[95] flex flex-col bg-[var(--paper)] px-5 pb-[calc(env(safe-area-inset-bottom)+1.25rem)] pt-[calc(env(safe-area-inset-top)+1rem)] font-mono text-xs tracking-wider uppercase lg:hidden">
+          <div className="flex items-center justify-between border-b border-[var(--ink)]/15 pb-4">
+            <span className="font-serif text-2xl normal-case italic text-[var(--ink)]">Devanshu <span className="font-mono text-[10px] not-italic uppercase tracking-widest text-[var(--muted)]">Â§ Notebook</span></span>
+            <button type="button" onClick={() => setMobileMenuOpen(false)} className="min-h-11 min-w-11 border border-[var(--ink)]/20 px-3 font-mono text-xs uppercase tracking-wider active:scale-[0.98]" aria-label="Close navigation menu">Close</button>
+          </div>
+          <nav className="flex flex-1 flex-col justify-center py-6" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -147,13 +167,13 @@ export default function Navbar() {
                 onClick={(e) => handleLinkClick(e, link)}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="flex items-center justify-between py-2 border-b border-[var(--ink)]/10 text-[var(--ink)] hover:text-[var(--accent)] transition-colors"
+                className="flex min-h-14 items-center justify-between border-b border-[var(--ink)]/10 py-2 text-[var(--ink)] hover:text-[var(--accent)] transition-colors active:scale-[0.98]"
               >
-                <span>{link.label}</span>
-                <span className="text-[var(--muted)] text-[10px]">{link.num}</span>
+                <span className="font-serif text-3xl sm:text-4xl normal-case">{link.label}</span>
+                <span className="text-[var(--muted)] text-xs tracking-widest">{link.num} /</span>
               </Link>
             ))}
-          </div>
+          </nav>
           <div className="pt-4 flex items-center gap-2 text-[var(--muted)] text-[11px]">
             <span className="inline-block w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
             <span>AMRAVATI, IN · AVAILABLE</span>

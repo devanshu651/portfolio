@@ -6,7 +6,8 @@ export default function GrainOverlay() {
       className="pointer-events-none fixed inset-0 z-40 h-full w-full overflow-hidden opacity-[0.045] transition-opacity duration-300 dark-section:opacity-[0.03]"
       aria-hidden="true"
     >
-      <div className="absolute -inset-[100%] w-[300%] h-[300%] animate-film-grain bg-repeat">
+      <div className="absolute inset-0 opacity-20 lg:hidden [background-image:radial-gradient(rgba(20,19,15,0.45)_0.5px,transparent_0.7px)] [background-size:4px_4px]" />
+      <div className="absolute -inset-[100%] hidden w-[300%] h-[300%] animate-film-grain bg-repeat lg:block">
         <svg
           className="h-full w-full"
           xmlns="http://www.w3.org/2000/svg"

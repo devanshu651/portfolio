@@ -8,6 +8,8 @@ export default function SkillsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const marquee1Ref = useRef<HTMLDivElement>(null);
   const marquee2Ref = useRef<HTMLDivElement>(null);
+  const mobileMarquee1Ref = useRef<HTMLDivElement>(null);
+  const mobileMarquee2Ref = useRef<HTMLDivElement>(null);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
 
   const marqueeRow1 = [
@@ -39,6 +41,8 @@ export default function SkillsSection() {
     "MVVM Architecture",
     "REST APIs",
   ];
+  const mobileMarqueeText1 = [...marqueeRow1, ...marqueeRow1].join("   ✦   ");
+  const mobileMarqueeText2 = [...marqueeRow2, ...marqueeRow2].join("   §   ");
 
   const skillGroups = [
     {
@@ -68,13 +72,10 @@ export default function SkillsSection() {
   ];
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      const timer = setTimeout(() => setIsReducedMotion(true), 0);
-      return () => clearTimeout(timer);
-    }
-
     gsap.registerPlugin(ScrollTrigger);
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+    setIsReducedMotion(false);
 
     let speed1 = 0.8;
     let speed2 = -0.8;
@@ -115,6 +116,8 @@ export default function SkillsSection() {
         if (pos2 >= 0) pos2 = -50;
         row2.style.transform = `translate3d(${pos2}%, 0, 0)`;
       }
+      mobileMarquee1Ref.current?.style.setProperty("--marquee-duration", `${34 / velocityMultiplier}s`);
+      mobileMarquee2Ref.current?.style.setProperty("--marquee-duration", `${42 / velocityMultiplier}s`);
 
       animId = requestAnimationFrame(tick);
     };
@@ -125,20 +128,26 @@ export default function SkillsSection() {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(animId);
     };
+    });
+    media.add("(prefers-reduced-motion: reduce)", () => {
+      setIsReducedMotion(true);
+      return () => setIsReducedMotion(false);
+    });
+    return () => media.revert();
   }, []);
 
   return (
     <section
       ref={sectionRef}
       id="skills"
-      className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15 overflow-hidden"
+      className="max-w-7xl mx-auto px-5 lg:px-12 py-20 lg:py-36 border-t border-[var(--ink)]/15 overflow-x-clip lg:overflow-hidden min-w-0"
     >
       {/* Section Header */}
       <div className="mb-14">
         <span className="font-mono text-xs uppercase tracking-widest text-[var(--muted)] block mb-2">
           § 05 / TECHNICAL SPECIFICATIONS
         </span>
-        <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-tight text-[var(--ink)] font-normal mb-3">
+        <h2 className="font-serif text-4xl sm:text-5xl lg:text-7xl tracking-tight text-[var(--ink)] font-normal mb-3 break-words">
           Skills &amp; Technologies
         </h2>
         <p className="font-sans text-base text-[var(--muted)] max-w-2xl leading-relaxed">
@@ -149,11 +158,15 @@ export default function SkillsSection() {
       {/* INFINITE MARQUEE STRIPS */}
       {!isReducedMotion ? (
         <div className="my-14 space-y-4 border-y border-[var(--ink)]/15 py-8 bg-[var(--paper)]">
+          <div className="lg:hidden space-y-4" aria-hidden="true">
+            <div ref={mobileMarquee1Ref} className="mobile-marquee-track mobile-marquee-forward font-serif text-2xl sm:text-4xl text-[var(--ink)]" data-marquee={mobileMarqueeText1} />
+            <div ref={mobileMarquee2Ref} className="mobile-marquee-track mobile-marquee-reverse font-mono text-[11px] sm:text-sm uppercase tracking-widest text-[var(--muted)]" data-marquee={mobileMarqueeText2} />
+          </div>
           {/* Strip 1: Leftward flow */}
-          <div className="overflow-hidden whitespace-nowrap select-none">
+          <div className="hidden lg:block overflow-x-clip lg:overflow-hidden whitespace-nowrap select-none">
             <div
               ref={marquee1Ref}
-              className="inline-flex items-center gap-8 will-change-transform font-serif text-3xl sm:text-4xl md:text-5xl text-[var(--ink)]"
+              className="inline-flex items-center gap-8 will-change-transform font-serif text-2xl sm:text-4xl lg:text-5xl text-[var(--ink)]"
             >
               {[...marqueeRow1, ...marqueeRow1, ...marqueeRow1, ...marqueeRow1].map((skill, idx) => (
                 <span key={idx} className="inline-flex items-center gap-8">
@@ -167,7 +180,7 @@ export default function SkillsSection() {
           </div>
 
           {/* Strip 2: Rightward flow */}
-          <div className="overflow-hidden whitespace-nowrap select-none">
+          <div className="hidden lg:block overflow-x-clip lg:overflow-hidden whitespace-nowrap select-none">
             <div
               ref={marquee2Ref}
               className="inline-flex items-center gap-8 will-change-transform font-mono text-xs sm:text-sm uppercase tracking-widest text-[var(--muted)]"
@@ -195,7 +208,7 @@ export default function SkillsSection() {
       )}
 
       {/* GROUPED MONO INVENTORIES */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 pt-6 min-w-0">
         {skillGroups.map((group) => (
           <div
             key={group.code}

@@ -91,7 +91,7 @@ export default function RootLayout({
       lang="en"
       className={`${instrumentSerif.variable} ${bricolage.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-[var(--paper)] text-[var(--ink)] font-sans antialiased min-h-screen relative selection:bg-[var(--accent)] selection:text-[var(--paper)]">
+      <body className="bg-[var(--paper)] text-[var(--ink)] font-sans antialiased min-h-[100svh] lg:min-h-screen relative selection:bg-[var(--accent)] selection:text-[var(--paper)]">
         {/* Short Page Load Preloader (<1.5s, cached in sessionStorage) */}
         <Preloader />
 

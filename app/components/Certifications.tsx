@@ -301,15 +301,15 @@ export default function Certifications() {
   return (
     <section
       id="certifications"
-      className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15"
+      className="max-w-7xl mx-auto px-5 lg:px-12 py-20 lg:py-36 border-t border-[var(--ink)]/15 min-w-0"
     >
       {/* Section Header */}
-      <div className="mb-14 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+      <div className="mb-10 lg:mb-14 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-5 lg:gap-6 min-w-0">
         <div>
           <span className="font-mono text-xs uppercase tracking-widest text-[var(--muted)] block mb-2">
             § 06 / CREDENTIALS &amp; INDUSTRY SIMULATIONS
           </span>
-          <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-tight text-[var(--ink)] font-normal leading-[0.95]">
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-7xl tracking-tight text-[var(--ink)] font-normal leading-[0.95]">
             Certifications
           </h2>
         </div>
@@ -328,7 +328,7 @@ export default function Certifications() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder='Filter credentials by name, issuer, or ID (e.g. "AWS", "IIT", "Deloitte", "4779071I9Y")...'
-            className="w-full bg-[var(--paper)] border border-[var(--ink)]/20 px-4 py-3.5 pl-10 font-mono text-xs sm:text-sm text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+            className="w-full min-h-11 bg-[var(--paper)] border border-[var(--ink)]/20 px-4 py-3.5 pl-10 font-mono text-base sm:text-sm text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none focus:border-[var(--accent)] transition-colors"
           />
           <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-mono text-xs text-[var(--muted)]">
             ⌕
@@ -355,7 +355,7 @@ export default function Certifications() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-3 py-1.5 border transition-colors ${
+              className={`min-h-11 px-3 py-2 border transition-colors active:scale-[0.98] ${
                 activeTab === tab.id
                   ? "border-[var(--accent)] bg-[var(--accent)] text-white"
                   : "border-[var(--ink)]/15 text-[var(--muted)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]"
@@ -382,9 +382,9 @@ export default function Certifications() {
                 <button
                   type="button"
                   onClick={() => toggleCategory(grp.key)}
-                  className="w-full flex items-center justify-between p-5 md:p-6 bg-[var(--ink)]/[0.02] hover:bg-[var(--ink)]/[0.05] transition-colors border-b border-[var(--ink)]/10 text-left font-mono"
+                  className="w-full min-h-14 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 p-4 lg:p-6 bg-[var(--ink)]/[0.02] hover:bg-[var(--ink)]/[0.05] transition-colors border-b border-[var(--ink)]/10 text-left font-mono active:scale-[0.98]"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2 lg:gap-3 min-w-0">
                     <span className="text-[var(--accent)] font-semibold text-xs">§</span>
                     <span className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal">
                       {grp.label}
@@ -394,7 +394,7 @@ export default function Certifications() {
                     </span>
                   </div>
 
-                  <span className="font-mono text-xs text-[var(--muted)]">
+                  <span className="self-end lg:self-auto font-mono text-xs text-[var(--muted)]">
                     {isExpanded ? "COLLAPSE ▲" : "EXPAND ▼"}
                   </span>
                 </button>
@@ -405,17 +405,17 @@ export default function Certifications() {
                     {grp.items.map((cert) => (
                       <div
                         key={cert.id + cert.title}
-                        className="p-5 md:p-6 hover:bg-[var(--ink)]/[0.02] transition-colors group flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+                        className="p-4 lg:p-6 hover:bg-[var(--ink)]/[0.02] transition-colors group flex min-w-0 flex-col lg:flex-row justify-between items-start lg:items-center gap-4"
                       >
                         {/* Title and Metadata */}
-                        <div className="space-y-1.5 max-w-3xl">
-                          <div className="flex items-center gap-3 font-mono text-[11px] uppercase text-[var(--muted)]">
-                            <span className="text-[var(--accent)] font-semibold">{cert.id}</span>
+                        <div className="space-y-1.5 max-w-3xl min-w-0">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase text-[var(--muted)] min-w-0">
+                            <span className="text-[var(--accent)] font-semibold" data-break-anywhere>{cert.id}</span>
                             {cert.issuer && <span>{cert.issuer}</span>}
                             {cert.period && <span>· {cert.period}</span>}
                           </div>
 
-                          <h3 className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal group-hover:text-[var(--accent)] transition-colors link-sweep inline-block">
+                          <h3 className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal group-hover:text-[var(--accent)] transition-colors link-sweep inline-block break-words">
                             {cert.title}
                           </h3>
 
@@ -436,7 +436,7 @@ export default function Certifications() {
                             }
                           }}
                           data-cursor="OPEN ↗"
-                          className="shrink-0 inline-flex items-center gap-2 border border-[var(--ink)]/20 px-4 py-2 font-mono text-xs uppercase tracking-wider text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] transition-colors active:scale-95"
+                            className="shrink-0 min-h-11 inline-flex items-center gap-2 border border-[var(--ink)]/20 px-4 py-2 font-mono text-xs uppercase tracking-wider text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] transition-colors active:scale-[0.98]"
                         >
                           <span>{cert.file.startsWith("http") ? "VERIFY BADGE" : "VIEW ARTIFACT"}</span>
                           <span>↗</span>
@@ -458,7 +458,7 @@ export default function Certifications() {
 
       {/* LIGHTBOX MODAL (For viewing certificate images & PDFs) */}
       {selectedCert && (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 md:p-12">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-3 sm:p-6 lg:p-12 pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-[var(--ink)]/80 backdrop-blur-sm transition-opacity"
@@ -466,7 +466,7 @@ export default function Certifications() {
           />
 
           {/* Modal Container */}
-          <div className="relative z-10 w-full max-w-5xl flex flex-col max-h-[92vh] border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden">
+          <div className="relative z-10 w-full max-w-5xl flex flex-col max-h-[calc(100svh-env(safe-area-inset-top)-env(safe-area-inset-bottom)-1.5rem)] lg:max-h-[92vh] border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden min-w-0">
             {/* Modal Header */}
             <div className="flex items-center justify-between p-4 sm:p-5 border-b border-[var(--ink)]/15 bg-[var(--paper)]">
               <div className="space-y-0.5 pr-4">
@@ -492,15 +492,15 @@ export default function Certifications() {
             </div>
 
             {/* Modal Body */}
-            <div className="relative flex-1 overflow-auto bg-[var(--paper)] flex items-center justify-center p-4 sm:p-8 min-h-[50vh]">
+            <div className="relative flex-1 overflow-auto bg-[var(--paper)] flex items-center justify-center p-3 sm:p-8 min-h-[50svh] lg:min-h-[50vh] min-w-0">
               {selectedCert.file.match(/\.(pdf)$/i) ? (
                 <iframe
                   src={selectedCert.file}
-                  className="w-full h-[70vh] border border-[var(--ink)]/15 bg-white"
+                  className="w-full h-[70svh] lg:h-[70vh] border border-[var(--ink)]/15 bg-white"
                   title={selectedCert.title}
                 />
               ) : (
-                <div className="relative w-full max-w-2xl h-[65vh]">
+                <div className="relative w-full max-w-2xl h-[65svh] lg:h-[65vh]">
                   <Image
                     src={selectedCert.file}
                     alt={selectedCert.title}

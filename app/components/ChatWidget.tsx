@@ -70,6 +70,20 @@ export default function ChatWidget() {
     return () => clearTimeout(timer);
   }, []);
 
+  // On touch layouts the teaser should not stay over page content after the
+  // visitor starts reading; the fixed chat button remains available.
+  useEffect(() => {
+    const mobile = window.matchMedia("(max-width: 1023px)");
+    if (!mobile.matches) return;
+    const dismissOnScroll = () => setShowTeaser(false);
+    window.addEventListener("scroll", dismissOnScroll, { passive: true, once: true });
+    const timer = window.setTimeout(() => setShowTeaser(false), 7000);
+    return () => {
+      window.removeEventListener("scroll", dismissOnScroll);
+      window.clearTimeout(timer);
+    };
+  }, []);
+
   // Auto-scroll messages
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -242,7 +256,7 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[90] flex flex-col items-end">
+    <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+1rem)] right-[calc(env(safe-area-inset-right)+1rem)] z-[90] flex flex-col items-end lg:bottom-6 lg:right-6">
       {/* POP-UP TEASER CARD (Above logo, once per session) */}
       <AnimatePresence>
         {showTeaser && !isOpen && (
@@ -251,7 +265,7 @@ export default function ChatWidget() {
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.95 }}
             transition={{ duration: prefersReducedMotion ? 0.2 : 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-3 w-[290px] sm:w-[320px] border border-[var(--ink)]/20 bg-[var(--paper)] p-4 shadow-2xl relative select-none"
+            className="mb-3 w-[min(290px,calc(100vw-2.5rem))] lg:w-[320px] border border-[var(--ink)]/20 bg-[var(--paper)] p-4 shadow-2xl relative select-none"
             role="region"
             aria-label="AI Assistant Quick Inquiries"
           >
@@ -268,7 +282,7 @@ export default function ChatWidget() {
               <button
                 type="button"
                 onClick={() => setShowTeaser(false)}
-                className="font-mono text-xs px-1 text-[var(--muted)] hover:text-[var(--ink)] transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus:outline-none"
+                className="min-h-11 min-w-11 font-mono text-xs px-1 text-[var(--muted)] hover:text-[var(--ink)] transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus:outline-none"
                 aria-label="Dismiss quick inquiries"
               >
                 ✕
@@ -276,7 +290,7 @@ export default function ChatWidget() {
             </div>
 
             {/* Serif line */}
-            <h4 className="font-serif text-lg sm:text-xl text-[var(--ink)] font-normal leading-snug my-2.5">
+            <h4 className="font-serif text-lg lg:text-xl text-[var(--ink)] font-normal leading-snug my-2.5">
               Ask my AI twin about my projects
             </h4>
 
@@ -291,7 +305,7 @@ export default function ChatWidget() {
                   key={chip}
                   type="button"
                   onClick={() => handleChipClick(chip)}
-                  className="w-full text-left font-mono text-[11px] border border-[var(--ink)]/15 px-3 py-1.5 bg-[var(--paper)] text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)] hover:bg-[var(--ink)]/[0.02] focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus:outline-none transition-all flex items-center justify-between group"
+                  className="w-full min-h-11 text-left font-mono text-[11px] border border-[var(--ink)]/15 px-3 py-2 bg-[var(--paper)] text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)] hover:bg-[var(--ink)]/[0.02] focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus:outline-none transition-all flex items-center justify-between group"
                 >
                   <span className="truncate pr-2">{chip}</span>
                   <span className="text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all text-xs">
@@ -316,7 +330,7 @@ export default function ChatWidget() {
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-x-0 bottom-0 sm:inset-auto sm:right-6 sm:bottom-6 w-full sm:w-[420px] h-[85dvh] sm:h-[560px] flex flex-col border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden z-[100]"
+            className="fixed inset-x-0 bottom-[env(safe-area-inset-bottom)] w-full max-w-full h-[min(85svh,560px)] flex flex-col border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden z-[100] lg:inset-auto lg:right-6 lg:bottom-6 lg:w-[420px] lg:h-[560px]"
           >
             {/* Corner Registration Stamps */}
             <span className="absolute top-1 left-1 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
@@ -340,7 +354,7 @@ export default function ChatWidget() {
                   setIsOpen(false);
                   triggerRef.current?.focus();
                 }}
-                className="font-mono text-xs uppercase px-2.5 py-1.5 border border-[var(--ink)]/20 text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus:outline-none transition-colors"
+                className="min-h-11 min-w-11 font-mono text-xs uppercase px-2.5 py-1.5 border border-[var(--ink)]/20 text-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus:outline-none transition-colors"
                 aria-label="Close chat window (Escape)"
               >
                 ✕ ESC
@@ -449,7 +463,7 @@ export default function ChatWidget() {
               whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
               whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
               data-cursor="CHAT"
-              className={`relative w-14 h-14 rounded-full border border-[var(--ink)]/25 bg-[var(--paper)] shadow-xl flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus:outline-none transition-shadow duration-300 ${
+              className={`relative min-h-14 min-w-14 rounded-full border border-[var(--ink)]/25 bg-[var(--paper)] shadow-xl flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus:outline-none transition-shadow duration-300 active:scale-[0.98] ${
                 isPulsing
                   ? "ring-2 ring-[var(--accent)]/50 shadow-[0_0_18px_rgba(235,59,0,0.3)]"
                   : "hover:border-[var(--accent)] hover:shadow-2xl"

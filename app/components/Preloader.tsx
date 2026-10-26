@@ -13,12 +13,20 @@ export default function Preloader() {
     const visited = sessionStorage.getItem(PRELOADER_STORAGE_KEY);
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (visited || prefersReducedMotion) {
-      return;
-    }
+    if (visited) return;
 
     const timer = setTimeout(() => {
       setShow(true);
+
+      if (prefersReducedMotion) {
+        setProgress(100);
+        setTimeout(() => {
+          setIsWiping(true);
+          sessionStorage.setItem(PRELOADER_STORAGE_KEY, "true");
+          setTimeout(() => setShow(false), 180);
+        }, 120);
+        return;
+      }
 
       const startTime = performance.now();
       const duration = 850;

@@ -39,10 +39,20 @@ export default function HeroSection() {
 
   // SplitText-style per-line mask reveal with GSAP
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
-    const ctx = gsap.context(() => {
+    const media = gsap.matchMedia();
+    media.add("(min-width: 0px)", () => {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.from([metaRef.current, bioRef.current, ctaRef.current, avatarRef.current], {
+          opacity: 0,
+          y: 4,
+          duration: 0.2,
+          stagger: 0.04,
+          clearProps: "all",
+        });
+        return;
+      }
       const tl = gsap.timeline({
         delay: 0.15,
         defaults: { ease: "power3.out", duration: 1.1 },
@@ -106,18 +116,19 @@ export default function HeroSection() {
           },
         });
       }
-    }, heroRef);
+      }, heroRef);
+      return () => ctx.revert();
+    });
 
-    return () => ctx.revert();
+    return () => media.revert();
   }, []);
 
   // Magnetic button physics
   useEffect(() => {
     const btn = magneticBtnRef.current;
     if (!btn) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
+    const media = gsap.matchMedia();
+    media.add("(min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = btn.getBoundingClientRect();
@@ -147,18 +158,20 @@ export default function HeroSection() {
       btn.removeEventListener("mousemove", onMouseMove);
       btn.removeEventListener("mouseleave", onMouseLeave);
     };
+    });
+    return () => media.revert();
   }, []);
 
   return (
     <section
       ref={heroRef}
       id="home"
-      className="relative min-h-[92vh] flex flex-col justify-between pt-8 pb-20 border-b border-[var(--ink)]/15 overflow-hidden"
+      className="relative min-h-[92svh] lg:min-h-[92vh] flex flex-col justify-between pt-8 pb-16 lg:pb-20 border-b border-[var(--ink)]/15 overflow-hidden"
     >
       {/* Top Meta Row */}
       <div
         ref={metaRef}
-        className="max-w-7xl mx-auto px-6 md:px-12 w-full pt-4 pb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 font-mono text-xs uppercase tracking-widest text-[var(--muted)] border-b border-[var(--ink)]/10"
+        className="max-w-7xl mx-auto px-5 lg:px-12 w-full pt-4 pb-6 lg:pb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 lg:gap-4 font-mono text-xs uppercase tracking-widest text-[var(--muted)] border-b border-[var(--ink)]/10 min-w-0"
       >
         <div className="flex items-center gap-3">
           <span className="text-[var(--ink)] font-medium">Amravati, IN</span>
@@ -174,14 +187,14 @@ export default function HeroSection() {
       </div>
 
       {/* Main Editorial Hero Grid */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full my-auto py-12 md:py-16">
-        <div className="grid grid-cols-12 gap-8 lg:gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-5 lg:px-12 w-full my-auto py-8 lg:py-16 min-w-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-w-0">
           
           {/* Left: Giant Display Headline */}
-          <div className="col-span-12 lg:col-span-8">
-            <h1 className="font-serif text-[11vw] sm:text-[9vw] lg:text-[7.5vw] xl:text-[6.8vw] font-normal leading-[0.92] tracking-[-0.035em] text-[var(--ink)] text-left select-none">
+          <div className="col-span-1 lg:col-span-8 min-w-0">
+            <h1 className="font-serif text-[clamp(2.5rem,9.5vw,4.75rem)] lg:text-[7.5vw] xl:text-[6.8vw] font-normal leading-[0.98] lg:leading-[0.92] tracking-[-0.035em] text-[var(--ink)] text-left select-none">
               {/* Line 1 with mask */}
-              <div className="overflow-hidden">
+              <div className="hero-reveal-mask">
                 <div ref={headlineLine1Ref} className="will-change-transform">
                   Building{" "}
                   <span className="italic text-[var(--accent)] underline decoration-[var(--accent)]/40 decoration-1 underline-offset-8">
@@ -191,7 +204,7 @@ export default function HeroSection() {
               </div>
 
               {/* Line 2 with mask */}
-              <div className="overflow-hidden mt-1 sm:mt-2">
+              <div className="hero-reveal-mask mt-1 sm:mt-2">
                 <div ref={headlineLine2Ref} className="will-change-transform text-[var(--ink)]">
                   learning by{" "}
                   <span className="relative inline-block">
@@ -223,7 +236,7 @@ export default function HeroSection() {
                   document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
                 }}
                 data-cursor="SCROLL"
-                className="group relative inline-flex items-center gap-3 bg-[var(--ink)] text-[var(--paper)] px-8 py-4 font-mono text-xs uppercase tracking-wider overflow-hidden hover:bg-[var(--accent)] transition-colors"
+                className="group relative inline-flex min-h-11 items-center gap-3 bg-[var(--ink)] text-[var(--paper)] px-5 sm:px-8 py-3 sm:py-4 font-mono text-xs uppercase tracking-wider overflow-hidden hover:bg-[var(--accent)] transition-colors active:scale-[0.98]"
               >
                 <span>EXPLORE PROJECTS</span>
                 <span className="inline-block transition-transform duration-300 group-hover:translate-y-0.5">
@@ -238,7 +251,7 @@ export default function HeroSection() {
                   document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
                 }}
                 data-cursor="READ"
-                className="inline-flex items-center gap-2 border border-[var(--ink)]/20 px-8 py-4 font-mono text-xs uppercase tracking-wider text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
+                className="inline-flex min-h-11 items-center gap-2 border border-[var(--ink)]/20 px-5 sm:px-8 py-3 sm:py-4 font-mono text-xs uppercase tracking-wider text-[var(--ink)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors active:scale-[0.98]"
               >
                 <span>DOSSIER / ABOUT</span>
                 <span>→</span>
@@ -277,7 +290,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right: Asymmetric Editorial Avatar Portrait */}
-          <div className="col-span-12 lg:col-span-4 flex flex-col items-center lg:items-end mt-6 lg:mt-0">
+          <div className="col-span-1 lg:col-span-4 flex flex-col items-center lg:items-end mt-4 lg:mt-0 min-w-0">
             <div
               ref={avatarRef}
               className="relative max-w-[240px] sm:max-w-[280px] aspect-[4/5] w-full border border-[var(--ink)]/20 bg-[var(--paper)] p-2 shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-700 group will-change-transform"
@@ -295,7 +308,7 @@ export default function HeroSection() {
                   fill
                   sizes="(max-width: 640px) 240px, 280px"
                   priority
-                  className="object-cover filter grayscale contrast-110 brightness-95 group-hover:filter-none transition-all duration-700"
+                  className="object-cover lg:filter lg:grayscale lg:contrast-110 lg:brightness-95 lg:group-hover:filter-none transition-all duration-700"
                 />
               </div>
 
@@ -315,7 +328,7 @@ export default function HeroSection() {
       </div>
 
       {/* Section index rule bar */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full pt-4 flex justify-between items-center font-mono text-[11px] uppercase tracking-widest text-[var(--muted)] border-t border-[var(--ink)]/10">
+      <div className="max-w-7xl mx-auto px-5 lg:px-12 w-full pt-4 flex justify-between items-center gap-3 font-mono text-[10px] lg:text-[11px] uppercase tracking-widest text-[var(--muted)] border-t border-[var(--ink)]/10 min-w-0">
         <span>§ 01 / OVERVIEW</span>
         <span>SCROLL TO READ DOSSIER ↓</span>
       </div>

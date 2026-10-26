@@ -26,6 +26,7 @@ export default function ProjectsSection() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [isHoveringList, setIsHoveringList] = useState(false);
   const [isFinePointer, setIsFinePointer] = useState(false);
+  const [isTouchLayout, setIsTouchLayout] = useState(false);
 
   const projects: Project[] = [
     {
@@ -104,15 +105,53 @@ export default function ProjectsSection() {
   // Top 2 projects for sticky stacked moment
   const topProjects = projects.slice(0, 2);
 
-  // Check pointer: fine
+  // Keep cursor previews on desktop; use a viewport-centered active row on touch layouts.
   useEffect(() => {
-    const fine = window.matchMedia("(pointer: fine)").matches;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (fine && !reduced) {
-      const timer = setTimeout(() => setIsFinePointer(true), 0);
-      return () => clearTimeout(timer);
-    }
+    const desktopPointer = window.matchMedia("(min-width: 1024px) and (pointer: fine)");
+    const touchLayout = window.matchMedia("(max-width: 1023px)");
+    const update = () => {
+      setIsFinePointer(desktopPointer.matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+      setIsTouchLayout(touchLayout.matches);
+    };
+    update();
+    desktopPointer.addEventListener("change", update);
+    touchLayout.addEventListener("change", update);
+    return () => {
+      desktopPointer.removeEventListener("change", update);
+      touchLayout.removeEventListener("change", update);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!isTouchLayout) return;
+    const updateActiveRow = () => {
+      const rows = [...document.querySelectorAll<HTMLElement>("[data-project-index-row]")];
+      const center = window.innerHeight / 2;
+      let nearest: { row: HTMLElement; distance: number } | null = null;
+      for (const row of rows) {
+        const rect = row.getBoundingClientRect();
+        if (rect.bottom <= 0 || rect.top >= window.innerHeight) continue;
+        const distance = Math.abs((rect.top + rect.bottom) / 2 - center);
+        if (!nearest || distance < nearest.distance) nearest = { row, distance };
+      }
+      const project = projects.find((item) => item.num === nearest?.row.dataset.projectIndexRow) ?? null;
+      setActiveProject(project);
+      setIsHoveringList(false);
+    };
+    let frame = 0;
+    const scheduleUpdate = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updateActiveRow);
+    };
+    updateActiveRow();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
+  }, [isTouchLayout]);
 
   // Floating cursor follower physics for index list preview
   useEffect(() => {
@@ -151,38 +190,49 @@ export default function ProjectsSection() {
     };
   }, [isFinePointer]);
 
-  // GSAP ScrollTrigger for Sticky Stacked Moment
+  // Pin and scale the stack on desktop; reveal normal-flow cards on mobile.
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
-    const ctx = gsap.context(() => {
+    const media = gsap.matchMedia();
+    media.add("(min-width: 1024px)", () => {
+      const ctx = gsap.context(() => {
+        const cards = stackContainerRef.current?.querySelectorAll(".stack-card");
+        if (cards && cards.length > 1) {
+          gsap.to(cards[0], {
+            scale: 0.96,
+            opacity: 0.7,
+            ease: "none",
+            scrollTrigger: {
+              trigger: cards[1],
+              start: "top 80%",
+              end: "top 25%",
+              scrub: true,
+            },
+          });
+        }
+      }, sectionRef);
+      return () => ctx.revert();
+    });
+    media.add("(max-width: 1023px)", () => {
       const cards = stackContainerRef.current?.querySelectorAll(".stack-card");
-      if (cards && cards.length > 1) {
-        // Card 1 subtle scale down as Card 2 slides over
-        gsap.to(cards[0], {
-          scale: 0.96,
-          opacity: 0.7,
-          ease: "none",
-          scrollTrigger: {
-            trigger: cards[1],
-            start: "top 80%",
-            end: "top 25%",
-            scrub: true,
-          },
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
+      if (!cards?.length) return;
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const ctx = gsap.context(() => {
+        cards.forEach((card) => gsap.fromTo(card, { opacity: 0, y: reduced ? 4 : 18 }, {
+          opacity: 1, y: 0, duration: reduced ? 0.22 : 0.55, ease: "power2.out",
+          scrollTrigger: { trigger: card, start: "top 88%", once: true },
+        }));
+      }, stackContainerRef);
+      return () => ctx.revert();
+    });
+    return () => media.revert();
   }, []);
 
   return (
     <section
       ref={sectionRef}
       id="projects"
-      className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15 relative"
+      className="max-w-7xl mx-auto px-5 lg:px-12 py-20 lg:py-36 border-t border-[var(--ink)]/15 relative min-w-0"
     >
       {/* Section Header */}
       <div className="mb-20 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-[var(--ink)]/15 pb-8">
@@ -210,7 +260,7 @@ export default function ProjectsSection() {
         {topProjects.map((p, idx) => (
           <div
             key={p.title}
-            className={`stack-card sticky top-24 md:top-28 border border-[var(--ink)]/20 bg-[var(--paper)] p-8 sm:p-12 md:p-16 shadow-2xl transition-transform will-change-transform ${
+            className={`stack-card relative lg:sticky lg:top-28 border border-[var(--ink)]/20 bg-[var(--paper)] p-5 sm:p-8 lg:p-16 shadow-2xl transition-transform min-w-0 ${
               idx === 1 ? "mt-8" : ""
             }`}
           >
@@ -218,14 +268,14 @@ export default function ProjectsSection() {
               
               {/* Left Column: Technical Dossier */}
               <div className="lg:col-span-7 space-y-6">
-                <div className="flex items-center gap-4 font-mono text-xs uppercase tracking-widest text-[var(--muted)] pb-3 border-b border-[var(--ink)]/10">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 font-mono text-[10px] sm:text-xs uppercase tracking-widest text-[var(--muted)] pb-3 border-b border-[var(--ink)]/10 min-w-0">
                   <span className="text-[var(--accent)] font-semibold">{p.num} · DOSSIER</span>
                   <span>·</span>
                   <span>{p.category}</span>
-                  <span className="ml-auto text-[var(--ink)]">{p.year}</span>
+                    <span className="sm:ml-auto text-[var(--ink)]">{p.year}</span>
                 </div>
 
-                <h3 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[var(--ink)] font-normal tracking-tight">
+                <h3 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[var(--ink)] font-normal tracking-tight break-words">
                   {p.title}
                 </h3>
 
@@ -257,7 +307,7 @@ export default function ProjectsSection() {
                   <Link
                     href={p.href}
                     data-cursor="VIEW"
-                    className="inline-flex items-center gap-3 bg-[var(--ink)] text-[var(--paper)] px-8 py-4 font-mono text-xs uppercase tracking-wider hover:bg-[var(--accent)] transition-colors group"
+                    className="inline-flex min-h-11 items-center gap-3 bg-[var(--ink)] text-[var(--paper)] px-5 sm:px-8 py-3 sm:py-4 font-mono text-xs uppercase tracking-wider hover:bg-[var(--accent)] transition-colors group active:scale-[0.98]"
                   >
                     <span>EXPLORE CASE STUDY</span>
                     <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
@@ -358,22 +408,23 @@ export default function ProjectsSection() {
               <Link
                 key={proj.title}
                 href={proj.href}
-                onMouseEnter={() => setActiveProject(proj)}
+                onMouseEnter={() => { if (!isTouchLayout) setActiveProject(proj); }}
+                data-project-index-row={proj.num}
                 data-cursor="VIEW"
-                className={`group block py-8 md:py-10 transition-all duration-300 relative ${
-                  hasOtherHovered ? "opacity-30" : "opacity-100"
+                className={`project-index-row group block py-6 lg:py-10 transition-all duration-300 relative min-w-0 ${
+                  (isTouchLayout ? activeProject && !isHovered : hasOtherHovered) ? "opacity-40" : "opacity-100"
                 } ${isHovered ? "bg-[var(--ink)]/5" : ""}`}
               >
-                <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 px-2">
+                <div className="flex flex-col lg:flex-row lg:items-baseline justify-between gap-3 lg:gap-4 px-2 min-w-0">
                   
                   {/* Left: Index number + Huge Serif Title */}
-                  <div className="flex items-baseline gap-6 md:gap-12">
+                  <div className="flex items-baseline gap-4 sm:gap-6 lg:gap-12 min-w-0">
                     <span className="font-mono text-xs md:text-sm text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors w-8">
                       {proj.num}
                     </span>
 
                     <h3
-                      className={`font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight transition-colors duration-200 ${
+                      className={`font-serif text-2xl sm:text-4xl lg:text-7xl tracking-tight transition-colors duration-200 break-words min-w-0 ${
                         isHovered ? "text-[var(--accent)] italic" : "text-[var(--ink)]"
                       }`}
                     >
@@ -382,7 +433,7 @@ export default function ProjectsSection() {
                   </div>
 
                   {/* Middle / Right: Category & Tags in JetBrains Mono */}
-                  <div className="flex flex-wrap md:flex-nowrap items-center gap-4 md:gap-8 font-mono text-xs uppercase text-[var(--muted)] ml-14 md:ml-0">
+                  <div className="flex flex-wrap lg:flex-nowrap items-center gap-3 lg:gap-8 font-mono text-xs uppercase text-[var(--muted)] ml-10 sm:ml-14 lg:ml-0">
                     <span className="hidden lg:inline-block tracking-wider">
                       {proj.category}
                     </span>
@@ -402,11 +453,16 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* Mobile-only visible preview (no hover required on touch) */}
-                <div className="md:hidden mt-4 pl-14 text-sm text-[var(--muted)] font-sans">
-                  <p>{proj.description}</p>
-                  <div className="flex flex-wrap gap-1.5 mt-2">
+                <div className={`${isTouchLayout && activeProject?.num === proj.num ? "block" : "hidden"} lg:hidden mt-4 ml-10 sm:ml-14 space-y-3 min-w-0`}>
+                  {proj.imageSrc && (
+                    <div className="relative aspect-[16/9] w-full overflow-hidden border border-[var(--ink)]/15 bg-[var(--ink)]/5">
+                      <Image src={proj.imageSrc} alt={`${proj.title} preview`} fill sizes="(max-width: 1023px) 100vw, 0px" className="object-cover" />
+                    </div>
+                  )}
+                  <p className="text-base text-[var(--muted)] font-sans">{proj.description}</p>
+                  <div className="flex flex-wrap gap-1.5">
                     {proj.tags.map((t) => (
-                      <span key={t} className="border border-[var(--ink)]/10 px-1.5 py-0.5 font-mono text-[9px] uppercase">
+                      <span key={t} className="border border-[var(--ink)]/10 px-2 py-1 font-mono text-[10px] uppercase">
                         {t}
                       </span>
                     ))}

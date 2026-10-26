@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function DeVinciPlayer() {
   return (
-    <article className="max-w-5xl mx-auto px-6 md:px-12 pt-16 pb-32">
+    <article className="max-w-5xl mx-auto px-5 lg:px-12 pt-20 lg:pt-16 pb-24 lg:pb-32 min-w-0">
       {/* Back Link */}
       <div className="mb-12">
         <Link
@@ -23,7 +23,7 @@ export default function DeVinciPlayer() {
           <span>NATIVE ANDROID CLIENT &amp; MEDIA ENGINE</span>
         </div>
 
-        <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-[var(--ink)] leading-[0.95]">
+        <h1 className="font-serif text-[clamp(2.5rem,10vw,5.25rem)] lg:text-8xl font-normal tracking-tight text-[var(--ink)] leading-[0.98] lg:leading-[0.95] break-words">
           DeVinci Music Player
         </h1>
 

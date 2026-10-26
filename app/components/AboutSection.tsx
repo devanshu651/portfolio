@@ -21,11 +21,9 @@ export default function AboutSection() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
-    const ctx = gsap.context(() => {
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
       // 1. Scrubbed Word-by-Word opacity animation
       const words = textContainerRef.current?.querySelectorAll(".scrub-word");
       if (words && words.length > 0) {
@@ -68,21 +66,37 @@ export default function AboutSection() {
       animateCount(stat1Ref.current, 9);
       animateCount(stat2Ref.current, 6);
       animateCount(stat3Ref.current, 10);
-    }, sectionRef);
-
-    return () => ctx.revert();
+      }, sectionRef);
+      return () => ctx.revert();
+    });
+    media.add("(prefers-reduced-motion: reduce)", () => {
+      if (stat1Ref.current) stat1Ref.current.textContent = "9";
+      if (stat2Ref.current) stat2Ref.current.textContent = "6";
+      if (stat3Ref.current) stat3Ref.current.textContent = "10";
+      const ctx = gsap.context(() => {
+        if (textContainerRef.current) {
+          gsap.fromTo(textContainerRef.current, { opacity: 0.8 }, {
+            opacity: 1,
+            duration: 0.2,
+            scrollTrigger: { trigger: textContainerRef.current, start: "top 88%", once: true },
+          });
+        }
+      }, sectionRef);
+      return () => ctx.revert();
+    });
+    return () => media.revert();
   }, []);
 
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15"
+      className="max-w-7xl mx-auto px-5 lg:px-12 py-20 lg:py-36 border-t border-[var(--ink)]/15 min-w-0"
     >
-      <div className="grid grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start min-w-0">
         
         {/* Left Sticky/Pinned Editorial Meta Column */}
-        <div className="col-span-12 lg:col-span-4 lg:sticky lg:top-28 space-y-10">
+        <div className="col-span-1 lg:col-span-4 lg:sticky lg:top-28 space-y-10 min-w-0">
           <div>
             <span className="font-mono text-xs uppercase tracking-widest text-[var(--muted)] block mb-2">
               § 02 / DOSSIER
@@ -96,7 +110,7 @@ export default function AboutSection() {
           </div>
 
           {/* Stats: Count-up numbers in huge serif */}
-          <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-1 gap-6 pt-6 border-t border-[var(--ink)]/15">
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 sm:gap-6 pt-6 border-t border-[var(--ink)]/15 min-w-0">
             {/* Stat 1 */}
             <div className="space-y-1">
               <div className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[var(--ink)] font-normal leading-none tracking-tight">
@@ -136,7 +150,7 @@ export default function AboutSection() {
         </div>
 
         {/* Right Column: Scrubbed Word-by-Word Text Reveal */}
-        <div ref={textContainerRef} className="col-span-12 lg:col-span-8 space-y-10">
+        <div ref={textContainerRef} className="col-span-1 lg:col-span-8 space-y-10 min-w-0">
           
           {/* Lead Quote */}
           <p className="font-serif text-3xl sm:text-4xl md:text-5xl text-[var(--ink)] italic font-normal leading-[1.15] tracking-tight">

@@ -9,14 +9,12 @@ export default function SmoothScroll() {
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Respect prefers-reduced-motion
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
     gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ ignoreMobileResize: true });
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Initialize Lenis
-    const lenis = new Lenis({
+    // Lenis smooths wheel input only; touch retains the browser's native scroll.
+    const lenis = prefersReducedMotion ? null : new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
@@ -25,20 +23,22 @@ export default function SmoothScroll() {
       wheelMultiplier: 0.9,
     });
 
-    // Synchronize Lenis with ScrollTrigger
-    lenis.on("scroll", ScrollTrigger.update);
+    lenis?.on("scroll", ScrollTrigger.update);
 
     const updateTicker = (time: number) => {
-      lenis.raf(time * 1000);
+      lenis?.raf(time * 1000);
     };
 
-    gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
+    if (lenis) {
+      gsap.ticker.add(updateTicker);
+      gsap.ticker.lagSmoothing(0);
+    }
 
     // Scroll progress bar
     const handleScroll = () => {
       if (!progressBarRef.current) return;
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      ScrollTrigger.update();
+      const totalScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const progress = totalScroll > 0 ? window.scrollY / totalScroll : 0;
       progressBarRef.current.style.transform = `scaleX(${progress})`;
     };
@@ -47,9 +47,10 @@ export default function SmoothScroll() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      gsap.ticker.remove(updateTicker);
-      lenis.destroy();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      if (lenis) {
+        gsap.ticker.remove(updateTicker);
+        lenis.destroy();
+      }
     };
   }, []);
 

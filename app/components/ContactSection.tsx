@@ -9,9 +9,8 @@ export default function ContactSection() {
   useEffect(() => {
     const btn = magneticCtaRef.current;
     if (!btn) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
+    const media = gsap.matchMedia();
+    media.add("(min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
 
     const onMouseMove = (e: MouseEvent) => {
       const rect = btn.getBoundingClientRect();
@@ -40,7 +39,10 @@ export default function ContactSection() {
     return () => {
       btn.removeEventListener("mousemove", onMouseMove);
       btn.removeEventListener("mouseleave", onMouseLeave);
+      gsap.set(btn, { clearProps: "transform" });
     };
+    });
+    return () => media.revert();
   }, []);
 
   const contactChannels = [
@@ -70,9 +72,9 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-36 border-t border-[var(--ink)]/15"
+      className="max-w-7xl mx-auto px-5 lg:px-12 py-20 lg:py-36 border-t border-[var(--ink)]/15 min-w-0"
     >
-      <div className="border border-[var(--ink)]/20 bg-[var(--paper)] p-8 sm:p-12 md:p-20 relative overflow-hidden shadow-2xl">
+        <div className="border border-[var(--ink)]/20 bg-[var(--paper)] p-5 sm:p-8 lg:p-20 relative overflow-visible lg:overflow-hidden shadow-2xl min-w-0">
         {/* Technical Corner Accents */}
         <span className="absolute -top-1.5 -left-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
         <span className="absolute -top-1.5 -right-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
@@ -87,7 +89,7 @@ export default function ContactSection() {
 
         {/* Main Oversized Headline */}
         <div className="text-center max-w-4xl mx-auto space-y-6">
-          <h2 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-[var(--ink)] font-normal leading-[0.92]">
+          <h2 className="font-serif text-[clamp(2.5rem,12vw,5rem)] lg:text-9xl tracking-tight text-[var(--ink)] font-normal leading-[0.96] lg:leading-[0.92] break-words">
             Let&apos;s build{" "}
             <span className="italic text-[var(--accent)] underline decoration-[var(--accent)]/30 decoration-1 underline-offset-8">
               something.
@@ -104,7 +106,7 @@ export default function ContactSection() {
               ref={magneticCtaRef}
               href="mailto:devanshuraut.in@gmail.com"
               data-cursor="EMAIL"
-              className="inline-flex items-center gap-3 bg-[var(--ink)] text-[var(--paper)] px-10 py-5 font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-[var(--accent)] transition-colors shadow-xl will-change-transform"
+              className="inline-flex min-h-11 items-center gap-3 bg-[var(--ink)] text-[var(--paper)] px-6 sm:px-10 py-4 sm:py-5 font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-[var(--accent)] transition-colors shadow-xl active:scale-[0.98]"
             >
               <span>SEND AN INQUIRY</span>
               <span className="text-base">↗</span>

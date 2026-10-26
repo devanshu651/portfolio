@@ -50,9 +50,8 @@ html {
 body {
   background-color: var(--paper);
   color: var(--ink);
-  min-height: 100vh;
+  min-height: 100svh;
   position: relative;
-  overflow-x: hidden;
 }
 
 ::selection {
@@ -91,11 +90,15 @@ body {
   will-change: transform;
 }
 
+.hero-reveal-mask {
+  clip-path: inset(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 180ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 180ms !important;
     scroll-behavior: auto !important;
   }
   .animate-film-grain {
@@ -103,6 +106,62 @@ body {
   }
   html {
     scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .animate-film-grain {
+    animation: none;
+    opacity: 0.012;
+  }
+
+  a,
+  button {
+    touch-action: manipulation;
+  }
+
+  a:active,
+  button:active {
+    transform: scale(0.98);
+    color: var(--accent);
+  }
+
+  [data-break-anywhere] {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .mobile-marquee-track {
+    position: relative;
+    width: 100%;
+    overflow: clip;
+    white-space: nowrap;
+  }
+
+  .mobile-marquee-track::before {
+    content: attr(data-marquee);
+    display: block;
+    width: max-content;
+    will-change: transform;
+    animation: mobileMarquee var(--marquee-duration, 34s) linear infinite;
+  }
+
+  .mobile-marquee-reverse::before {
+    animation-direction: reverse;
+    animation-duration: var(--marquee-duration, 42s);
+  }
+
+  @keyframes mobileMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 1023px) {
+  .mobile-marquee-track::before {
+    animation: none;
+    width: 100%;
+    white-space: normal;
   }
 }
 
