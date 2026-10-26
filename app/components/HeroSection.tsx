@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 
 export default function HeroSection() {
@@ -288,10 +289,13 @@ export default function HeroSection() {
               <span className="absolute -bottom-1.5 -right-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
 
               <div className="relative w-full h-full overflow-hidden border border-[var(--ink)]/10">
-                <img
+                <Image
                   src="/avatar.png"
                   alt="Devanshu Raut Portrait"
-                  className="w-full h-full object-cover filter grayscale contrast-110 brightness-95 group-hover:filter-none transition-all duration-700"
+                  fill
+                  sizes="(max-width: 640px) 240px, 280px"
+                  priority
+                  className="object-cover filter grayscale contrast-110 brightness-95 group-hover:filter-none transition-all duration-700"
                 />
               </div>
 

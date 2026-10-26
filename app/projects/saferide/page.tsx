@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SafeRide() {
   return (
@@ -42,10 +43,13 @@ export default function SafeRide() {
           <span className="absolute -bottom-1.5 -right-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
 
           <div className="relative overflow-hidden border border-[var(--ink)]/10 bg-[var(--ink)]/5">
-            <img
+            <Image
               src="/saferide-ui.png"
               alt="SafeRide UI Interface"
+              width={800}
+              height={500}
               className="w-full h-auto object-contain filter contrast-105"
+              priority
             />
           </div>
 

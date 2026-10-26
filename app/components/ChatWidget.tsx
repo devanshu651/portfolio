@@ -200,7 +200,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-x-0 bottom-0 sm:inset-auto sm:right-6 sm:bottom-6 w-full sm:w-[420px] h-[85vh] sm:h-[560px] flex flex-col border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden z-[100]"
+            className="fixed inset-x-0 bottom-0 sm:inset-auto sm:right-6 sm:bottom-6 w-full sm:w-[420px] h-[85dvh] sm:h-[560px] flex flex-col border border-[var(--ink)]/20 bg-[var(--paper)] shadow-2xl overflow-hidden z-[100]"
           >
             {/* Corner Registration Stamps */}
             <span className="absolute top-1 left-1 font-mono text-[9px] text-[var(--ink)]/30 pointer-events-none">+</span>
@@ -234,6 +234,7 @@ export default function ChatWidget() {
             {/* Messages Scroll Area */}
             <div
               tabIndex={0}
+              data-lenis-prevent
               aria-label="Chat conversation history"
               className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-5 focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus:outline-none scroll-smooth"
             >
@@ -322,7 +323,7 @@ export default function ChatWidget() {
             data-cursor="CHAT"
             className="group flex items-center gap-3 border border-[var(--ink)]/25 bg-[var(--paper)] px-5 py-3 shadow-xl hover:border-[var(--accent)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus:outline-none transition-all duration-200"
             aria-expanded={isOpen}
-            aria-label="Open AI Devanshu chat assistant"
+            aria-label="Ask Devanshu's Bot — Open AI Chat Assistant"
           >
             <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
             <span className="font-mono text-xs uppercase tracking-widest text-[var(--ink)] group-hover:text-[var(--accent)] transition-colors">

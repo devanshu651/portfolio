@@ -176,7 +176,7 @@ export default function AboutSection() {
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="p-6 border border-[var(--ink)]/15 bg-[var(--paper)] hover:border-[var(--accent)] transition-colors">
                 <span className="font-mono text-xs text-[var(--muted)] block mb-3">01 / AXIOM</span>
-                <h4 className="font-serif text-2xl text-[var(--ink)] font-normal mb-2">Build to Learn</h4>
+                <h3 className="font-serif text-2xl text-[var(--ink)] font-normal mb-2">Build to Learn</h3>
                 <p className="text-sm text-[var(--muted)] leading-relaxed font-sans">
                   Theory is essential, but implementation is where real engineering mastery happens. I prioritize live systems and deep debugging over pure classroom speculation.
                 </p>
@@ -184,7 +184,7 @@ export default function AboutSection() {
 
               <div className="p-6 border border-[var(--ink)]/15 bg-[var(--paper)] hover:border-[var(--accent)] transition-colors">
                 <span className="font-mono text-xs text-[var(--muted)] block mb-3">02 / AXIOM</span>
-                <h4 className="font-serif text-2xl text-[var(--ink)] font-normal mb-2">Performance First</h4>
+                <h3 className="font-serif text-2xl text-[var(--ink)] font-normal mb-2">Performance First</h3>
                 <p className="text-sm text-[var(--muted)] leading-relaxed font-sans">
                   High-efficiency execution matters. From native Android architectures with low memory footprints to responsive, highly-optimized full-stack web applications.
                 </p>

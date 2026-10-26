@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import Image from "next/image";
 
 type Certificate = {
   id: string;
@@ -414,9 +415,9 @@ export default function Certifications() {
                             {cert.period && <span>· {cert.period}</span>}
                           </div>
 
-                          <h4 className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal group-hover:text-[var(--accent)] transition-colors link-sweep inline-block">
+                          <h3 className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal group-hover:text-[var(--accent)] transition-colors link-sweep inline-block">
                             {cert.title}
-                          </h4>
+                          </h3>
 
                           {cert.details && (
                             <p className="font-mono text-xs text-[var(--muted)]">
@@ -499,12 +500,15 @@ export default function Certifications() {
                   title={selectedCert.title}
                 />
               ) : (
-                <img
-                  src={selectedCert.file}
-                  alt={selectedCert.title}
-                  className="max-w-full max-h-[70vh] object-contain border border-[var(--ink)]/15 shadow-md"
-                  loading="lazy"
-                />
+                <div className="relative w-full max-w-2xl h-[65vh]">
+                  <Image
+                    src={selectedCert.file}
+                    alt={selectedCert.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 672px"
+                    className="object-contain border border-[var(--ink)]/15 shadow-md"
+                  />
+                </div>
               )}
             </div>
 

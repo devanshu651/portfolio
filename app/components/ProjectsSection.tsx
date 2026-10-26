@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -265,10 +266,12 @@ export default function ProjectsSection() {
                   
                   <div className="relative aspect-[4/3] w-full overflow-hidden border border-[var(--ink)]/10 bg-[var(--ink)]/5">
                     {p.imageSrc ? (
-                      <img
+                      <Image
                         src={p.imageSrc}
                         alt={`${p.title} Preview`}
-                        className="w-full h-full object-cover filter grayscale contrast-110 group-hover:filter-none group-hover:scale-105 transition-all duration-700"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 448px"
+                        className="object-cover filter grayscale contrast-110 group-hover:filter-none group-hover:scale-105 transition-all duration-700"
                       />
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center">
@@ -330,13 +333,13 @@ export default function ProjectsSection() {
                       {proj.num}
                     </span>
 
-                    <h4
+                    <h3
                       className={`font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight transition-colors duration-200 ${
                         isHovered ? "text-[var(--accent)] italic" : "text-[var(--ink)]"
                       }`}
                     >
                       {proj.title}
-                    </h4>
+                    </h3>
                   </div>
 
                   {/* Middle / Right: Category & Tags in JetBrains Mono */}
@@ -387,10 +390,12 @@ export default function ProjectsSection() {
         >
           {activeProject?.imageSrc ? (
             <div className="relative w-full h-full">
-              <img
+              <Image
                 src={activeProject.imageSrc}
                 alt={activeProject.title}
-                className="w-full h-full object-cover filter contrast-105"
+                fill
+                sizes="288px"
+                className="object-cover filter contrast-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)]/80 via-transparent to-transparent flex items-end p-3">
                 <span className="font-serif text-lg text-white font-normal">
@@ -406,9 +411,9 @@ export default function ProjectsSection() {
                 <span className="text-[var(--accent)] font-semibold">TYPOGRAPHIC DOSSIER</span>
               </div>
               <div className="my-auto text-center">
-                <h5 className="font-serif text-2xl text-[var(--ink)] italic leading-tight">
+                <h4 className="font-serif text-2xl text-[var(--ink)] italic leading-tight">
                   {activeProject?.title}
-                </h5>
+                </h4>
                 <p className="font-mono text-[10px] text-[var(--muted)] uppercase mt-1">
                   {activeProject?.category}
                 </p>

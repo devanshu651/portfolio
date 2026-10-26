@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function DeVinciPlayer() {
   return (
@@ -40,10 +41,13 @@ export default function DeVinciPlayer() {
           <span className="absolute -bottom-1.5 -right-1.5 font-mono text-[10px] text-[var(--ink)]/40 pointer-events-none">+</span>
 
           <div className="relative overflow-hidden border border-[var(--ink)]/10 bg-[var(--ink)]/5">
-            <img
+            <Image
               src="/devinci-ui.png"
               alt="DeVinci Music Player UI"
+              width={600}
+              height={750}
               className="w-full h-auto object-contain filter contrast-105"
+              priority
             />
           </div>
 

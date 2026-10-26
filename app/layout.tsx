@@ -32,8 +32,49 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Devanshu Raut — Systems, Machine Learning & Engineering",
-  description: "Portfolio of Devanshu Raut — AI/ML engineering student, builder of SafeRide, CampusEye AI, PromptLab Pro, and DeVinci Player.",
+  metadataBase: new URL("https://devanshuweb.in"),
+  title: {
+    default: "Devanshu Raut — Systems, Machine Learning & Engineering",
+    template: "%s · Devanshu Raut",
+  },
+  description:
+    "Portfolio of Devanshu Raut — AI/ML engineering student, builder of SafeRide, CampusEye AI, PromptLab Pro, and DeVinci Player.",
+  keywords: [
+    "Devanshu Raut",
+    "AI/ML Engineer",
+    "Systems Engineering",
+    "SafeRide",
+    "CampusEye AI",
+    "PromptLab",
+    "PRPCEM",
+    "Next.js Portfolio",
+  ],
+  authors: [{ name: "Devanshu Raut", url: "https://devanshuweb.in" }],
+  creator: "Devanshu Raut",
+  openGraph: {
+    title: "Devanshu Raut — Systems, Machine Learning & Engineering",
+    description:
+      "Editorial portfolio of Devanshu Raut — AI & ML engineering student, shipping production systems, hackathon finalists, and research tools.",
+    url: "https://devanshuweb.in",
+    siteName: "Devanshu Raut Portfolio",
+    images: [
+      {
+        url: "/avatar.png",
+        width: 800,
+        height: 800,
+        alt: "Devanshu Raut portrait",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Devanshu Raut — Systems, Machine Learning & Engineering",
+    description:
+      "Editorial portfolio of Devanshu Raut — AI & ML engineering student, shipping production systems, hackathon finalists, and research tools.",
+    images: ["/avatar.png"],
+  },
   verification: {
     google: "JhwCV-hq0eo2TK-zBTTIYKctc6ff8z4bFoM-lqBEwNI",
   },
